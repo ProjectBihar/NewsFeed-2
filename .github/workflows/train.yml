@@ -1,0 +1,39 @@
+name: train
+
+# Plan §51 — created now that statistical ML exists (Phases 25/27):
+# weekly — build candidate model, evaluate, store metrics, report
+# comparison. Never deploy a worse model automatically.
+#
+# This workflow evaluates and reports only: it runs the model suites,
+# the hybrid gate, the golden pins, and the frozen evaluation. It
+# writes no report.json and appends no ledger — promotion stays a
+# human-reviewed repo change through models.retrain's promotion bar,
+# so a challenger can never ship itself from a schedule.
+
+on:
+  schedule:
+    - cron: "11 6 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: train-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  train-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          pip install -r extraction/requirements.txt
+          pip install -r intelligence/requirements.txt
+
+      - name: Candidate models, hybrid gate, golden, frozen evaluation
+        run: pytest intelligence/models evaluation tests/test_golden.py -q

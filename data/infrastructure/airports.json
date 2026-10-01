@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "coverage": "seed",
+  "coverage_note": "Operational and under-construction airports. Airstrips without scheduled service expand in later waves.",
+  "entities": [
+    {
+      "id": "airport-patna",
+      "canonical_name": "Jay Prakash Narayan International Airport",
+      "type": "airport",
+      "aliases": ["Patna Airport", "PAT", "Lok Nayak Jayaprakash Airport"],
+      "hindi_names": ["जयप्रकाश नारायण अंतरराष्ट्रीय हवाई अड्डा", "पटना हवाई अड्डा"],
+      "romanisations": ["Jay Prakash Narayan International Airport"],
+      "district": "patna",
+      "parent_entity": null,
+      "latitude": 25.59,
+      "longitude": 85.09,
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "airport-gaya",
+      "canonical_name": "Gaya International Airport",
+      "type": "airport",
+      "aliases": ["Gaya Airport", "GAY"],
+      "hindi_names": ["गया अंतरराष्ट्रीय हवाई अड्डा"],
+      "romanisations": ["Gaya International Airport"],
+      "district": "gaya",
+      "parent_entity": null,
+      "latitude": 24.74,
+      "longitude": 84.95,
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "airport-darbhanga",
+      "canonical_name": "Darbhanga Airport",
+      "type": "airport",
+      "aliases": ["DBR", "Darbhanga Civil Enclave"],
+      "hindi_names": ["दरभंगा हवाई अड्डा"],
+      "romanisations": ["Darbhanga Airport"],
+      "district": "darbhanga",
+      "parent_entity": null,
+      "latitude": 26.19,
+      "longitude": 85.92,
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "airport-bihta",
+      "canonical_name": "Bihta Airport",
+      "type": "airport",
+      "aliases": ["Bihta Civil Enclave", "Patna Bihta Airport"],
+      "hindi_names": ["बिहटा हवाई अड्डा"],
+      "romanisations": ["Bihta Airport"],
+      "district": "patna",
+      "parent_entity": null,
+      "latitude": 25.59,
+      "longitude": 84.8,
+      "valid_from": null,
+      "valid_to": null
+    },
+    {
+      "id": "airport-purnia",
+      "canonical_name": "Purnia Airport",
+      "type": "airport",
+      "aliases": ["Purnia Civil Enclave"],
+      "hindi_names": ["पूर्णिया हवाई अड्डा"],
+      "romanisations": ["Purnia Airport"],
+      "district": "purnia",
+      "parent_entity": null,
+      "latitude": 25.76,
+      "longitude": 87.41,
+      "valid_from": null,
+      "valid_to": null
+    }
+  ]
+}

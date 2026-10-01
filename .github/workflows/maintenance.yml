@@ -1,0 +1,65 @@
+name: maintenance
+
+# Plan §50: daily — temporary text cleanup, stale queue cleanup,
+# metrics aggregation, story statistic recalculation, DB housekeeping.
+#
+# Executable today: temporary text cleanup via npm run
+# retention:cleanup, which runs only when Supabase secrets are
+# configured and otherwise skips honestly (nothing deleted, nothing
+# faked). The remaining duties need the production pipeline wiring
+# (see the §§45–51 entry in docs/IMPLEMENTATION_STATUS.md) and are
+# not simulated here. The retention contract (PGlite gate + script
+# contract) runs unconditionally.
+
+on:
+  schedule:
+    - cron: "23 4 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: maintenance-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  retention-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Retention contract (PGlite gate + cleanup script contract)
+        run: npx vitest run tests/retention.test.ts crawler/retention tests/retention-cleanup-script.test.ts
+
+  temporary-text-cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Temporary text cleanup (live, secret-guarded)
+        if: secrets.NEXT_PUBLIC_SUPABASE_URL != ''
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        run: npm run retention:cleanup
+
+      - name: Honest skip (no backend configured)
+        if: secrets.NEXT_PUBLIC_SUPABASE_URL == ''
+        run: echo "Supabase secrets absent — live temporary-text cleanup skipped; nothing was deleted and nothing was faked."

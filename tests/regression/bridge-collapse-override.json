@@ -1,0 +1,15 @@
+{
+  "id": "bridge-collapse-override",
+  "history": "Phase 11: structural collapse of built infrastructure must read as a development/accountability story, never a routine accident. Collapse plus an infrastructure noun overrides the accident reading.",
+  "phase": 11,
+  "cases": [
+    {
+      "title": "Bridge collapses a year after construction",
+      "body": "An under-construction bridge over the river collapsed on Thursday. The road construction department ordered a probe into the collapse.",
+      "expect": {
+        "relevance": { "pass": false },
+        "type": { "article_type": "development", "significance_tier": "A", "curated": true }
+      }
+    }
+  ]
+}

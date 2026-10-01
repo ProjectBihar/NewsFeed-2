@@ -1,0 +1,49 @@
+name: process
+
+# Plan §48: read queue → fetch → extract → validate → detect language →
+# run Bihar relevance → classify → deduplicate → cluster → persist.
+# Execution must be bounded: if the run ends before the queue is empty,
+# the remaining queue survives (durable crawl_queue — runners claim
+# bounded batches and never delete work).
+#
+# Honesty note: the production fetch→extract→persist wiring is unwired
+# (see the §§45–51 entry in docs/IMPLEMENTATION_STATUS.md). This
+# workflow runs the bounded offline process gate: pure-unit fetch and
+# queue tests only. The network/Chromium integration batches stay in
+# CI's full suite, not here, so every run stays bounded and fast.
+#
+# Manual trigger only: the plan sets no cadence for process runs. The
+# batch-size input reserves the bound the live runner will enforce.
+
+on:
+  workflow_dispatch:
+    inputs:
+      batch-size:
+        description: "Max queue rows per batch (bounded execution)"
+        required: false
+        default: "100"
+
+concurrency:
+  group: process-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  process-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Bounded process gate (no network, no browser)
+        run: npx vitest run crawler/fetch/retry.test.ts crawler/fetch/throttle-config.test.ts crawler/fetch/queue-store.test.ts crawler/fetch/browser-policy.test.ts crawler/queues/checkpoints.test.ts
+
+      - name: Report the bound
+        run: echo "Bounded gate complete (batch-size input reserved for the live runner)"

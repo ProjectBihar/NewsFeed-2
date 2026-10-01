@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "note": "Article-type regression corpus for the Phase 11 gate: every case must pass exactly. Includes the plan's mandatory examples across tiers A-D.",
+  "cases": [
+    {
+      "id": "robbery-patna",
+      "expected": { "type": "crime", "tier": "C", "curated": false },
+      "title": "Three arrested after robbery in Patna",
+      "body": "Police on Monday arrested three men in connection with a jewellery shop robbery. All stolen items were recovered, officials said."
+    },
+    {
+      "id": "police-funding",
+      "expected": { "type": "governance", "tier": "A", "curated": true },
+      "title": "Bihar Police receives modernisation funding",
+      "body": "The state government has approved a Rs 750 crore modernisation programme for the police. Cyber laboratories will come up in all ranges under the funded programme."
+    },
+    {
+      "id": "modernisation-750cr",
+      "expected": { "type": "governance", "tier": "A", "curated": true },
+      "title": "Bihar approves Rs 750 crore police modernisation programme",
+      "body": "The cabinet approved the modernisation programme covering cyber labs, weapons and mobility. The home department will review funding utilisation every quarter."
+    },
+    {
+      "id": "rally-attack",
+      "expected": { "type": "politics", "tier": "C", "curated": false },
+      "title": "Minister attacks opponent at election rally",
+      "body": "Addressing a rally, the minister attacked the opposition over stalled works. Party workers cheered the rhetoric while opposition leaders hit out in return."
+    },
+    {
+      "id": "industrial-policy",
+      "expected": { "type": "governance", "tier": "A", "curated": true },
+      "title": "Cabinet approves industrial policy",
+      "body": "The cabinet approved a new industrial policy offering capital subsidy and stamp duty waivers. The industries department will allot land on priority."
+    },
+    {
+      "id": "bridge-collapse",
+      "expected": { "type": "development", "tier": "A", "curated": true },
+      "title": "Bridge collapses one year after construction",
+      "body": "An under-construction bridge over the river collapsed on Thursday. The road construction department ordered a probe into the collapse of the structure."
+    },
+    {
+      "id": "cag-irregularities",
+      "expected": { "type": "governance", "tier": "B", "curated": true },
+      "title": "CAG finds major expenditure irregularities",
+      "body": "The auditor general flagged irregularities of Rs 400 crore in rural road schemes. The CAG report cites excess payments and incomplete works."
+    },
+    {
+      "id": "communal-violence",
+      "expected": { "type": "crime", "tier": "B", "curated": true },
+      "title": "Major communal violence disrupts a district",
+      "body": "Communal clashes left several injured as violence spread across neighbourhoods. The administration imposed curfew and suspended internet services."
+    },
+    {
+      "id": "celebrity-gossip",
+      "expected": { "type": "entertainment", "tier": "D", "curated": false },
+      "title": "Celebrity relationship controversy involving a Bihar-born actor",
+      "body": "The actor's relationship became the talk of celebrity gossip columns after photos surfaced. Film fans debated the controversy on social media."
+    },
+    {
+      "id": "metro-cabinet",
+      "expected": { "type": "development", "tier": "A", "curated": true },
+      "title": "Bihar Cabinet approves Patna Metro expansion",
+      "body": "The cabinet cleared two metro corridors to Bihta. The revised detailed project report enables tenders for the construction expansion early next year."
+    },
+    {
+      "id": "nomination-filing",
+      "expected": { "type": "election_campaign", "tier": "C", "curated": false },
+      "title": "Candidates file nominations on last day",
+      "body": "Hundreds of candidates filed nomination papers as campaigning intensified. The manifesto promises dominated roadshow speeches across constituencies."
+    },
+    {
+      "id": "road-accident",
+      "expected": { "type": "accident", "tier": "C", "curated": false },
+      "title": "Three injured in road accident",
+      "body": "Two vehicles collided on the national highway in a road accident. The injured were admitted to hospital after the collision."
+    },
+    {
+      "id": "bus-tragedy",
+      "expected": { "type": "accident", "tier": "B", "curated": true },
+      "title": "Twelve killed as bus overturns",
+      "body": "Twelve passengers were killed and twenty injured after the bus overturned on the highway. Rescue teams rushed the dead and injured to hospital."
+    },
+    {
+      "id": "hc-audit-order",
+      "expected": { "type": "court", "tier": "B", "curated": true },
+      "title": "High Court directs forensic audit of civic funds",
+      "body": "The Patna High Court directed a forensic audit and pulled up the department. The bench issued the court order during the petition hearing."
+    },
+    {
+      "id": "routine-bail",
+      "expected": { "type": "court", "tier": "B", "curated": false },
+      "title": "Court grants bail in theft case",
+      "body": "The court granted bail to the accused in a theft case. The hearing lasted twenty minutes before the judge pronounced the order."
+    },
+    {
+      "id": "rain-forecast",
+      "expected": { "type": "weather", "tier": "C", "curated": false },
+      "title": "Light rain likely for two days, says forecast",
+      "body": "The weather department forecast light rain with a dip in maximum temperature. The monsoon remains active over the region."
+    },
+    {
+      "id": "major-flood",
+      "expected": { "type": "environmental_event", "tier": "B", "curated": true },
+      "title": "Floods displace 40,000 in north Bihar",
+      "body": "Floods marooned hundreds of villages as embankments faced pressure. Relief camps house the displaced while boats evacuate families."
+    },
+    {
+      "id": "cricket-match",
+      "expected": { "type": "sports", "tier": "D", "curated": false },
+      "title": "Bihar loses Ranji match by six wickets",
+      "body": "Chasing 240, the team folded for 180 in the second innings. The captain blamed poor shot selection after the match."
+    },
+    {
+      "id": "film-release",
+      "expected": { "type": "entertainment", "tier": "D", "curated": false },
+      "title": "Bhojpuri film releases in 200 theatres",
+      "body": "The much-awaited Bhojpuri film opened to packed houses. The actor thanked fans as box office numbers poured in."
+    },
+    {
+      "id": "opinion-air",
+      "expected": { "type": "opinion", "tier": "B", "curated": false },
+      "title": "Opinion: why the city chokes every winter",
+      "body": "In my view, enforcement fails every winter as dust and smoke return. This column argues for year-round dust control, in my view the only fix."
+    },
+    {
+      "id": "analysis-survey",
+      "expected": { "type": "analysis", "tier": "B", "curated": false },
+      "title": "What the data says about land disputes",
+      "body": "This analysis of tribunal records shows disputes fell by a third. The data shows ground-truthing works, explains this explainer."
+    },
+    {
+      "id": "pib-release",
+      "expected": { "type": "official_release", "tier": "B", "curated": true },
+      "title": "Cabinet approves river project, says release",
+      "body": "According to an official release, the cabinet committee approved the interlinking project. The release said central assistance covers sixty percent."
+    },
+    {
+      "id": "routine-transfer-order",
+      "expected": { "type": "official_release", "tier": "B", "curated": false },
+      "title": "Twelve officers transferred, says notification",
+      "body": "A notification transferred twelve officers across districts. The official release lists the new postings without further detail."
+    },
+    {
+      "id": "photo-gallery",
+      "expected": { "type": "roundup", "tier": "D", "curated": false },
+      "title": "In pictures: festival preparations",
+      "body": "Photo gallery: glimpses from the ground as preparations peak. Top shots from our photographers in this pictures roundup."
+    },
+    {
+      "id": "sponsored-content",
+      "expected": { "type": "advertorial", "tier": "D", "curated": false },
+      "title": "The right tractor for your farm",
+      "body": "Sponsored content: this partner content presents the new tractor range. Advertisement features easy loans for buyers."
+    },
+    {
+      "id": "vague-note",
+      "expected": { "type": "miscellaneous", "tier": "C", "curated": false },
+      "title": "Community meeting held in village",
+      "body": "Residents gathered on Sunday to discuss local matters. Sweets were distributed at the end of the meeting."
+    },
+    {
+      "id": "horoscope",
+      "expected": { "type": "entertainment", "tier": "D", "curated": false },
+      "title": "Daily horoscope: promising day for investments",
+      "body": "Aries natives may find gains today. Taurus should avoid travel. Check the rashifal before deciding."
+    },
+    {
+      "id": "metro-hindi",
+      "expected": { "type": "development", "tier": "A", "curated": true },
+      "title": "पटना मेट्रो विस्तार को मंजूरी",
+      "body": "राज्य कैबिनेट ने मेट्रो परियोजना के विस्तार को मंजूरी दी। बिहटा तक कॉरिडोर बनेगा और निर्माण के लिए निविदाएं आएंगी।"
+    },
+    {
+      "id": "robbery-hindi",
+      "expected": { "type": "crime", "tier": "C", "curated": false },
+      "title": "पटना में लूट के बाद तीन गिरफ्तार",
+      "body": "पुलिस ने लूट के आरोप में तीन आरोपियों को गिरफ्तार किया। प्राथमिकी दर्ज कर लूटा गया सामान बरामद हुआ।"
+    },
+    {
+      "id": "rally-hindi",
+      "expected": { "type": "politics", "tier": "C", "curated": false },
+      "title": "रैली में विपक्ष पर बरसे मंत्री",
+      "body": "चुनावी रैली में मंत्री ने विपक्ष पर बयानबाजी का आरोप लगाया। पार्टी कार्यकर्ताओं ने जमकर नारेबाजी की।"
+    },
+    {
+      "id": "midday-meal",
+      "expected": { "type": "governance", "tier": "A", "curated": true },
+      "title": "Midday meal menu revised in schools",
+      "body": "The education department revised the menu under the nutrition scheme. Eggs twice a week were approved for government schools."
+    }
+  ]
+}

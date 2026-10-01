@@ -1,0 +1,124 @@
+{
+  "generated_at": "2026-09-29T06:26:20.346290+00:00",
+  "corpus_version": 1,
+  "metrics": {
+    "relevance_precision": {
+      "value": 1.0,
+      "n": 60
+    },
+    "relevance_recall": {
+      "value": 1.0,
+      "n": 60
+    },
+    "curated_precision": {
+      "value": 1.0,
+      "n": 31
+    },
+    "curated_recall": {
+      "value": 1.0,
+      "n": 31
+    },
+    "article_type_macro_f1": {
+      "value": 1.0,
+      "n": 31
+    },
+    "category_macro_f1": {
+      "value": 1.0,
+      "n": 39
+    },
+    "event_accuracy": {
+      "value": 1.0,
+      "n": 31
+    },
+    "event_macro_f1": {
+      "value": 1.0,
+      "n": 31
+    },
+    "cluster_precision": {
+      "value": 1.0,
+      "n": 210
+    },
+    "cluster_recall": {
+      "value": 1.0,
+      "n": 210
+    },
+    "extraction_success_rate": {
+      "value": 1.0,
+      "n": 30
+    },
+    "language_accuracy": {
+      "value": 0.975,
+      "n": 40
+    },
+    "exact_dedup_accuracy": {
+      "value": 1.0,
+      "n": 14
+    },
+    "near_dup_accuracy": {
+      "value": 1.0,
+      "n": 13
+    },
+    "xlingual_accuracy": {
+      "value": 1.0,
+      "n": 10
+    }
+  },
+  "thresholds": {
+    "relevance_precision": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "relevance_recall": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "curated_precision": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "curated_recall": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "article_type_macro_f1": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "category_macro_f1": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "event_accuracy": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "event_macro_f1": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "cluster_precision": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "cluster_recall": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    },
+    "extraction_success_rate": {
+      "value": 1.0,
+      "threshold": 0.9,
+      "pass": true
+    }
+  },
+  "overall_pass": true
+}

@@ -1,0 +1,249 @@
+{
+  "version": 1,
+  "note": "Topic benchmark for the Phase 12 gate: primary exact, secondary as subset. Covers all eight categories, unclassifiable cases, and Hindi.",
+  "cases": [
+    {
+      "id": "gdp-survey",
+      "expected": { "primary": "Economy", "secondary": ["Public Finance"] },
+      "title": "State GDP growth pegged at 9.2 percent",
+      "body": "The economic survey pegged GDP growth at 9.2 per cent. The fiscal deficit stayed within limits while capital outlay rose, the finance department said."
+    },
+    {
+      "id": "youth-unemployment",
+      "expected": { "primary": "Economy", "secondary": ["Employment & Jobs"] },
+      "title": "Educated youth unemployment worries survey",
+      "body": "Unemployment among educated youth is the central challenge, the survey says. Thousands of vacancies remain unfilled while job seekers multiply."
+    },
+    {
+      "id": "crop-loans",
+      "expected": { "primary": "Economy", "secondary": ["Banking & Credit"] },
+      "title": "Banks extend crop loans to small farmers",
+      "body": "Banks disbursed record crop loans this season. Officials said timely credit helped farmers buy seeds and fertiliser."
+    },
+    {
+      "id": "patna-metro",
+      "expected": { "primary": "Infrastructure", "secondary": ["Metro & Urban Transport"] },
+      "title": "Bihar Cabinet approves Patna Metro expansion",
+      "body": "Two metro corridors to Bihta will transform urban transport. The metro rail project enters its construction phase next year."
+    },
+    {
+      "id": "danapur-road",
+      "expected": { "primary": "Infrastructure", "secondary": ["Roads & Bridges"] },
+      "title": "Danapur-Bihta elevated road gets clearance",
+      "body": "The 20-km elevated road project received forest clearance. The bypass will decongest the highway corridor."
+    },
+    {
+      "id": "sone-bridge",
+      "expected": { "primary": "Infrastructure", "secondary": ["Roads & Bridges"] },
+      "title": "Bridge over Sone opens for traffic",
+      "body": "The new bridge opened for light vehicles. Load testing for heavy traffic finishes next month on the river bridge."
+    },
+    {
+      "id": "bihta-airport",
+      "expected": { "primary": "Infrastructure", "secondary": ["Airports & Aviation"] },
+      "title": "Bihta airport terminal work gathers pace",
+      "body": "The new terminal and runway at the Bihta airport will handle larger aircraft. The civil enclave opens next year under the UDAN scheme."
+    },
+    {
+      "id": "power-unit",
+      "expected": { "primary": "Infrastructure", "secondary": ["Power & Energy"] },
+      "title": "New thermal power unit synchronised",
+      "body": "The thermal power unit was synchronised with the grid. Officials promised stable electricity supply and fewer outages."
+    },
+    {
+      "id": "biada-plots",
+      "expected": {
+        "primary": "Industry",
+        "secondary": ["Industrial Land & Policy", "Food Processing"]
+      },
+      "title": "BIADA allots 120 plots at Bihta park",
+      "body": "Food processing units bagged most plots in the industrial area allotment. The industrial policy offers capital subsidy on land allotment."
+    },
+    {
+      "id": "ethanol-subsidy",
+      "expected": { "primary": "Industry", "secondary": ["Ethanol & Sugar"] },
+      "title": "Ethanol plants get fresh interest subsidy",
+      "body": "Grain-based ethanol distilleries get interest subsidy. Twelve distilleries under construction will benefit from the decision."
+    },
+    {
+      "id": "textile-park",
+      "expected": { "primary": "Industry", "secondary": ["Textiles"] },
+      "title": "Textile park proposed in Bhagalpur",
+      "body": "A textile park for garment units was proposed. Handloom weavers will get common facility centres in the textile cluster."
+    },
+    {
+      "id": "startup-policy",
+      "expected": { "primary": "Industry", "secondary": ["MSME & Startups"] },
+      "title": "Startup policy offers seed support",
+      "body": "The startup policy supports small enterprises with seed funding. Young entrepreneurs welcomed the MSME package."
+    },
+    {
+      "id": "solar-pumps",
+      "expected": {
+        "primary": "Agriculture",
+        "secondary": ["Irrigation & Water", "Farm Mechanisation"]
+      },
+      "title": "Solar pumps reach 10,000 farmers",
+      "body": "Solar pumps transformed irrigation in pilot blocks. Farm mechanisation subsidies covered eighty percent of the cost."
+    },
+    {
+      "id": "paddy-procurement",
+      "expected": {
+        "primary": "Agriculture",
+        "secondary": ["Crops & Production", "Markets & MSP"]
+      },
+      "title": "Paddy procurement crosses target",
+      "body": "Paddy procurement at mandis crossed the target. Farmers received minimum support price payments within days of the harvest."
+    },
+    {
+      "id": "dairy-expansion",
+      "expected": { "primary": "Agriculture", "secondary": ["Dairy & Livestock"] },
+      "title": "Dairy union adds chilling centres",
+      "body": "The dairy cooperative added milk chilling centres. Cattle owners and poultry farmers joined the expanded network."
+    },
+    {
+      "id": "bpsc-calendar",
+      "expected": { "primary": "Education", "secondary": ["Exams & Recruitment"] },
+      "title": "BPSC releases teacher recruitment calendar",
+      "body": "Examinations for 27,000 teacher posts will be held in December. Admit cards arrive a fortnight before each examination."
+    },
+    {
+      "id": "nalanda-school",
+      "expected": { "primary": "Education", "secondary": ["Higher Education"] },
+      "title": "Nalanda University opens new school",
+      "body": "The university campus will admit 120 students. The vice-chancellor announced new programmes starting next semester."
+    },
+    {
+      "id": "midday-meal",
+      "expected": { "primary": "Education", "secondary": ["School Education"] },
+      "title": "Midday meal menu revised in schools",
+      "body": "Government schools revised the midday meal menu. Teachers welcomed better enrollment prospects from the school scheme."
+    },
+    {
+      "id": "aiims-opd",
+      "expected": { "primary": "Healthcare", "secondary": ["Hospitals & Infrastructure"] },
+      "title": "AIIMS OPD crosses one lakh patients",
+      "body": "The hospital outpatient department added beds and a trauma centre. AIIMS doctors managed the record OPD footfall."
+    },
+    {
+      "id": "vaccination-drive",
+      "expected": { "primary": "Healthcare", "secondary": ["Public Health & Schemes"] },
+      "title": "Immunisation drive covers remote blocks",
+      "body": "A public health immunisation drive reached remote blocks. ASHA workers led the vaccination campaign under the health scheme."
+    },
+    {
+      "id": "doctor-shortage",
+      "expected": { "primary": "Healthcare", "secondary": ["Medical Staff"] },
+      "title": "Hospitals face doctor shortage",
+      "body": "Doctors and nurses posts lie vacant in district hospitals. The shortage of doctors affects emergency care, nurses said."
+    },
+    {
+      "id": "dengue-rise",
+      "expected": { "primary": "Healthcare", "secondary": ["Disease Control"] },
+      "title": "Dengue cases rise in the capital",
+      "body": "The dengue outbreak spread across neighbourhoods. Health teams began fogging as encephalitis fears grew."
+    },
+    {
+      "id": "flood-camps",
+      "expected": { "primary": "Environment", "secondary": ["Rivers & Floods"] },
+      "title": "Flood relief camps house 40,000",
+      "body": "Floods marooned villages along the river as embankments faced pressure. Relief camps line the river banks."
+    },
+    {
+      "id": "tiger-count",
+      "expected": { "primary": "Environment", "secondary": ["Forests & Wildlife"] },
+      "title": "Tiger reserve reports rise in count",
+      "body": "The tiger reserve estimated 56 big cats. Forest guards credited the sanctuary management and anti-poaching camps."
+    },
+    {
+      "id": "air-quality",
+      "expected": { "primary": "Environment", "secondary": ["Pollution & Air Quality"] },
+      "title": "City air turns severe in winter",
+      "body": "Air quality slid into the severe category as smog settled. Pollution control teams targeted dust and plastic waste burning."
+    },
+    {
+      "id": "wetland-census",
+      "expected": { "primary": "Environment", "secondary": ["Wetlands"] },
+      "title": "Wetland census finds new visitors",
+      "body": "The wetland census recorded migratory birds at oxbow lakes. Wetlands experts sought reserve status for the sites."
+    },
+    {
+      "id": "cag-audit",
+      "expected": { "primary": "Economy", "secondary": ["Public Finance"] },
+      "title": "CAG flags expenditure irregularities",
+      "body": "The audit flagged irregularities in scheme spending. Utilisation certificates were missing for large outlays, the report says."
+    },
+    {
+      "id": "land-survey",
+      "expected": { "primary": "Governance", "secondary": ["Land & Revenue"] },
+      "title": "Land survey cuts pending disputes",
+      "body": "The revisional land survey published draft records. Mutation backlogs fell as jamabandi entries were corrected."
+    },
+    {
+      "id": "transfer-orders",
+      "expected": { "primary": "Governance", "secondary": ["Transfers & Appointments"] },
+      "title": "Twelve officers transferred",
+      "body": "A transfer order moved twelve officers across districts. New postings take effect immediately, the notification says."
+    },
+    {
+      "id": "quota-verdict",
+      "expected": { "primary": "Governance", "secondary": ["Judiciary & Justice"] },
+      "title": "Supreme Court upholds quota law",
+      "body": "The Supreme Court delivered its verdict on the reservation law. The judgment settles the tribunal debate over the breach."
+    },
+    {
+      "id": "flood-relief-govt",
+      "expected": { "primary": "Governance", "secondary": ["Disaster Management"] },
+      "title": "Relief operations scaled up",
+      "body": "The disaster management department opened relief camps. NDRF teams led evacuation as compensation surveys began."
+    },
+    {
+      "id": "panchayat-polls",
+      "expected": { "primary": "Governance", "secondary": ["Elections & Panchayats"] },
+      "title": "Panchayat bypolls announced",
+      "body": "Panchayat bypolls will be held next month. Ward-level municipal rolls were updated for the civic polls."
+    },
+    {
+      "id": "robbery-laworder",
+      "expected": { "primary": "Governance", "secondary": ["Police & Law & Order"] },
+      "title": "Three arrested after robbery",
+      "body": "Police arrested three men for robbery. Officials cited improved patrolling and law and order drives."
+    },
+    {
+      "id": "celebrity-tour",
+      "expected": { "primary": null, "secondary": [] },
+      "title": "Actor tours three cities for film",
+      "body": "The actor will promote the new movie across cities. Fans gathered as the celebrity motorcade passed."
+    },
+    {
+      "id": "cricket-loss",
+      "expected": { "primary": null, "secondary": [] },
+      "title": "State loses Ranji match",
+      "body": "Chasing 240, the team folded for 180. The captain blamed poor shot selection after the innings defeat."
+    },
+    {
+      "id": "metro-hindi",
+      "expected": { "primary": "Infrastructure", "secondary": ["Metro & Urban Transport"] },
+      "title": "पटना मेट्रो विस्तार को मंजूरी",
+      "body": "मेट्रो परियोजना के विस्तार से शहरी परिवहन बदलेगा। मेट्रो रेल अगले साल निर्माण चरण में प्रवेश करेगी।"
+    },
+    {
+      "id": "bpsc-hindi",
+      "expected": { "primary": "Education", "secondary": ["Exams & Recruitment"] },
+      "title": "शिक्षक नियुक्ति परीक्षा कैलेंडर जारी",
+      "body": "27,000 पदों के लिए दिसंबर में परीक्षा होगी। प्रवेश पत्र परीक्षा से पहले जारी किए जाएंगे।"
+    },
+    {
+      "id": "robbery-hindi",
+      "expected": { "primary": "Governance", "secondary": ["Police & Law & Order"] },
+      "title": "पटना में लूट के बाद तीन गिरफ्तार",
+      "body": "पुलिस ने लूट के तीन आरोपियों को गिरफ्तार किया। अधिकारियों ने गश्त और कानून व्यवस्था का हवाला दिया।"
+    },
+    {
+      "id": "naljal-hindi",
+      "expected": { "primary": "Infrastructure", "secondary": ["Water Supply & Sanitation"] },
+      "title": "नल-जल योजना का दूसरा चरण",
+      "body": "हर घर नल योजना में छूटे टोलों को जोड़ा जाएगा। पेयजल आपूर्ति के लिए नई पाइपलाइन बिछेगी।"
+    }
+  ]
+}

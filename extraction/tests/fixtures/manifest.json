@@ -1,0 +1,486 @@
+{
+  "version": 1,
+  "note": "Synthetic but structurally representative publisher pages. Each entry states the observable contract: headline, date, body, canonical, author, floor confidence, and content markers.",
+  "fixtures": [
+    {
+      "file": "001-thehindu-like.html",
+      "url": "https://news.example.com/bihar/cabinet-metro-expansion-101",
+      "source": "thehindu-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Bihar Cabinet approves Patna Metro expansion",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 5,
+        "min_confidence": "high",
+        "contains": ["Bihta"]
+      }
+    },
+    {
+      "file": "002-indianexpress-like.html",
+      "url": "https://news.example.com/bihar/biada-bihta-plots-102",
+      "source": "indianexpress-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "BIADA allots 120 plots",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["900 crore"]
+      }
+    },
+    {
+      "file": "003-toi-like.html",
+      "url": "https://news.example.com/bihar/bpsc-calendar-103",
+      "source": "toi-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "BPSC releases teacher recruitment calendar",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 3,
+        "min_confidence": "high",
+        "contains": ["27,000"]
+      }
+    },
+    {
+      "file": "004-ht-like.html",
+      "url": "https://news.example.com/bihar/ganga-cleanup-104",
+      "source": "ht-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Ganga ghat cleanup drive",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["Chhath"]
+      }
+    },
+    {
+      "file": "005-et-like.html",
+      "url": "https://news.example.com/bihar/police-modernisation-105",
+      "source": "et-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "police modernisation",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["750 crore"]
+      }
+    },
+    {
+      "file": "006-jagran-like.html",
+      "url": "https://news.example.com/bihar/patna-metro-hindi-106",
+      "source": "jagran-like",
+      "language": "hi",
+      "expect": {
+        "title_contains": "पटना मेट्रो विस्तार",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["बिहटा"]
+      }
+    },
+    {
+      "file": "007-amarujala-like.html",
+      "url": "https://news.example.com/bihar/bihta-plots-hindi-107",
+      "source": "amarujala-like",
+      "language": "hi",
+      "expect": {
+        "title_contains": "बिहटा औद्योगिक पार्क",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 3,
+        "min_confidence": "high",
+        "contains": ["900 करोड़"]
+      }
+    },
+    {
+      "file": "008-bhaskar-like.html",
+      "url": "https://news.example.com/bihar/midday-meal-108",
+      "source": "bhaskar-like",
+      "language": "hi",
+      "expect": {
+        "title_contains": "मध्याह्न भोजन",
+        "date_present": false,
+        "author_present": false,
+        "canonical_present": false,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "medium",
+        "contains": ["अंडा"]
+      }
+    },
+    {
+      "file": "009-prabhatkhabar-like.html",
+      "url": "https://news.example.com/bihar/teacher-calendar-hindi-109",
+      "source": "prabhatkhabar-like",
+      "language": "hi",
+      "expect": {
+        "title_contains": "शिक्षक नियुक्ति",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": false,
+        "body_present": true,
+        "min_paragraphs": 3,
+        "min_confidence": "medium",
+        "contains": ["38 जिलों"]
+      }
+    },
+    {
+      "file": "010-livehindustan-like.html",
+      "url": "https://news.example.com/bihar/ganga-hindi-110",
+      "source": "livehindustan-like",
+      "language": "hi",
+      "expect": {
+        "title_contains": "गंगा घाटों",
+        "date_present": true,
+        "author_present": false,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 3,
+        "min_confidence": "high",
+        "contains": ["छठ"]
+      }
+    },
+    {
+      "file": "011-news18hindi-like.html",
+      "url": "https://news.example.com/bihar/weather-video-111",
+      "source": "news18hindi-like",
+      "language": "hi",
+      "expect": {
+        "title_contains": "मौसम अपडेट",
+        "date_present": false,
+        "author_present": false,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 1,
+        "min_confidence": "low",
+        "contains": ["हल्की बारिश"]
+      }
+    },
+    {
+      "file": "012-toi-patna-like.html",
+      "url": "https://news.example.com/bihar/danapur-bihta-road-112",
+      "source": "toi-patna-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Danapur-Bihta elevated road",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["25 minutes"]
+      }
+    },
+    {
+      "file": "013-ht-patna-like.html",
+      "url": "https://news.example.com/bihar/valmiki-tigers-113",
+      "source": "ht-patna-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Valmiki reserve",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["56"]
+      }
+    },
+    {
+      "file": "014-mongabay-like.html",
+      "url": "https://news.example.com/bihar/wetland-census-114",
+      "source": "mongabay-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Wetland census",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["112"]
+      }
+    },
+    {
+      "file": "015-pib-release-like.html",
+      "url": "https://news.example.com/bihar/river-interlinking-115",
+      "source": "pib-release-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "river interlinking project",
+        "date_present": true,
+        "author_present": false,
+        "canonical_present": false,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "medium",
+        "contains": ["4,800 crore"]
+      }
+    },
+    {
+      "file": "016-prs-analysis-like.html",
+      "url": "https://news.example.com/bihar/land-survey-analysis-116",
+      "source": "prs-analysis-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "land survey",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 6,
+        "min_confidence": "high",
+        "contains": ["45,000 villages"]
+      }
+    },
+    {
+      "file": "017-theprint-like.html",
+      "url": "https://news.example.com/bihar/nalanda-school-117",
+      "source": "theprint-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Nalanda University",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["120 students"]
+      }
+    },
+    {
+      "file": "018-scroll-like.html",
+      "url": "https://news.example.com/bihar/solar-pumps-118",
+      "source": "scroll-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Solar pumps",
+        "date_present": true,
+        "author_present": false,
+        "canonical_present": false,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "medium",
+        "contains": ["10,000 farmers"]
+      }
+    },
+    {
+      "file": "019-wire-like.html",
+      "url": "https://news.example.com/bihar/cag-roads-119",
+      "source": "wire-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "CAG flags expenditure",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["400 crore"]
+      }
+    },
+    {
+      "file": "020-quint-like.html",
+      "url": "https://news.example.com/bihar/aiims-darbhanga-120",
+      "source": "quint-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "AIIMS Darbhanga",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["one lakh"]
+      }
+    },
+    {
+      "file": "021-newindianexpress-like.html",
+      "url": "https://news.example.com/bihar/sone-bridge-121",
+      "source": "newindianexpress-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Bridge over Sone",
+        "date_present": true,
+        "author_present": false,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 3,
+        "min_confidence": "high",
+        "contains": ["load testing"]
+      }
+    },
+    {
+      "file": "022-deccanherald-like.html",
+      "url": "https://news.example.com/bihar/teacher-protest-122",
+      "source": "deccanherald-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "teacher transfers",
+        "date_present": false,
+        "author_present": false,
+        "canonical_present": false,
+        "body_present": true,
+        "min_paragraphs": 3,
+        "min_confidence": "medium",
+        "contains": ["15 districts"]
+      }
+    },
+    {
+      "file": "023-business-standard-like.html",
+      "url": "https://news.example.com/bihar/gdp-growth-123",
+      "source": "business-standard-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "GDP growth",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["9.2 per cent"]
+      }
+    },
+    {
+      "file": "024-moneycontrol-like.html",
+      "url": "https://news.example.com/bihar/ethanol-subsidy-124",
+      "source": "moneycontrol-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Ethanol plants",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 3,
+        "min_confidence": "high",
+        "contains": ["Kosi"]
+      }
+    },
+    {
+      "file": "025-abp-hindi-like.html",
+      "url": "https://news.example.com/bihar/road-accident-125",
+      "source": "abp-hindi-like",
+      "language": "hi",
+      "expect": {
+        "title_contains": "सड़क हादसे",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 3,
+        "min_confidence": "high",
+        "contains": ["रेफर"]
+      }
+    },
+    {
+      "file": "026-zee-hindi-like.html",
+      "url": "https://news.example.com/bihar/rally-rhetoric-126",
+      "source": "zee-hindi-like",
+      "language": "hi",
+      "expect": {
+        "title_contains": "रैली में विपक्ष",
+        "date_present": true,
+        "author_present": false,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 3,
+        "min_confidence": "high",
+        "contains": ["कार्यकर्ता"]
+      }
+    },
+    {
+      "file": "027-navbharat-times-like.html",
+      "url": "https://news.example.com/bihar/nal-jal-127",
+      "source": "navbharat-times-like",
+      "language": "hi",
+      "expect": {
+        "title_contains": "नल-जल योजना",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["टोल-फ्री"]
+      }
+    },
+    {
+      "file": "028-opinion-like.html",
+      "url": "https://news.example.com/bihar/patna-air-opinion-128",
+      "source": "opinion-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "air turns toxic",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["purifiers"]
+      }
+    },
+    {
+      "file": "029-photo-gallery-like.html",
+      "url": "https://news.example.com/bihar/sonepur-gallery-129",
+      "source": "photo-gallery-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Sonepur fair",
+        "date_present": false,
+        "author_present": false,
+        "canonical_present": true,
+        "body_present": false,
+        "min_paragraphs": 0,
+        "min_confidence": "failed",
+        "contains": []
+      }
+    },
+    {
+      "file": "030-pti-wire-like.html",
+      "url": "https://news.example.com/bihar/flood-camps-130",
+      "source": "pti-wire-like",
+      "language": "en",
+      "expect": {
+        "title_contains": "Flood relief camps",
+        "date_present": true,
+        "author_present": true,
+        "canonical_present": true,
+        "body_present": true,
+        "min_paragraphs": 4,
+        "min_confidence": "high",
+        "contains": ["40,000"]
+      }
+    }
+  ]
+}

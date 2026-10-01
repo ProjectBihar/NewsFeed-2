@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "note": "Permanent evaluation corpus index (Phase 23). Component sets are owned by their phases; this file unifies them for cross-system metrics. ~290 labelled units. Grows toward 1000+ by appending reviewed items and rerunning evaluation/run.py.",
+  "components": [
+    {
+      "id": "extraction",
+      "path": "extraction/tests/fixtures/manifest.json",
+      "kind": "extraction",
+      "coverage": [
+        "english",
+        "hindi",
+        "json-ld",
+        "opengraph",
+        "minimal-meta",
+        "amp",
+        "video",
+        "gallery-failure"
+      ]
+    },
+    {
+      "id": "language",
+      "path": "intelligence/language/tests/fixtures/bilingual-test-set.json",
+      "kind": "language",
+      "coverage": ["english", "hindi", "devanagari-entities", "latin-loans", "short-texts", "mixed"]
+    },
+    {
+      "id": "relevance",
+      "path": "intelligence/relevance/tests/fixtures/benchmark.json",
+      "kind": "relevance",
+      "coverage": [
+        "bihar",
+        "non-bihar",
+        "hindi",
+        "english",
+        "all-tiers",
+        "district-ambiguity",
+        "datelines",
+        "incidental-mentions"
+      ]
+    },
+    {
+      "id": "article-type",
+      "path": "intelligence/classification/tests/fixtures/article-type-cases.json",
+      "kind": "article-type",
+      "coverage": [
+        "all-tiers-A-D",
+        "crime",
+        "politics",
+        "governance",
+        "development",
+        "sports",
+        "entertainment",
+        "hindi"
+      ]
+    },
+    {
+      "id": "topic",
+      "path": "intelligence/classification/tests/fixtures/topic-cases.json",
+      "kind": "topic",
+      "coverage": ["all-eight-categories", "unclassifiable", "hindi"]
+    },
+    {
+      "id": "event",
+      "path": "intelligence/classification/tests/fixtures/event-cases.json",
+      "kind": "event",
+      "coverage": ["lifecycle-events", "no-event", "hindi"]
+    },
+    {
+      "id": "exact-dedup",
+      "path": "intelligence/dedup/tests/fixtures/duplicate-cases.json",
+      "kind": "duplicate-pairs",
+      "coverage": ["tracking", "amp", "mobile", "syndication", "re-ingestion", "must-not-collapse"]
+    },
+    {
+      "id": "near-dup",
+      "path": "intelligence/dedup/tests/fixtures/neardup-cases.json",
+      "kind": "similarity-pairs",
+      "coverage": ["paraphrase", "updates", "templates", "cross-language", "substantive-updates"]
+    },
+    {
+      "id": "story",
+      "path": "intelligence/clustering/tests/fixtures/story-clusters.json",
+      "kind": "story-partition",
+      "coverage": ["multi-publisher", "cross-language", "singletons", "time-separated"]
+    },
+    {
+      "id": "xlingual",
+      "path": "intelligence/clustering/tests/fixtures/xlingual-cases.json",
+      "kind": "xl-pairs",
+      "coverage": ["hindi-english", "transliteration", "shared-numbers", "must-not-merge"]
+    }
+  ],
+  "thresholds": {
+    "relevance_precision": 0.9,
+    "relevance_recall": 0.9,
+    "curated_precision": 0.9,
+    "curated_recall": 0.9,
+    "article_type_macro_f1": 0.9,
+    "category_macro_f1": 0.9,
+    "event_accuracy": 0.9,
+    "event_macro_f1": 0.9,
+    "cluster_precision": 0.9,
+    "cluster_recall": 0.9,
+    "extraction_success_rate": 0.9
+  }
+}

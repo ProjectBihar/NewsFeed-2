@@ -1,0 +1,60 @@
+{
+  "runs": [
+    {
+      "training_date": "2026-09-30T02:40:33.407716+00:00",
+      "triggered_by": ["first-run"],
+      "corrections_since_run": null,
+      "dataset_version": "evaluation-corpus-v1+sha256:6e21589b95a7",
+      "metrics": {
+        "relevance": {
+          "production_mean": 0.832,
+          "challenger": "logistic-balanced",
+          "challenger_mean": 0.832,
+          "delta": 0.0
+        },
+        "article_type": {
+          "production_mean": 0.227,
+          "challenger": "linear-svc",
+          "challenger_mean": 0.204,
+          "delta": -0.023
+        },
+        "primary_category": {
+          "production_mean": 0.224,
+          "challenger": "linear-svc",
+          "challenger_mean": 0.21,
+          "delta": -0.014
+        }
+      },
+      "decisions": {
+        "relevance": {
+          "decision": "hold",
+          "reasons": ["improvement +0.000 below promotion margin 0.01"],
+          "class_regressions": {},
+          "gate": null
+        },
+        "article_type": {
+          "decision": "hold",
+          "reasons": ["improvement -0.023 below promotion margin 0.01"],
+          "class_regressions": {},
+          "gate": null
+        },
+        "primary_category": {
+          "decision": "hold",
+          "reasons": ["improvement -0.014 below promotion margin 0.01"],
+          "class_regressions": {},
+          "gate": null
+        }
+      },
+      "model_versions": {
+        "relevance": "logistic-regression@evaluation-corpus-v1+sha256:6e21589b95a7",
+        "article_type": "linear-svc-balanced@evaluation-corpus-v1+sha256:6e21589b95a7",
+        "primary_category": "linear-svc-balanced@evaluation-corpus-v1+sha256:6e21589b95a7"
+      },
+      "production": {
+        "relevance": "logistic-regression",
+        "article_type": "linear-svc-balanced",
+        "primary_category": "linear-svc-balanced"
+      }
+    }
+  ]
+}

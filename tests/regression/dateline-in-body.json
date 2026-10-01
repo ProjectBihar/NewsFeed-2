@@ -1,0 +1,21 @@
+{
+  "id": "dateline-in-body",
+  "history": "Phase 10: dateline regex anchored at string start missed datelines after the title (re.match ignores MULTILINE line starts). Fixed with search(); datelines are line-anchored within the opening.",
+  "phase": 10,
+  "cases": [
+    {
+      "title": "Farm package approved",
+      "body": "NEW DELHI: The union cabinet approved a farm package. Ministers said states will implement the scheme.",
+      "expect": {
+        "relevance": { "pass": false }
+      }
+    },
+    {
+      "title": "Cabinet meeting ends",
+      "body": "PATNA: The cabinet cleared three proposals on Monday. Officials briefed the press afterwards.",
+      "expect": {
+        "relevance": { "pass": true }
+      }
+    }
+  ]
+}

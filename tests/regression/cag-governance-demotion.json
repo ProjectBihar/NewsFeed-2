@@ -1,0 +1,15 @@
+{
+  "id": "cag-governance-demotion",
+  "history": "Phase 11: accountability findings about governance (CAG audits, scams, probes) read public-significance B, not development A. Approval-family words select curation but never demote; findings do.",
+  "phase": 11,
+  "cases": [
+    {
+      "title": "CAG finds major expenditure irregularities",
+      "body": "The auditor general flagged irregularities of Rs 400 crore in rural road schemes. The CAG report cites excess payments and incomplete works.",
+      "expect": {
+        "relevance": { "pass": false },
+        "type": { "article_type": "governance", "significance_tier": "B", "curated": true }
+      }
+    }
+  ]
+}

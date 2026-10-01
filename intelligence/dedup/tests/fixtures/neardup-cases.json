@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "note": "Near-duplicate gate for Phase 15: rewrites and updates merge; different angles, languages and substantive updates must not. Same-skeleton templates for different places are excluded here by design — blocking prunes them before scoring (proven in test_pipeline.py) — because no bag similarity separates shared skeletons from shared facts.",
+  "pairs": [
+    {
+      "id": "paraphrase-metro",
+      "near_duplicate": true,
+      "a": "The state cabinet on Sunday approved two metro corridors to Bihta and Fatuha. Officials said the revised detailed project report will be submitted within three months. The expanded network will add 28 kilometres of track at a cost of Rs 750 crore as state share for land acquisition.",
+      "b": "Two metro corridors to Bihta and Fatuha were cleared by the state cabinet on Sunday. The revised detailed project report must reach the government within three months. The expansion covers 28 kilometres of track, with Rs 750 crore set aside as state share for land acquisition."
+    },
+    {
+      "id": "wire-update",
+      "near_duplicate": true,
+      "a": "Relief camps across six districts are housing nearly forty thousand displaced people. Community kitchens serve cooked meals twice daily. Boats and rescue teams remain deployed in the affected blocks.",
+      "b": "Relief camps across six districts are housing nearly forty thousand displaced people. Community kitchens serve cooked meals twice daily. Boats and rescue teams remain deployed in the affected blocks. Compensation surveys began as waters receded."
+    },
+    {
+      "id": "hindi-paraphrase",
+      "near_duplicate": true,
+      "a": "नालंदा विश्वविद्यालय में नए सत्र से 120 छात्र दाखिला लेंगे। कुलपति के अनुसार विदेशी संस्थानों के शिक्षक पारिस्थितिकी पढ़ाएंगे। छात्रों ने फैसले का स्वागत किया है।",
+      "b": "नालंदा विश्वविद्यालय में अगले सत्र से 120 छात्रों का दाखिला होगा। विदेशी संस्थानों के शिक्षक पारिस्थितिकी पढ़ाएंगे, कुलपति ने बताया। छात्रों ने इस फैसले का स्वागत किया।"
+    },
+    {
+      "id": "minor-edits",
+      "near_duplicate": true,
+      "a": "PATNA: The state cabinet on Sunday approved two metro corridors. Officials said tenders will be invited early next year for the construction phase.",
+      "b": "Patna: The state cabinet on Sunday approved two metro corridors. Officials said tenders will be invited early next year for the construction phase!"
+    },
+    {
+      "id": "same-project-different-event",
+      "near_duplicate": false,
+      "a": "The state cabinet on Sunday approved two metro corridors to Bihta and Fatuha. Officials said the revised detailed project report will be submitted within three months.",
+      "b": "Metro fares were announced for the first operational corridor on Monday. Monthly passes will cost commuters less than bus fares, officials said."
+    },
+    {
+      "id": "cross-language",
+      "near_duplicate": false,
+      "a": "The state cabinet on Sunday approved two metro corridors to Bihta and Fatuha. Officials said the revised detailed project report will be submitted within three months.",
+      "b": "राज्य कैबिनेट ने रविवार को बिहटा और फतुहा तक दो मेट्रो कॉरिडोर को मंजूरी दी। अधिकारियों के अनुसार संशोधित परियोजना रिपोर्ट तीन महीने में सौंपी जाएगी।"
+    },
+    {
+      "id": "same-district-different-crime",
+      "near_duplicate": false,
+      "a": "Police on Monday arrested three men in Patna for a jewellery shop robbery. All stolen items were recovered, officials said.",
+      "b": "Police on Tuesday arrested two men in Patna for a motorcycle theft racket. Several stolen bikes were recovered, officials said."
+    },
+    {
+      "id": "short-snippets",
+      "near_duplicate": false,
+      "a": "Rain likely today.",
+      "b": "Rain likely tomorrow."
+    },
+    {
+      "id": "opinion-vs-news",
+      "near_duplicate": false,
+      "a": "In my view, enforcement fails each winter as dust returns. This column argues for year-round dust control in the city.",
+      "b": "The pollution board reported severe air quality in the city. Officials announced emergency measures including a construction ban."
+    },
+    {
+      "id": "substantive-update",
+      "near_duplicate": false,
+      "a": "Relief camps across six districts are housing nearly forty thousand displaced people. Boats and rescue teams remain deployed.",
+      "b": "The flood toll crossed sixty five thousand as waters entered three new districts. Fresh relief camps opened in Supaul and Saharsa with central teams arriving."
+    },
+    {
+      "id": "same-headline-rewritten",
+      "near_duplicate": false,
+      "a": "Metro expansion approved. Our correspondent reports the cabinet cleared two corridors after a long debate on Sunday evening.",
+      "b": "Metro expansion approved. A separate newsroom describes the same metro decision with independent reporting and fresh quotes."
+    },
+    {
+      "id": "syndication-light-edit",
+      "near_duplicate": true,
+      "a": "Relief camps across six districts are housing nearly forty thousand displaced people. Community kitchens serve cooked meals twice daily.",
+      "b": "Relief camps across six districts are housing almost 40,000 displaced people. Community kitchens serve cooked meals two times a day."
+    },
+    {
+      "id": "rival-claims",
+      "near_duplicate": false,
+      "a": "Examinations for twenty seven thousand teacher posts will be held in December. Admit cards arrive a fortnight before each paper.",
+      "b": "School teachers demonstrated against the transfer policy in fifteen districts. The education department appealed to call off the stir."
+    }
+  ]
+}

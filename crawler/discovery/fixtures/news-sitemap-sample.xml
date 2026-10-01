@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  <url>
+    <loc>https://news.example.com/bihar/bihta-industrial-park-301</loc>
+    <news:news>
+      <news:publication>
+        <news:name>Test Source</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-09-28T12:00:00+05:30</news:publication_date>
+      <news:title>BIADA allots plots at Bihta industrial park</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://news.example.com/bihar/midday-meal-menu-302</loc>
+    <lastmod>2026-09-28T06:00:00+05:30</lastmod>
+  </url>
+  <url>
+    <loc>https://news.example.com/bihar/untracked-draft-303</loc>
+  </url>
+</urlset>

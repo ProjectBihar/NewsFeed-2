@@ -1,0 +1,8 @@
+node_modules
+.next
+out
+build
+coverage
+storage
+package-lock.json
+PROJECTBIHAR_NEWSFEED_V2_MASTER_PLAN (1).md

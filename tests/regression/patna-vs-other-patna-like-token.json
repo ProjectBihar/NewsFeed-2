@@ -1,0 +1,21 @@
+{
+  "id": "patna-vs-other-patna-like-token",
+  "history": "Phase 10: ambiguous place names (Aurangabad also being a Maharashtra city) must resolve against Bihar corroboration — quarantined alone, accepted with context.",
+  "phase": 10,
+  "cases": [
+    {
+      "title": "Aurangabad civic body polls announced",
+      "body": "The municipal corporation of Aurangabad announced ward reservations ahead of civic polls. Officials said voter lists will be revised.",
+      "expect": {
+        "relevance": { "pass": false }
+      }
+    },
+    {
+      "title": "Aurangabad road project sanctioned",
+      "body": "The road construction department sanctioned a bypass for Aurangabad town in Bihar. Officials in Patna said land acquisition begins next month.",
+      "expect": {
+        "relevance": { "pass": true }
+      }
+    }
+  ]
+}

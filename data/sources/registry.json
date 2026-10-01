@@ -1,0 +1,390 @@
+{
+  "version": 1,
+  "verified_at": "2026-09-28",
+  "verification_method": "HTTP GET of each endpoint URL; kept only http-200 with the expected content type (feed XML, sitemap XML, section HTML). Blocked or failed endpoints are registered inactive with a reason, never silently dropped.",
+  "groups": [
+    "national-english",
+    "national-hindi",
+    "bihar-english",
+    "bihar-hindi",
+    "district-local",
+    "business",
+    "environment",
+    "education",
+    "official",
+    "institutional"
+  ],
+  "sources": [
+    {
+      "name": "The Hindu",
+      "domain": "thehindu.com",
+      "language": "en",
+      "scope": "national",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "national-english",
+      "wave": "A",
+      "notes": "National English daily. RSS verified 200 application/xml; Google News sitemap verified 200 application/xml.",
+      "endpoints": [
+        {
+          "endpoint_type": "rss",
+          "url": "https://www.thehindu.com/feeder/default.rss",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 application/xml feed"
+        },
+        {
+          "endpoint_type": "news_sitemap",
+          "url": "https://www.thehindu.com/sitemap/googlenews/all/all.xml",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 application/xml sitemap (listed in robots.txt)"
+        }
+      ]
+    },
+    {
+      "name": "Indian Express",
+      "domain": "indianexpress.com",
+      "language": "en",
+      "scope": "national",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "national-english",
+      "wave": "A",
+      "notes": "National English daily. RSS and news sitemap verified 200.",
+      "endpoints": [
+        {
+          "endpoint_type": "rss",
+          "url": "https://indianexpress.com/feed/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 application/rss+xml feed"
+        },
+        {
+          "endpoint_type": "news_sitemap",
+          "url": "https://indianexpress.com/news-sitemap.xml",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 application/xml sitemap (listed in robots.txt)"
+        }
+      ]
+    },
+    {
+      "name": "Dainik Jagran",
+      "domain": "jagran.com",
+      "language": "hi",
+      "scope": "national",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "national-hindi",
+      "wave": "A",
+      "notes": "National Hindi daily with Bihar edition. Bihar section and news sitemap verified 200.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.jagran.com/bihar/",
+          "active": true,
+          "priority": "medium",
+          "verification": "2026-09-28 http-200 text/html section"
+        },
+        {
+          "endpoint_type": "news_sitemap",
+          "url": "https://www.jagran.com/news-sitemap.xml",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 text/xml sitemap (listed in robots.txt)"
+        }
+      ]
+    },
+    {
+      "name": "Amar Ujala",
+      "domain": "amarujala.com",
+      "language": "hi",
+      "scope": "national",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "national-hindi",
+      "wave": "A",
+      "notes": "National Hindi daily with Bihar edition. Bihar section and news sitemap verified 200.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.amarujala.com/bihar",
+          "active": true,
+          "priority": "medium",
+          "verification": "2026-09-28 http-200 text/html section"
+        },
+        {
+          "endpoint_type": "news_sitemap",
+          "url": "https://www.amarujala.com/sitemap-news-v1.xml",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 application/xml sitemap (listed in robots.txt)"
+        }
+      ]
+    },
+    {
+      "name": "Times of India Patna",
+      "domain": "timesofindia.indiatimes.com",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-english",
+      "wave": "A",
+      "notes": "TOI Patna city edition. City section and daily sitemap verified 200. City RSS needs a numeric feed id; left for Phase 4 discovery.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://timesofindia.indiatimes.com/city/patna",
+          "active": true,
+          "priority": "medium",
+          "verification": "2026-09-28 http-200 text/html section"
+        },
+        {
+          "endpoint_type": "sitemap",
+          "url": "https://timesofindia.indiatimes.com/sitemap/today",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 text/xml sitemap (listed in robots.txt)"
+        }
+      ]
+    },
+    {
+      "name": "Hindustan Times Patna",
+      "domain": "hindustantimes.com",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-english",
+      "wave": "A",
+      "notes": "HT Patna city edition. City section and news sitemap verified 200.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.hindustantimes.com/cities/patna-news",
+          "active": true,
+          "priority": "medium",
+          "verification": "2026-09-28 http-200 text/html section"
+        },
+        {
+          "endpoint_type": "news_sitemap",
+          "url": "https://www.hindustantimes.com/sitemap/news.xml",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 application/xml sitemap (listed in robots.txt)"
+        }
+      ]
+    },
+    {
+      "name": "Dainik Bhaskar Bihar",
+      "domain": "bhaskar.com",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "A",
+      "notes": "Bihar Hindi daily. Bihar section and Google News sitemap index verified 200.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.bhaskar.com/local/bihar/",
+          "active": true,
+          "priority": "medium",
+          "verification": "2026-09-28 http-200 text/html section"
+        },
+        {
+          "endpoint_type": "news_sitemap",
+          "url": "https://www.bhaskar.com/sitemaps-v1--sitemap-google-news-index.xml",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 application/xml sitemap index (listed in robots.txt)"
+        }
+      ]
+    },
+    {
+      "name": "Prabhat Khabar",
+      "domain": "prabhatkhabar.com",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "A",
+      "notes": "Jharkhand/Bihar Hindi daily with strong Bihar coverage. Bihar section and news sitemap verified 200.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.prabhatkhabar.com/state/bihar",
+          "active": true,
+          "priority": "medium",
+          "verification": "2026-09-28 http-200 text/html section"
+        },
+        {
+          "endpoint_type": "news_sitemap",
+          "url": "https://www.prabhatkhabar.com/news-sitemap.xml",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 text/xml sitemap (listed in robots.txt)"
+        }
+      ]
+    },
+    {
+      "name": "Live Hindustan Bihar",
+      "domain": "livehindustan.com",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "A",
+      "notes": "Hindustan Hindi digital, Bihar edition. Bihar section and news sitemap verified 200.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.livehindustan.com/bihar/",
+          "active": true,
+          "priority": "medium",
+          "verification": "2026-09-28 http-200 text/html section"
+        },
+        {
+          "endpoint_type": "news_sitemap",
+          "url": "https://www.livehindustan.com/news-sitemap.xml",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 application/xml sitemap (listed in robots.txt)"
+        }
+      ]
+    },
+    {
+      "name": "News18 Bihar",
+      "domain": "hindi.news18.com",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "medium",
+      "active": false,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "A",
+      "notes": "INACTIVE: bot protection returns http-403 to plain HTTP (robots.txt and section both 403 on 2026-09-28). Candidate for browser fallback policy (Phase 6) or later re-check. Section path itself is unverified. Chromium probe 2026-09-28: still http-403 Access Denied (bot mitigation, not a rendering gap) — flag stays false.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://hindi.news18.com/news/bihar/",
+          "active": false,
+          "priority": "medium",
+          "verification": "2026-09-28 http-403 bot-blocked; path unverified"
+        }
+      ]
+    },
+    {
+      "name": "Economic Times",
+      "domain": "economictimes.indiatimes.com",
+      "language": "en",
+      "scope": "national",
+      "source_type": "news",
+      "priority": "medium",
+      "active": true,
+      "requires_browser": false,
+      "group": "business",
+      "wave": "A",
+      "notes": "Business/economy coverage (national scope; Bihar business stories surface via topic classification in Phase 12). Top-stories RSS verified 200.",
+      "endpoints": [
+        {
+          "endpoint_type": "rss",
+          "url": "https://economictimes.indiatimes.com/rssfeedstopstories.cms",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 text/xml feed"
+        }
+      ]
+    },
+    {
+      "name": "Mongabay India",
+      "domain": "india.mongabay.com",
+      "language": "en",
+      "scope": "national",
+      "source_type": "news",
+      "priority": "medium",
+      "active": true,
+      "requires_browser": false,
+      "group": "environment",
+      "wave": "A",
+      "notes": "Environmental journalism with regular Bihar coverage (wetlands, floods, wildlife). RSS verified 200.",
+      "endpoints": [
+        {
+          "endpoint_type": "rss",
+          "url": "https://india.mongabay.com/feed/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-09-28 http-200 text/xml feed"
+        }
+      ]
+    },
+    {
+      "name": "Press Information Bureau",
+      "domain": "pib.gov.in",
+      "language": "en",
+      "scope": "national",
+      "source_type": "official",
+      "priority": "high",
+      "active": false,
+      "requires_browser": false,
+      "group": "official",
+      "wave": "A",
+      "notes": "INACTIVE: homepage returns http-403 to plain HTTP on 2026-09-28 (bot protection; bilingual en/hi releases). Candidate for browser fallback policy (Phase 6). Register Patna-region release listing once a fetchable channel is confirmed. Chromium probe 2026-09-28: still http-403 Access Denied — flag stays false.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.pib.gov.in/",
+          "active": false,
+          "priority": "medium",
+          "verification": "2026-09-28 http-403 bot-blocked"
+        }
+      ]
+    },
+    {
+      "name": "PRS Legislative Research",
+      "domain": "prsindia.org",
+      "language": "en",
+      "scope": "national",
+      "source_type": "institutional",
+      "priority": "low",
+      "active": true,
+      "requires_browser": false,
+      "group": "institutional",
+      "wave": "A",
+      "notes": "Institutional policy/legislative research. Homepage verified 200; dedicated Bihar section URL pending (a guessed /states/bihar path 404s, a guessed budget PDF path 404s). Low priority until Phase 4 discovery maps a real channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://prsindia.org/",
+          "active": true,
+          "priority": "low",
+          "verification": "2026-09-28 http-200 text/html homepage"
+        }
+      ]
+    }
+  ]
+}

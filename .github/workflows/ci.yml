@@ -1,0 +1,58 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A newer push supersedes older runs on the same ref.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: TypeScript tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Python dependencies
+        run: |
+          pip install -r extraction/requirements.txt
+          pip install -r intelligence/requirements.txt
+
+      - name: Python tests
+        run: pytest
+
+      - name: Regression tests (golden pins + frozen evaluation)
+        run: pytest tests/test_golden.py evaluation -q
+
+      - name: Validate schema (migrations exist, PGlite applies them all)
+        run: |
+          test -n "$(ls supabase/migrations/*.sql)"
+          npx vitest run tests/db-foundation.test.ts tests/source-registry.test.ts

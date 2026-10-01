@@ -1,0 +1,39 @@
+name: discover
+
+# Plan §47: poll source endpoints every 30 minutes — discover URLs,
+# normalise URLs, enqueue new URLs, record discovery metrics.
+# Never fetch full articles.
+#
+# Honesty note: live endpoint polling needs a configured database and a
+# production discover runner (unwired — see the §§45–51 entry in
+# docs/IMPLEMENTATION_STATUS.md). Until that wiring exists this workflow
+# guards the discovery contract offline: channel parsers, checkpoint
+# cursors, URL normalisation, idempotent enqueue SQL, and registry sync.
+# No network I/O beyond installs; no live database touched.
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: discover-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  discovery-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Discovery contract (parsers, checkpoints, enqueue, registry)
+        run: npx vitest run crawler/discovery crawler/queues crawler/normalisation tests/source-registry.test.ts

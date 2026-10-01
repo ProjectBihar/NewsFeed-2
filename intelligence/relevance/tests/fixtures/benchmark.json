@@ -1,0 +1,370 @@
+{
+  "version": 1,
+  "note": "Manually labelled Bihar/non-Bihar benchmark for the Phase 10 gate (precision/recall >= 0.90). Relevant items span all curation tiers — relevance is not curation. Includes the known traps: incidental mentions, Aurangabad ambiguity, other-state datelines.",
+  "thresholds": {
+    "precision": 0.9,
+    "recall": 0.9
+  },
+  "items": [
+    {
+      "id": "br01",
+      "expected": true,
+      "title": "Bihar Cabinet approves Patna Metro expansion",
+      "body": "PATNA: The state cabinet on Sunday approved two new metro corridors to Bihta and Fatuha. Officials said tenders will be invited early next year."
+    },
+    {
+      "id": "br02",
+      "expected": true,
+      "title": "BIADA allots 120 plots at Bihta park",
+      "body": "The Bihar Industrial Area Development Authority cleared allotments expected to bring Rs 900 crore in investment. Food processing units bagged most plots."
+    },
+    {
+      "id": "br03",
+      "expected": true,
+      "title": "BPSC releases teacher recruitment calendar",
+      "body": "The Bihar Public Service Commission will hold examinations for 27,000 school teacher posts in December across all 38 districts."
+    },
+    {
+      "id": "br04",
+      "expected": true,
+      "title": "Rs 750 crore police modernisation approved",
+      "body": "The Bihar Police will get cyber forensic laboratories in all nine ranges under the three-year modernisation programme cleared by the state government."
+    },
+    {
+      "id": "br05",
+      "expected": true,
+      "title": "Three arrested after robbery in Patna",
+      "body": "PATNA: Police on Monday arrested three men in connection with a jewellery shop robbery. All stolen items were recovered, officials said."
+    },
+    {
+      "id": "br06",
+      "expected": true,
+      "title": "Minister attacks opponent at election rally",
+      "body": "Addressing a rally in Muzaffarpur, the minister accused the opposition of stalling development works. Party workers cheered the speech."
+    },
+    {
+      "id": "br07",
+      "expected": true,
+      "title": "Cabinet approves industrial policy",
+      "body": "The Bihar cabinet approved a new industrial policy offering capital subsidy and stamp duty waivers. BIADA will allot land on priority for food processing units."
+    },
+    {
+      "id": "br08",
+      "expected": true,
+      "title": "Bridge collapses a year after construction",
+      "body": "An under-construction bridge over the Gandak in Saran collapsed on Thursday, the second such incident in the district. The road construction department ordered a probe."
+    },
+    {
+      "id": "br09",
+      "expected": true,
+      "title": "CAG finds expenditure irregularities",
+      "body": "The auditor general flagged irregularities of Rs 400 crore in rural road schemes in Bihar. The report, tabled in the Bihar assembly, cites excess payments and incomplete works shown as complete."
+    },
+    {
+      "id": "br10",
+      "expected": true,
+      "title": "Violence disrupts district, internet suspended",
+      "body": "Communal clashes in Siwan district left several injured on Sunday. The district magistrate imposed prohibitory orders and suspended internet services."
+    },
+    {
+      "id": "br11",
+      "expected": true,
+      "title": "पटना मेट्रो विस्तार को मंजूरी",
+      "body": "पटना: राज्य कैबिनेट ने मेट्रो के दो नए कॉरिडोर को मंजूरी दी। बिहटा और फतुहा तक ट्रैक बिछेगा। अधिकारियों के अनुसार अगले साल निविदाएं आएंगी।"
+    },
+    {
+      "id": "br12",
+      "expected": true,
+      "title": "बिहटा पार्क में 120 भूखंड आवंटित",
+      "body": "बिहार औद्योगिक क्षेत्र विकास प्राधिकार ने 900 करोड़ रुपये के निवेश का रास्ता साफ किया। खाद्य प्रसंस्करण इकाइयों को अधिकतर भूखंड मिले।"
+    },
+    {
+      "id": "br13",
+      "expected": true,
+      "title": "Flood relief camps house 40,000",
+      "body": "Relief camps in Supaul and Saharsa house nearly 40,000 displaced people. The disaster management department deployed 120 boats across the Kosi belt."
+    },
+    {
+      "id": "br14",
+      "expected": true,
+      "title": "Ganga ghat cleanup begins",
+      "body": "A cleanup drive across 40 ghats began in Patna ahead of Chhath. Municipal workers removed plastic waste deposited during the monsoon."
+    },
+    {
+      "id": "br15",
+      "expected": true,
+      "title": "Nalanda University opens sustainability school",
+      "body": "The university at Rajgir will admit 120 students next session. Faculty from five countries will teach ecology and water management."
+    },
+    {
+      "id": "br16",
+      "expected": true,
+      "title": "AIIMS Darbhanga OPD crosses one lakh",
+      "body": "Outpatient visits at AIIMS Darbhanga crossed one lakh in a month. New cardiology and oncology blocks drove footfall from north Bihar."
+    },
+    {
+      "id": "br17",
+      "expected": true,
+      "title": "Valmiki reserve tiger count rises",
+      "body": "The Valmiki Tiger Reserve in West Champaran estimated 56 tigers, up from 41. Forest officials credited grassland management in the Terai Arc landscape."
+    },
+    {
+      "id": "br18",
+      "expected": true,
+      "title": "Solar pumps reach 10,000 farmers",
+      "body": "Nalanda district farmers received solar pumps under the farm mechanisation push, an agriculture department official said. Diesel use fell by two-thirds in pilot blocks."
+    },
+    {
+      "id": "br19",
+      "expected": true,
+      "title": "Midday meal menu revised",
+      "body": "Government schools across Bihar will serve eggs twice a week under the revised midday meal menu. The education department cited nutrition experts."
+    },
+    {
+      "id": "br20",
+      "expected": true,
+      "title": "Teacher protest enters second week",
+      "body": "School teachers demonstrated in 15 districts of Bihar against the transfer policy. The education department appealed to call off the stir."
+    },
+    {
+      "id": "br21",
+      "expected": true,
+      "title": "Supreme Court upholds Bihar quota law",
+      "body": "NEW DELHI: The Supreme Court on Tuesday upheld the Bihar government's revised reservation law. The state government in Patna welcomed the ruling on the survey-backed quota."
+    },
+    {
+      "id": "br22",
+      "expected": true,
+      "title": "Aurangabad road project sanctioned",
+      "body": "The road construction department sanctioned a bypass for Aurangabad town in Bihar. Officials in Patna said land acquisition begins next month."
+    },
+    {
+      "id": "br23",
+      "expected": true,
+      "title": "Danapur-Bihta road gets clearance",
+      "body": "The 20-km elevated road connecting Patna to the Bihta airport received forest clearance. The corridor cuts travel time to 25 minutes."
+    },
+    {
+      "id": "br24",
+      "expected": true,
+      "title": "Sone bridge opens for traffic",
+      "body": "The new bridge over the Sone in Rohtas district opened for light vehicles. Heavy vehicles await load testing, an official of the road construction department said."
+    },
+    {
+      "id": "br25",
+      "expected": true,
+      "title": "State GDP growth pegged at 9.2 percent",
+      "body": "The Bihar economic survey credits construction and trade. The finance department flagged youth unemployment as the central challenge."
+    },
+    {
+      "id": "br26",
+      "expected": true,
+      "title": "Ethanol subsidy for distilleries",
+      "body": "The industries department approved interest subsidy for 12 grain-based ethanol plants. Maize growers in the Kosi belt gain assured procurement."
+    },
+    {
+      "id": "br27",
+      "expected": true,
+      "title": "Land survey cuts disputes",
+      "body": "Mutation disputes fell by a third in six districts of Bihar since the revisional survey began. The revenue and land reforms department published draft records."
+    },
+    {
+      "id": "br28",
+      "expected": true,
+      "title": "Wetland census finds new visitors",
+      "body": "The bird census in north Bihar recorded three new migratory species at Kusheshwarsthan and Gogabil wetlands. Experts seek conservation reserve status for both sites."
+    },
+    {
+      "id": "br29",
+      "expected": true,
+      "title": "Nal-jal second phase begins",
+      "body": "पटना: हर घर नल का जल योजना के दूसरे चरण में छूटे टोलों को जोड़ा जाएगा। लोक स्वास्थ्य अभियंत्रण विभाग ने टोल-फ्री नंबर सक्रिय रखा है।"
+    },
+    {
+      "id": "br30",
+      "expected": true,
+      "title": "Patna High Court orders audit",
+      "body": "The Patna High Court directed a forensic audit of municipal funds. The bench pulled up the urban development department over missing utilisation certificates."
+    },
+    {
+      "id": "nb01",
+      "expected": false,
+      "title": "Union cabinet approves farm package",
+      "body": "NEW DELHI: The union cabinet approved a national farm package. Ministers said states will implement the scheme through existing channels."
+    },
+    {
+      "id": "nb02",
+      "expected": false,
+      "title": "Robbery gang busted in Lucknow",
+      "body": "LUCKNOW: Police arrested five men for a series of robberies. The gang targeted jewellery shops across the city, officials said."
+    },
+    {
+      "id": "nb03",
+      "expected": false,
+      "title": "Aurangabad civic body polls announced",
+      "body": "The municipal corporation of Aurangabad announced ward reservations ahead of civic polls. Officials said voter lists will be revised."
+    },
+    {
+      "id": "nb04",
+      "expected": false,
+      "title": "Sambhajinagar water project reviewed",
+      "body": "Officials reviewed the new water supply project for Sambhajinagar city. The scheme covers 200 villages in the district."
+    },
+    {
+      "id": "nb05",
+      "expected": false,
+      "title": "Monsoon session discusses floods",
+      "body": "Parliament discussed floods in Assam, Bihar and Uttar Pradesh. Members demanded a national flood management policy."
+    },
+    {
+      "id": "nb06",
+      "expected": false,
+      "title": "Supreme Court on sedition pleas",
+      "body": "NEW DELHI: The Supreme Court heard petitions on sedition law misuse. A lawyer from Bihar argued one of the matters, reports said."
+    },
+    {
+      "id": "nb07",
+      "expected": false,
+      "title": "Sensex crosses new high",
+      "body": "MUMBAI: Benchmark indices rose on banking stocks. Traders in Mumbai said foreign inflows drove the rally."
+    },
+    {
+      "id": "nb08",
+      "expected": false,
+      "title": "Film star launches Bihar tour",
+      "body": "The actor, born in Bihar, will tour three cities for a film promotion. Fans gathered outside the Mumbai hotel where the tour was announced."
+    },
+    {
+      "id": "nb09",
+      "expected": false,
+      "title": "Ranchi smart city works reviewed",
+      "body": "RANCHI: Officials reviewed smart city works in the Jharkhand capital. The urban development mission covers water supply and roads."
+    },
+    {
+      "id": "nb10",
+      "expected": false,
+      "title": "Kolkata metro extension opens",
+      "body": "KOLKATA: A new metro stretch opened for passengers. Officials said the extension will ease east-west travel."
+    },
+    {
+      "id": "nb11",
+      "expected": false,
+      "title": "Rohtas Fort conservation plan",
+      "body": "ISLAMABAD: Authorities announced a conservation plan for Rohtas Fort, the 16th-century garrison. Tourism officials expect more visitors."
+    },
+    {
+      "id": "nb12",
+      "expected": false,
+      "title": "Cricket team announced for series",
+      "body": "NEW DELHI: Selectors announced the squad for the home series. Two debutants from domestic cricket made the cut."
+    },
+    {
+      "id": "nb13",
+      "expected": false,
+      "title": "Horoscope: what the stars hold",
+      "body": "Aries natives may find the day favourable for investments. Consult an astrologer before major decisions, the column advises."
+    },
+    {
+      "id": "nb14",
+      "expected": false,
+      "title": "Celebrity wedding in Udaipur",
+      "body": "The wedding ceremony in Udaipur drew film personalities. JAIPUR: Hotels reported full occupancy for the weekend."
+    },
+    {
+      "id": "nb15",
+      "expected": false,
+      "title": "UP board results declared",
+      "body": "LUCKNOW: The Uttar Pradesh board declared high school results. Girls outperformed boys in most districts, officials said."
+    },
+    {
+      "id": "nb16",
+      "expected": false,
+      "title": "Delhi air quality worsens",
+      "body": "NEW DELHI: The capital's air quality slid into the severe category. The pollution board advised residents to limit outdoor activity."
+    },
+    {
+      "id": "nb17",
+      "expected": false,
+      "title": "Hyderabad IT corridor expansion",
+      "body": "HYDERABAD: Tech firms leased record office space this quarter. Officials credited infrastructure upgrades around the corridor."
+    },
+    {
+      "id": "nb18",
+      "expected": false,
+      "title": "Bengaluru water crisis deepens",
+      "body": "BENGALURU: Several wards face supply cuts as reservoirs dip. The water board promised tanker support for affected areas."
+    },
+    {
+      "id": "nb19",
+      "expected": false,
+      "title": "Punjab farm fires decline",
+      "body": "CHANDIGARH: Farm fire counts fell this season, officials said. The Punjab government credited machines and fines."
+    },
+    {
+      "id": "nb20",
+      "expected": false,
+      "title": "Gujarat industrial summit opens",
+      "body": "GANDHINAGAR: The investment summit drew pledges from manufacturing firms. Officials projected two lakh jobs."
+    },
+    {
+      "id": "nb21",
+      "expected": false,
+      "title": "Kerala monsoon preparedness",
+      "body": "THIRUVANANTHAPURAM: The state reviewed monsoon preparedness. Control rooms will operate round the clock, officials said."
+    },
+    {
+      "id": "nb22",
+      "expected": false,
+      "title": "Odisha cyclone shelters ready",
+      "body": "BHUBANESWAR: Cyclone shelters along the coast were stocked. The special relief commissioner reviewed evacuation plans."
+    },
+    {
+      "id": "nb23",
+      "expected": false,
+      "title": "Assam flood situation improves",
+      "body": "GUWAHATI: Water levels receded in most districts. Relief camps still house thousands, the disaster authority said."
+    },
+    {
+      "id": "nb24",
+      "expected": false,
+      "title": "Kathmandu valley tourism push",
+      "body": "KATHMANDU: Authorities announced a tourism campaign for the valley. Hoteliers welcomed the move ahead of the season."
+    },
+    {
+      "id": "nb25",
+      "expected": false,
+      "title": "National highway toll revision",
+      "body": "NEW DELHI: Highway toll rates were revised for the fiscal year. Commuters on expressways will pay the new rates from Monday."
+    },
+    {
+      "id": "nb26",
+      "expected": false,
+      "title": "Railways announces holiday trains",
+      "body": "NEW DELHI: Special trains will run for the festival season. Officials said berths were added on high-demand routes."
+    },
+    {
+      "id": "nb27",
+      "expected": false,
+      "title": "Mumbai rains disrupt traffic",
+      "body": "MUMBAI: Heavy overnight rain waterlogged arterial roads. The civic body deployed pumps at chronic flooding spots."
+    },
+    {
+      "id": "nb28",
+      "expected": false,
+      "title": "Jaipur literature festival dates",
+      "body": "JAIPUR: The annual literature festival announced its dates. Organisers expect record footfall at the venue."
+    },
+    {
+      "id": "nb29",
+      "expected": false,
+      "title": "Chennai metro phase two tender",
+      "body": "CHENNAI: Tenders were invited for three underground stretches. Officials set a four-year completion target."
+    },
+    {
+      "id": "nb30",
+      "expected": false,
+      "title": "Bhopal gas tragedy anniversary",
+      "body": "BHOPAL: Survivors held a prayer meeting on the anniversary. Activists renewed demands for higher compensation."
+    }
+  ]
+}

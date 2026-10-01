@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "note": "Event-type fixture set for the Phase 13 gate: exact match on all cases, including vocabulary gaps (None).",
+  "cases": [
+    {
+      "id": "metro-approval",
+      "expected": "approval",
+      "title": "Cabinet approves metro expansion",
+      "body": "The cabinet approved two corridors. Officials said tenders follow the approval."
+    },
+    {
+      "id": "ethanol-funding",
+      "expected": "funding",
+      "title": "Ethanol plants get fresh interest subsidy",
+      "body": "Distilleries get interest subsidy with fresh allocation. The financing covers twelve units."
+    },
+    {
+      "id": "metro-tender",
+      "expected": "tender",
+      "title": "Tenders invited for metro corridor",
+      "body": "Bids were invited through open tender. Bidding closes next month for the corridor tender."
+    },
+    {
+      "id": "construction-begins",
+      "expected": "construction_started",
+      "title": "Construction begins on elevated road",
+      "body": "Work begins on Monday with a foundation stone ceremony. Ground-breaking follows years of planning."
+    },
+    {
+      "id": "road-progress",
+      "expected": "construction_progress",
+      "title": "Sixty percent work complete on corridor",
+      "body": "The elevated road is under construction with work in progress on all spans. Officials cite steady progress."
+    },
+    {
+      "id": "bridge-opens",
+      "expected": "completion",
+      "title": "Bridge opens for light traffic",
+      "body": "The bridge opened on Sunday after completion of load tests. The ready structure eases congestion."
+    },
+    {
+      "id": "school-inaugurated",
+      "expected": "inauguration",
+      "title": "University inaugurates new school",
+      "body": "The vice-chancellor inaugurated the school at a ceremony. The inauguration drew faculty from five countries."
+    },
+    {
+      "id": "metro-delayed",
+      "expected": "delay",
+      "title": "Metro misses deadline, delayed by a year",
+      "body": "The project is behind schedule after missing its deadline. Work stalled for months on land disputes."
+    },
+    {
+      "id": "toll-cancelled",
+      "expected": "cancellation",
+      "title": "Toll contract cancelled after violations",
+      "body": "The contract was cancelled and the operator blacklisted. The cancellation follows repeated violations."
+    },
+    {
+      "id": "gdp-report",
+      "expected": "report",
+      "title": "Survey pegs growth at 9.2 percent",
+      "body": "The economic survey report reveals steady growth. Findings show construction leading the findings charts."
+    },
+    {
+      "id": "cag-audit",
+      "expected": "audit",
+      "title": "CAG flags expenditure irregularities",
+      "body": "The CAG audit flagged irregularities. Auditors cited excess payments in the audit report."
+    },
+    {
+      "id": "hc-order",
+      "expected": "court_order",
+      "title": "High Court directs forensic audit",
+      "body": "The court directed officials to comply. The verdict follows a petition hearing last month."
+    },
+    {
+      "id": "dm-charge",
+      "expected": "appointment",
+      "title": "New DM takes charge in Patna",
+      "body": "The newly appointed officer takes charge on Monday. The appointment ends weeks of vacancy."
+    },
+    {
+      "id": "transfer-order",
+      "expected": "appointment",
+      "title": "Twelve officers transferred",
+      "body": "A transfer order moved officers across districts. The postings take effect immediately."
+    },
+    {
+      "id": "bpsc-recruitment",
+      "expected": "recruitment",
+      "title": "BPSC opens applications for 27,000 posts",
+      "body": "Applications are invited online for the recruitment. Admit cards arrive before the hiring rounds."
+    },
+    {
+      "id": "industrial-policy",
+      "expected": "policy_change",
+      "title": "Cabinet approves new industrial policy",
+      "body": "The new policy amends investment rules. Revised guidelines create a single-window framework."
+    },
+    {
+      "id": "scheme-launch",
+      "expected": "programme_launch",
+      "title": "Solar pump scheme launched for farmers",
+      "body": "The scheme launched on Sunday covers 10,000 farmers. The rollout begins with pilot blocks."
+    },
+    {
+      "id": "teacher-protest",
+      "expected": "protest",
+      "title": "Teachers protest transfer policy",
+      "body": "Teachers marched in protest through the town. The demonstration entered its second week of strike."
+    },
+    {
+      "id": "nominations",
+      "expected": "election_campaign",
+      "title": "Candidates file nominations",
+      "body": "Nomination papers flooded in as campaigning peaked. Roadshows marked the final day before polling."
+    },
+    {
+      "id": "bus-accident",
+      "expected": "accident",
+      "title": "Bus overturns, twelve killed",
+      "body": "The bus overturned in a horrific crash. The injured were rushed to hospital after the accident."
+    },
+    {
+      "id": "robbery-arrests",
+      "expected": "crime",
+      "title": "Three arrested after robbery",
+      "body": "Police arrested three men for robbery. An FIR was registered in the theft case."
+    },
+    {
+      "id": "wetland-report",
+      "expected": "report",
+      "title": "Wetland census finds new visitors",
+      "body": "The census report recorded new species. Findings will shape the official survey record."
+    },
+    {
+      "id": "midday-revised",
+      "expected": "policy_change",
+      "title": "Midday meal menu revised",
+      "body": "The revised menu amends nutrition norms. New guidelines apply from next month."
+    },
+    {
+      "id": "flood-relief",
+      "expected": null,
+      "title": "Relief camps house 40,000",
+      "body": "Camps house the displaced as waters recede. Kitchens serve meals twice daily. (No vocabulary event: documented gap.)"
+    },
+    {
+      "id": "celebrity-tour",
+      "expected": null,
+      "title": "Actor tours three cities",
+      "body": "The actor promotes the new movie across cities. Fans gathered along the route."
+    },
+    {
+      "id": "cricket-win",
+      "expected": null,
+      "title": "State wins thriller by two runs",
+      "body": "Chasing 240, the team held its nerve. The captain praised the bowlers after the win."
+    },
+    {
+      "id": "opinion-column",
+      "expected": null,
+      "title": "Opinion: why the city chokes",
+      "body": "In my view, enforcement fails each winter. This column argues for dust control."
+    },
+    {
+      "id": "photo-gallery",
+      "expected": null,
+      "title": "In pictures: festival week",
+      "body": "Glimpses from the ground in this pictures roundup."
+    },
+    {
+      "id": "township-proposal",
+      "expected": "proposal",
+      "title": "Government proposes riverside township",
+      "body": "The draft plan proposes a township with housing and parks. The proposal invites public objections."
+    },
+    {
+      "id": "announcement-calendar",
+      "expected": "announcement",
+      "title": "BPSC releases recruitment calendar",
+      "body": "The commission announced the examination calendar. The announcement covers 27,000 posts."
+    },
+    {
+      "id": "metro-hindi-approval",
+      "expected": "approval",
+      "title": "पटना मेट्रो विस्तार को मंजूरी",
+      "body": "कैबिनेट ने दो कॉरिडोर को मंजूरी दी। स्वीकृति के बाद निविदाएं आएंगी।"
+    }
+  ]
+}

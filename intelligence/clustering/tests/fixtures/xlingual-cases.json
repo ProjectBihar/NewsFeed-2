@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "note": "Phase 17 gate: Hindi-English pairs merge via transliteration bridges, shared numbers, events and categories — never via embeddings. Entity sets are deliberately disjoint where bridges must prove themselves.",
+  "cases": [
+    {
+      "id": "xl-metro",
+      "merge": true,
+      "a": {
+        "headline": "पटना मेट्रो विस्तार को मंजूरी",
+        "body": "राज्य कैबिनेट ने बिहटा तक दो कॉरिडोर को मंजूरी दी। २८ किलोमीटर विस्तार के लिए ७५० करोड़ रुपये रखे गए हैं। पटना में काम अगले साल शुरू होगा।",
+        "entities": ["bihar-cabinet"],
+        "districts": ["patna"],
+        "event_type": "approval",
+        "primary_category": "Infrastructure",
+        "published_at": "2026-09-28T15:00:00+05:30"
+      },
+      "b": {
+        "headline": "Two metro corridors cleared for Bihta",
+        "body": "Two new corridors to Bihta won cabinet approval on Sunday. The expansion covers 28 kilometres with Rs 750 crore set aside. Work in Patna begins next year.",
+        "entities": ["patna-metro"],
+        "districts": ["patna"],
+        "event_type": "approval",
+        "primary_category": "Infrastructure",
+        "published_at": "2026-09-28T12:30:00+05:30"
+      }
+    },
+    {
+      "id": "xl-flood",
+      "merge": true,
+      "a": {
+        "headline": "बाढ़ राहत शिविरों में चालीस हजार लोग",
+        "body": "सुपौल के शिविरों में चालीस हजार लोग रह रहे हैं। कोसी क्षेत्र में नावों से राहत पहुंचाई जा रही है।",
+        "entities": [],
+        "districts": ["supaul"],
+        "event_type": null,
+        "primary_category": "Environment",
+        "published_at": "2026-09-28T09:00:00+05:30"
+      },
+      "b": {
+        "headline": "Relief camps house 40,000 in Kosi belt",
+        "body": "Camps in Supaul house forty thousand displaced people. Boats ferry supplies across the Kosi region.",
+        "entities": [],
+        "districts": ["supaul"],
+        "event_type": null,
+        "primary_category": "Environment",
+        "published_at": "2026-09-28T08:00:00+05:30"
+      }
+    },
+    {
+      "id": "xl-person",
+      "merge": true,
+      "a": {
+        "headline": "नीतीश कुमार ने योजना की समीक्षा की",
+        "body": "पटना में नीतीश कुमार ने अधिकारियों के साथ योजना की समीक्षा की। कुमार ने समय पर काम पूरा करने का निर्देश दिया।",
+        "entities": [],
+        "districts": ["patna"],
+        "event_type": "announcement",
+        "primary_category": "Governance",
+        "published_at": "2026-09-28T11:00:00+05:30"
+      },
+      "b": {
+        "headline": "Nitish Kumar reviews scheme progress",
+        "body": "Nitish Kumar reviewed scheme progress with officials in Patna. Kumar directed timely completion of the works.",
+        "entities": [],
+        "districts": ["patna"],
+        "event_type": "announcement",
+        "primary_category": "Governance",
+        "published_at": "2026-09-28T11:30:00+05:30"
+      }
+    },
+    {
+      "id": "xl-nalanda",
+      "merge": true,
+      "a": {
+        "headline": "नालंदा में 120 छात्रों का दाखिला होगा",
+        "body": "नालंदा विश्वविद्यालय में अगले सत्र से 120 छात्र पढ़ेंगे। विदेशी शिक्षक पारिस्थितिकी पढ़ाएंगे।",
+        "entities": ["bihar-cabinet"],
+        "districts": ["nalanda"],
+        "event_type": "announcement",
+        "primary_category": "Education",
+        "published_at": "2026-09-27T14:00:00+05:30"
+      },
+      "b": {
+        "headline": "Nalanda University to admit 120 students",
+        "body": "Nalanda University will admit 120 students next session. Foreign faculty will teach ecology at Nalanda.",
+        "entities": ["nalanda-university"],
+        "districts": ["nalanda"],
+        "event_type": "announcement",
+        "primary_category": "Education",
+        "published_at": "2026-09-27T15:00:00+05:30"
+      }
+    },
+    {
+      "id": "xl-protest",
+      "merge": true,
+      "a": {
+        "headline": "शिक्षकों ने गांधी मैदान में प्रदर्शन किया",
+        "body": "पटना के गांधी मैदान में शिक्षकों ने स्थानांतरण नीति के खिलाफ प्रदर्शन किया। 27,000 पदों पर भर्ती की मांग भी उठी।",
+        "entities": ["bpsc"],
+        "districts": ["patna"],
+        "event_type": "protest",
+        "primary_category": "Education",
+        "published_at": "2026-09-28T13:00:00+05:30"
+      },
+      "b": {
+        "headline": "Teachers protest at Gandhi Maidan",
+        "body": "Teachers demonstrated at Gandhi Maidan in Patna against the transfer policy. Protesters demanded recruitment for 27000 posts.",
+        "entities": ["education-dept"],
+        "districts": ["patna"],
+        "event_type": "protest",
+        "primary_category": "Education",
+        "published_at": "2026-09-28T14:00:00+05:30"
+      }
+    },
+    {
+      "id": "xl-metro-vs-flood",
+      "merge": false,
+      "a": {
+        "headline": "पटना मेट्रो विस्तार को मंजूरी",
+        "body": "राज्य कैबिनेट ने बिहटा तक दो कॉरिडोर को मंजूरी दी। पटना में काम अगले साल शुरू होगा।",
+        "entities": ["bihar-cabinet"],
+        "districts": ["patna"],
+        "event_type": "approval",
+        "primary_category": "Infrastructure",
+        "published_at": "2026-09-28T15:00:00+05:30"
+      },
+      "b": {
+        "headline": "Relief camps house 40,000 in Kosi belt",
+        "body": "Camps in Supaul house forty thousand displaced people. Boats ferry supplies across the region.",
+        "entities": [],
+        "districts": ["supaul"],
+        "event_type": null,
+        "primary_category": "Environment",
+        "published_at": "2026-09-28T08:00:00+05:30"
+      }
+    },
+    {
+      "id": "xl-rally-districts",
+      "merge": false,
+      "a": {
+        "headline": "मुजफ्फरपुर रैली में मंत्री का भाषण",
+        "body": "मुजफ्फरपुर में मंत्री ने विकास कार्यों का ब्योरा दिया। बिहार में योजनाओं का लाभ पहुंच रहा है।",
+        "entities": [],
+        "districts": ["muzaffarpur"],
+        "event_type": null,
+        "primary_category": null,
+        "published_at": "2026-09-28T17:00:00+05:30"
+      },
+      "b": {
+        "headline": "Minister addresses Gaya rally",
+        "body": "The minister listed development works at a Gaya rally. Schemes are reaching people across Bihar.",
+        "entities": [],
+        "districts": ["gaya"],
+        "event_type": null,
+        "primary_category": null,
+        "published_at": "2026-09-28T17:30:00+05:30"
+      }
+    },
+    {
+      "id": "xl-sport",
+      "merge": false,
+      "a": {
+        "headline": "क्रिकेट में घरेलू टीम की जीत",
+        "body": "घरेलू टीम ने छह विकेट से मैच जीता। कप्तान ने गेंदबाजों की तारीफ की।",
+        "entities": [],
+        "districts": [],
+        "event_type": null,
+        "primary_category": null,
+        "published_at": "2026-09-28T19:00:00+05:30"
+      },
+      "b": {
+        "headline": "State loses Ranji thriller",
+        "body": "Chasing 240, the team folded for 180. The captain blamed poor shot selection.",
+        "entities": [],
+        "districts": [],
+        "event_type": null,
+        "primary_category": null,
+        "published_at": "2026-09-28T19:30:00+05:30"
+      }
+    },
+    {
+      "id": "xl-celebrity",
+      "merge": false,
+      "a": {
+        "headline": "अभिनेता के बिहार दौरे की चर्चा",
+        "body": "बिहार में जन्मे अभिनेता के दौरे की खबरों में खूब चर्चा है। प्रशंसक फिल्म का इंतजार कर रहे हैं।",
+        "entities": [],
+        "districts": [],
+        "event_type": null,
+        "primary_category": null,
+        "published_at": "2026-09-28T12:00:00+05:30"
+      },
+      "b": {
+        "headline": "Actor tours three cities for film",
+        "body": "The actor, born in Bihar, will promote the new movie across cities. Fans gathered along the route.",
+        "entities": [],
+        "districts": [],
+        "event_type": null,
+        "primary_category": null,
+        "published_at": "2026-09-28T12:30:00+05:30"
+      }
+    },
+    {
+      "id": "xl-crime-districts",
+      "merge": false,
+      "a": {
+        "headline": "पटना में लूट के बाद गिरफ्तारी",
+        "body": "पटना पुलिस ने लूट के तीन आरोपियों को गिरफ्तार किया। सामान बरामद हुआ।",
+        "entities": ["bihar-police"],
+        "districts": ["patna"],
+        "event_type": "crime",
+        "primary_category": "Governance",
+        "published_at": "2026-09-28T11:00:00+05:30"
+      },
+      "b": {
+        "headline": "Robbery arrests reported in Gaya",
+        "body": "Gaya police arrested two men for a shop robbery. Stolen goods were recovered.",
+        "entities": ["bihar-police"],
+        "districts": ["gaya"],
+        "event_type": "crime",
+        "primary_category": "Governance",
+        "published_at": "2026-09-28T11:30:00+05:30"
+      }
+    }
+  ]
+}

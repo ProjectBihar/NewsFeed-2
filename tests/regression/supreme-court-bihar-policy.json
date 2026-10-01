@@ -1,0 +1,15 @@
+{
+  "id": "supreme-court-bihar-policy",
+  "history": "Phase 10: a Delhi dateline plus thin Bihar evidence failed a Bihar-central story. Fixed via the Bihar Government entity and single-counting the dateline city. The dateline must penalize, never veto.",
+  "phase": 10,
+  "cases": [
+    {
+      "title": "Supreme Court upholds Bihar quota law",
+      "body": "NEW DELHI: The Supreme Court on Tuesday upheld the Bihar government's revised reservation law. The state government in Patna welcomed the ruling on the survey-backed quota.",
+      "expect": {
+        "relevance": { "pass": true },
+        "type": { "article_type": "court", "significance_tier": "B", "curated": false }
+      }
+    }
+  ]
+}

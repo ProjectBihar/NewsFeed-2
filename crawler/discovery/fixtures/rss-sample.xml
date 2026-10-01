@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Test Source Feed</title>
+    <link>https://news.example.com/</link>
+    <item>
+      <title>Bihar Cabinet approves test project</title>
+      <link>https://news.example.com/bihar/cabinet-approves-test-project-101</link>
+      <pubDate>Sun, 28 Sep 2026 10:00:00 +0530</pubDate>
+    </item>
+    <item>
+      <title>Patna Metro expansion update</title>
+      <link>https://news.example.com/bihar/patna-metro-expansion-102?utm_source=rss&amp;utm_medium=feed&amp;fbclid=abc123</link>
+      <pubDate>Sun, 28 Sep 2026 09:00:00 +0530</pubDate>
+    </item>
+    <item>
+      <title>Old story below the checkpoint</title>
+      <link>https://news.example.com/bihar/old-story-100</link>
+      <pubDate>Sat, 27 Sep 2026 08:00:00 +0530</pubDate>
+    </item>
+    <item>
+      <title>Ancient story</title>
+      <link>https://news.example.com/bihar/ancient-story-99</link>
+      <pubDate>Mon, 20 Sep 2026 08:00:00 +0530</pubDate>
+    </item>
+  </channel>
+</rss>

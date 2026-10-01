@@ -1,0 +1,295 @@
+{
+  "version": 1,
+  "note": "Exact-dedup gate for Phase 14: known duplicate fixtures collapse, distinct coverage never does.",
+  "pairs": [
+    {
+      "id": "tracking-variant",
+      "duplicate": true,
+      "reason": "canonical-url",
+      "a": {
+        "id": "a1",
+        "source": "s1",
+        "url": "https://n.example/bihar/metro-1",
+        "canonical": "https://n.example/bihar/metro-1",
+        "headline": "Metro expansion approved",
+        "body": "The cabinet approved two metro corridors to Bihta and Fatuha in a meeting on Sunday."
+      },
+      "b": {
+        "id": "b1",
+        "source": "s1",
+        "url": "https://n.example/bihar/metro-1?utm_source=rss&fbclid=x",
+        "canonical": "https://n.example/bihar/metro-1",
+        "headline": "Metro expansion approved",
+        "body": "The cabinet approved two metro corridors to Bihta and Fatuha in a meeting on Sunday."
+      }
+    },
+    {
+      "id": "amp-variant",
+      "duplicate": true,
+      "reason": "canonical-url",
+      "a": {
+        "id": "a2",
+        "source": "s1",
+        "url": "https://n.example/bihar/solar-2",
+        "canonical": "https://n.example/bihar/solar-2",
+        "headline": "Solar pumps reach farmers",
+        "body": "Solar pumps transformed irrigation in pilot blocks across the district this season."
+      },
+      "b": {
+        "id": "b2",
+        "source": "s1",
+        "url": "https://n.example/bihar/solar-2/amp/",
+        "canonical": "https://n.example/bihar/solar-2",
+        "headline": "Solar pumps reach farmers",
+        "body": "Solar pumps transformed irrigation in pilot blocks across the district this season."
+      }
+    },
+    {
+      "id": "mobile-variant-same-body",
+      "duplicate": true,
+      "reason": "content-hash",
+      "a": {
+        "id": "a3",
+        "source": "s1",
+        "url": "https://n.example/bihar/ganga-3",
+        "canonical": "https://n.example/bihar/ganga-3",
+        "headline": "Ganga cleanup begins",
+        "body": "A coordinated cleanup drive across forty ghats began ahead of the festival season."
+      },
+      "b": {
+        "id": "b3",
+        "source": "s1",
+        "url": "https://m.n.example/bihar/ganga-3",
+        "canonical": "https://m.n.example/bihar/ganga-3",
+        "headline": "Ganga cleanup begins",
+        "body": "A coordinated cleanup drive across forty ghats began ahead of the festival season."
+      }
+    },
+    {
+      "id": "syndicated-identical-cross-publisher",
+      "duplicate": true,
+      "reason": "content-hash",
+      "a": {
+        "id": "a4",
+        "source": "pti-wire",
+        "url": "https://pti.example/flood-4",
+        "canonical": "https://pti.example/flood-4",
+        "headline": "Flood relief camps house thousands",
+        "body": "Relief camps across six districts are housing nearly forty thousand displaced people today."
+      },
+      "b": {
+        "id": "b4",
+        "source": "portal-x",
+        "url": "https://x.example/bihar/flood-4",
+        "canonical": "https://x.example/bihar/flood-4",
+        "headline": "Flood camps house 40,000: report",
+        "body": "Relief camps across six districts are housing nearly forty thousand displaced people today."
+      }
+    },
+    {
+      "id": "repeated-ingestion",
+      "duplicate": true,
+      "reason": "canonical-url",
+      "a": {
+        "id": "a5",
+        "source": "s2",
+        "url": "https://m.example/bihar/bpsc-5",
+        "canonical": "https://m.example/bihar/bpsc-5",
+        "headline": "BPSC releases calendar",
+        "body": "Examinations for twenty seven thousand teacher posts will be held in December this year."
+      },
+      "b": {
+        "id": "b5",
+        "source": "s2",
+        "url": "https://m.example/bihar/bpsc-5",
+        "canonical": "https://m.example/bihar/bpsc-5",
+        "headline": "BPSC releases calendar",
+        "body": "Examinations for twenty seven thousand teacher posts will be held in December this year."
+      }
+    },
+    {
+      "id": "same-headline-same-source-new-url",
+      "duplicate": true,
+      "reason": "headline-hash-same-source",
+      "a": {
+        "id": "a6",
+        "source": "s3",
+        "url": "https://k.example/bihar/story-6",
+        "canonical": "https://k.example/bihar/story-6",
+        "headline": "Cabinet meets over flood relief",
+        "body": "The state cabinet reviewed the flood situation in an emergency meeting held on Monday morning."
+      },
+      "b": {
+        "id": "b6",
+        "source": "s3",
+        "url": "https://k.example/bihar/story-6-updated",
+        "canonical": "https://k.example/bihar/story-6-updated",
+        "headline": "Cabinet meets over flood relief",
+        "body": "Updated: the state cabinet announced additional relief funds after reviewing the flood situation."
+      }
+    },
+    {
+      "id": "headline-suffix-variant",
+      "duplicate": true,
+      "reason": "headline-hash-same-source",
+      "a": {
+        "id": "a7",
+        "source": "s4",
+        "url": "https://j.example/bihar/a-7",
+        "canonical": "https://j.example/bihar/a-7",
+        "headline": "Nalanda University opens school",
+        "body": "The university will admit one hundred twenty students in the next academic session starting July."
+      },
+      "b": {
+        "id": "b7",
+        "source": "s4",
+        "url": "https://j.example/bihar/b-7",
+        "canonical": "https://j.example/bihar/b-7",
+        "headline": "Nalanda University opens school | Test Source",
+        "body": "A different wire update on the same university opening with entirely different wording here."
+      }
+    },
+    {
+      "id": "same-headline-different-sources",
+      "duplicate": false,
+      "a": {
+        "id": "a8",
+        "source": "s5",
+        "url": "https://e1.example/bihar/metro-8",
+        "canonical": "https://e1.example/bihar/metro-8",
+        "headline": "Metro expansion approved",
+        "body": "Our correspondent reports the cabinet cleared two corridors after a long debate on Sunday."
+      },
+      "b": {
+        "id": "b8",
+        "source": "s6",
+        "url": "https://e2.example/bihar/metro-8",
+        "canonical": "https://e2.example/bihar/metro-8",
+        "headline": "Metro expansion approved",
+        "body": "A separate newsroom describes the same metro decision with independent reporting and quotes."
+      }
+    },
+    {
+      "id": "rewritten-coverage",
+      "duplicate": false,
+      "a": {
+        "id": "a9",
+        "source": "s5",
+        "url": "https://e1.example/bihar/bihta-9",
+        "canonical": "https://e1.example/bihar/bihta-9",
+        "headline": "BIADA allots plots at Bihta",
+        "body": "One hundred twenty plots went to food processing units in the latest allotment round this week."
+      },
+      "b": {
+        "id": "b9",
+        "source": "s6",
+        "url": "https://e2.example/bihar/bihta-9",
+        "canonical": "https://e2.example/bihar/bihta-9",
+        "headline": "Industrial plots allotted in Bihta park",
+        "body": "Officials confirmed fresh allotments promising hundreds of crores in investment and new jobs."
+      }
+    },
+    {
+      "id": "same-source-developing-story",
+      "duplicate": false,
+      "a": {
+        "id": "a10",
+        "source": "s7",
+        "url": "https://d.example/bihar/flood-10a",
+        "canonical": "https://d.example/bihar/flood-10a",
+        "headline": "Floods hit northern districts",
+        "body": "Rising waters entered dozens of villages as rivers swelled beyond the danger mark overnight."
+      },
+      "b": {
+        "id": "b10",
+        "source": "s7",
+        "url": "https://d.example/bihar/flood-10b",
+        "canonical": "https://d.example/bihar/flood-10b",
+        "headline": "Relief camps open for flood-hit",
+        "body": "Authorities opened relief camps with kitchens and medical teams for displaced families today."
+      }
+    },
+    {
+      "id": "fragment-variant",
+      "duplicate": true,
+      "reason": "canonical-url",
+      "a": {
+        "id": "a11",
+        "source": "s8",
+        "url": "https://f.example/bihar/road-11",
+        "canonical": "https://f.example/bihar/road-11",
+        "headline": "Elevated road cleared",
+        "body": "The twenty kilometre elevated road received its final statutory clearance this week."
+      },
+      "b": {
+        "id": "b11",
+        "source": "s8",
+        "url": "https://f.example/bihar/road-11#comments",
+        "canonical": "https://f.example/bihar/road-11",
+        "headline": "Elevated road cleared",
+        "body": "The twenty kilometre elevated road received its final statutory clearance this week."
+      }
+    },
+    {
+      "id": "thin-bodies-different-urls",
+      "duplicate": false,
+      "a": {
+        "id": "a12",
+        "source": "s9",
+        "url": "https://g.example/a-12",
+        "canonical": "https://g.example/a-12",
+        "headline": "Gallery: morning scenes",
+        "body": "Short caption one."
+      },
+      "b": {
+        "id": "b12",
+        "source": "s9",
+        "url": "https://g.example/b-12",
+        "canonical": "https://g.example/b/b-12",
+        "headline": "Gallery: evening scenes",
+        "body": "Short caption two."
+      }
+    },
+    {
+      "id": "case-punct-headline",
+      "duplicate": true,
+      "reason": "headline-hash-same-source",
+      "a": {
+        "id": "a13",
+        "source": "s10",
+        "url": "https://h.example/bihar/c-13",
+        "canonical": "https://h.example/bihar/c-13",
+        "headline": "BIHAR CABINET MEETS TODAY!",
+        "body": "First version of the cabinet meeting story with its own distinct wording and details."
+      },
+      "b": {
+        "id": "b13",
+        "source": "s10",
+        "url": "https://h.example/bihar/d-13",
+        "canonical": "https://h.example/bihar/d-13",
+        "headline": "Bihar cabinet meets today",
+        "body": "Second version of the cabinet meeting story with completely different wording and details."
+      }
+    },
+    {
+      "id": "unrelated-stories",
+      "duplicate": false,
+      "a": {
+        "id": "a14",
+        "source": "s11",
+        "url": "https://i.example/bihar/e-14",
+        "canonical": "https://i.example/bihar/e-14",
+        "headline": "Tiger count rises in reserve",
+        "body": "Camera traps estimated fifty six tigers in the reserve this season."
+      },
+      "b": {
+        "id": "b14",
+        "source": "s11",
+        "url": "https://i.example/bihar/f-14",
+        "canonical": "https://i.example/bihar/f-14",
+        "headline": "Wetland census finds visitors",
+        "body": "Birders recorded new migratory species at northern wetlands this week."
+      }
+    }
+  ]
+}

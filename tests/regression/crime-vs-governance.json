@@ -1,0 +1,23 @@
+{
+  "id": "crime-vs-governance",
+  "history": "Phase 11: same institution (Bihar Police), opposite readings. Arrest reports stay routine crime; institutional funding reads governance. Relevance passes both (tiers are not relevance).",
+  "phase": 11,
+  "cases": [
+    {
+      "title": "Bihar Police arrests murder accused",
+      "body": "Police on Monday arrested the accused in a murder case. The weapon was recovered, officials said.",
+      "expect": {
+        "relevance": { "pass": true },
+        "type": { "article_type": "crime", "significance_tier": "C", "curated": false }
+      }
+    },
+    {
+      "title": "Bihar Police receives modernisation funding",
+      "body": "The state government has approved a Rs 750 crore modernisation programme for the police. Cyber laboratories will come up in all ranges.",
+      "expect": {
+        "relevance": { "pass": true },
+        "type": { "article_type": "governance", "significance_tier": "A", "curated": true }
+      }
+    }
+  ]
+}

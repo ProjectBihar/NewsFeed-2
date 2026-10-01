@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Test Source Atom</title>
+  <link href="https://news.example.com/"/>
+  <entry>
+    <title>BPSC announces recruitment calendar</title>
+    <link rel="alternate" href="https://news.example.com/bihar/bpsc-calendar-201"/>
+    <published>2026-09-28T11:00:00+05:30</published>
+  </entry>
+  <entry>
+    <title>Ganga ghat cleanup drive</title>
+    <link href="https://news.example.com/bihar/ganga-ghat-cleanup-202"/>
+    <updated>2026-09-28T07:30:00+05:30</updated>
+  </entry>
+</feed>

@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "note": "Manually labelled bilingual set for the Phase 8 gate (threshold 0.95). EN items include Devanagari entities; HI items include Latin loans and digits — the detector must follow function words, not script.",
+  "items": [
+    {
+      "id": "en01",
+      "expected": "en",
+      "text": "The Bihar Cabinet on Sunday approved the expansion of the Patna Metro rail project, clearing two corridors to बिहटा and Fatuha. Officials in पटना said the revised detailed project report will be submitted within three months. The decision is expected to ease congestion in the state capital."
+    },
+    {
+      "id": "en02",
+      "expected": "en",
+      "text": "The Bihar Industrial Area Development Authority has allotted 120 plots at its Bihta park in बिहार. Food processing and textile units bagged most of the space. Officials said the allotments will bring investments of nearly Rs 900 crore to the state."
+    },
+    {
+      "id": "en03",
+      "expected": "en",
+      "text": "The बिहार लोक सेवा आयोग released the examination calendar for 27,000 school teacher posts. The written examinations will be held in December across all 38 districts of the state. Candidates welcomed the announcement made in पटना."
+    },
+    {
+      "id": "en04",
+      "expected": "en",
+      "text": "The state government approved a Rs 750 crore modernisation programme for the बिहार पुलिस. Cyber forensic laboratories will come up in all nine police ranges. The home department will review utilisation every quarter."
+    },
+    {
+      "id": "en05",
+      "expected": "en",
+      "text": "Relief camps across flood-affected districts are housing nearly 40,000 people. Community kitchens along the गंगा serve cooked meals twice daily. The disaster management department said boats and rescue teams remain deployed ahead of छठ."
+    },
+    {
+      "id": "en06",
+      "expected": "en",
+      "text": "नालंदा विश्वविद्यालय inaugurated its school of sustainability studies on Saturday. The school will admit 120 students in the next academic session. Faculty from partner institutions in five countries will teach ecology and water management."
+    },
+    {
+      "id": "en07",
+      "expected": "en",
+      "text": "The auditor general flagged expenditure irregularities of over Rs 400 crore in rural road schemes in बिहार. The report cites excess payments and incomplete works shown as complete. The rural works department said corrective action has begun."
+    },
+    {
+      "id": "en08",
+      "expected": "en",
+      "text": "A coordinated cleanup drive across 40 ghats of the Ganga began in पटना ahead of छठ. Municipal workers and volunteers removed plastic waste deposited during the monsoon. The drive will continue daily until the festival concludes."
+    },
+    {
+      "id": "en09",
+      "expected": "en",
+      "text": "The state economic survey has pegged GDP growth at 9.2 per cent for the year, driven by construction and trade. Agriculture growth stayed muted after uneven rainfall. Economists noted that per capita income still trails the national average."
+    },
+    {
+      "id": "en10",
+      "expected": "en",
+      "text": "The 20-km elevated road received its final statutory clearance this week. The corridor will connect the western suburbs directly to the airport, cutting travel time to about 25 minutes. Officials expect completion within three years."
+    },
+    {
+      "id": "en11",
+      "expected": "en",
+      "text": "Solar-powered irrigation pumps have now reached 10,000 farmers in the district under the farm mechanisation push. The pumps have cut diesel costs sharply in the pilot blocks. Forty new service centres will open before the next season."
+    },
+    {
+      "id": "en12",
+      "expected": "en",
+      "text": "The tiger reserve reported an increase in its big cat population, with the latest camera-trap exercise estimating 56 tigers. Forest officials credited grassland management and a growing prey base. Three new anti-poaching camps will open before winter."
+    },
+    { "id": "en13", "expected": "en", "text": "Bihar Cabinet approves Patna Metro expansion" },
+    {
+      "id": "en14",
+      "expected": "en",
+      "text": "CAG flags road scheme irregularities in assembly report"
+    },
+    {
+      "id": "en15",
+      "expected": "en",
+      "text": "Addressing an election rally, the minister attacked the opposition over stalled projects. The crowd cheered as he declared that विकास हुआ है and promised new roads for every block. Opposition leaders dismissed the speech as rhetoric."
+    },
+    {
+      "id": "en16",
+      "expected": "en",
+      "text": "Teachers protesting the transfer policy marched through the town raising slogans. Their placards read न्याय चाहिए in bold letters. The education department said a committee is examining the demands."
+    },
+    {
+      "id": "en17",
+      "expected": "en",
+      "text": "The outpatient department at the new medical institute crossed one lakh patient visits in a single month. Administrators held average waiting time under two hours through token staggering. Two hundred more beds will be added next year."
+    },
+    {
+      "id": "en18",
+      "expected": "en",
+      "text": "A new bridge over the river opened for light vehicles on Sunday, nearly a year behind schedule. Heavy vehicles must wait for load testing next month. Commuters welcomed the opening but questioned the repeated delays."
+    },
+    {
+      "id": "hi01",
+      "expected": "hi",
+      "text": "राज्य कैबिनेट ने रविवार को Patna Metro के विस्तार को मंजूरी दे दी। इसके तहत Bihta तक नया कॉरिडोर बनेगा। अधिकारियों के अनुसार तीन महीने में विस्तृत रिपोर्ट सौंपी जाएगी।"
+    },
+    {
+      "id": "hi02",
+      "expected": "hi",
+      "text": "बिहार औद्योगिक क्षेत्र विकास प्राधिकार ने 120 भूखंडों का आवंटन किया है। अधिकारियों के अनुसार इससे 900 करोड़ रुपये के निवेश और 8,000 रोजगार की उम्मीद है।"
+    },
+    {
+      "id": "hi03",
+      "expected": "hi",
+      "text": "लोक सेवा आयोग ने 27,000 अध्यापकों की नियुक्ति के लिए परीक्षा कैलेंडर जारी किया। BPSC के अनुसार परीक्षाएं December में होंगी और सभी 38 जिलों में केंद्र बनाए गए हैं।"
+    },
+    {
+      "id": "hi04",
+      "expected": "hi",
+      "text": "पुलिस आधुनिकीकरण के तहत सभी जिलों में cyber प्रयोगशालाएं बनेंगी। CCTV और आधुनिक हथियारों पर 750 करोड़ रुपये खर्च होंगे। गृह विभाग हर तिमाही समीक्षा करेगा।"
+    },
+    {
+      "id": "hi05",
+      "expected": "hi",
+      "text": "Nalanda University में नए सत्र से 120 छात्र दाखिला लेंगे। कुलपति के अनुसार विदेशी संस्थानों के शिक्षक पारिस्थितिकी पढ़ाएंगे। छात्रों ने फैसले का स्वागत किया है।"
+    },
+    {
+      "id": "hi06",
+      "expected": "hi",
+      "text": "AIIMS में OPD मरीजों की संख्या एक महीने में एक लाख के पार पहुंच गई। अधिकारियों ने कहा कि नए specialty block से उत्तर बिहार के मरीजों को लाभ मिला है।"
+    },
+    {
+      "id": "hi07",
+      "expected": "hi",
+      "text": "solar pump योजना के तहत 10,000 किसानों तक लाभ पहुंचा है। Nalanda जिले में diesel खर्च में भारी कमी आई है। विभाग ने कहा कि रबी सीजन से पहले 40 सेवा केंद्र खुलेंगे।"
+    },
+    {
+      "id": "hi08",
+      "expected": "hi",
+      "text": "ethanol इकाइयों के लिए ब्याज अनुदान को मंजूरी दी गई है। Kosi क्षेत्र के मक्का किसानों को assured खरीद का लाभ मिलेगा। अनुदान की समीक्षा दो साल बाद होगी।"
+    },
+    {
+      "id": "hi09",
+      "expected": "hi",
+      "text": "राज्य के सरकारी स्कूलों में मध्याह्न भोजन के मेन्यू में बदलाव किया गया है। अब सप्ताह में दो दिन अंडा और तीन दिन दूध परोसा जाएगा। शिक्षा विभाग ने सभी जिलों को निर्देश दिए हैं।"
+    },
+    {
+      "id": "hi10",
+      "expected": "hi",
+      "text": "गंगा के घाटों पर छठ से पहले स्वच्छता अभियान शुरू हो गया है। नगर निकायों के कर्मियों ने प्लास्टिक कचरा हटाया। पर्यावरणविदों ने श्रद्धालुओं से सहयोग की अपील की है।"
+    },
+    {
+      "id": "hi11",
+      "expected": "hi",
+      "text": "राष्ट्रीय राजमार्ग पर दो वाहनों की टक्कर में तीन लोग घायल हो गए। पुलिस के अनुसार तेज रफ्तार हादसे की वजह रही। घायलों को अस्पताल में भर्ती कराया गया है।"
+    },
+    {
+      "id": "hi12",
+      "expected": "hi",
+      "text": "हर घर नल का जल योजना के दूसरे चरण की शुरुआत हुई है। इस चरण में छूटे हुए टोलों को जोड़ा जाएगा। विभाग ने कहा कि शिकायतों के लिए टोल-फ्री नंबर सक्रिय है।"
+    },
+    { "id": "hi13", "expected": "hi", "text": "पटना मेट्रो विस्तार को मंजूरी" },
+    { "id": "hi14", "expected": "hi", "text": "बिहार कैबिनेट की बैठक कल होगी" },
+    {
+      "id": "hi15",
+      "expected": "hi",
+      "text": "शिक्षक नियुक्ति परीक्षा दिसंबर में होगी। आयोग ने कहा कि प्रवेश पत्र परीक्षा से एक पखवाड़े पहले जारी किए जाएंगे। अभ्यर्थियों ने समय-सारणी के पालन की मांग की है।"
+    },
+    {
+      "id": "hi16",
+      "expected": "hi",
+      "text": "बाढ़ प्रभावित जिलों में राहत शिविरों में चालीस हजार लोग रह रहे हैं। सामुदायिक रसोई में दिन में दो बार भोजन परोसा जा रहा है। प्रशासन ने कहा कि सहायता राशि सीधे खातों में भेजी जाएगी।"
+    },
+    {
+      "id": "hi17",
+      "expected": "hi",
+      "text": "वायु प्रदूषण पर टिप्पणी करते हुए विशेषज्ञों ने कहा कि निर्माण धूल और खुले में कचरा जलाना मुख्य कारण हैं। शहर को वर्ष भर धूल नियंत्रण और यंत्रीकृत सफाई की जरूरत है।"
+    },
+    {
+      "id": "hi18",
+      "expected": "hi",
+      "text": "भूमि सर्वेक्षण के दूसरे वर्ष में दाखिल-खारिज विवादों में कमी आई है। राजस्व अधिकारियों के अनुसार छह जिलों में लंबित मामले एक तिहाई घट गए हैं।"
+    },
+    {
+      "id": "x01",
+      "expected": "en",
+      "text": "The new schemes — हर घर नल का जल, मध्याह्न भोजन reform, and the नल-जल mission — were reviewed at length. Officials said central assistance will cover sixty percent of the cost. The meeting also cleared pending irrigation files."
+    },
+    {
+      "id": "x02",
+      "expected": "hi",
+      "text": "रैली में मंत्री ने कहा कि विकास कार्य जारी हैं। उन्होंने अंग्रेजी में कहा, The central government has released the funds and the state will complete the work on time. कार्यकर्ताओं ने तालियां बजाईं।"
+    },
+    { "id": "x03", "expected": "en", "text": "Patna 28C" },
+    { "id": "x04", "expected": "hi", "text": "पटना 28" }
+  ]
+}
