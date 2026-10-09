@@ -16,7 +16,7 @@ const read = (f: string) => readFileSync(join(FIX, f), "utf8");
 describe("feed/sitemap/wordpress/section parsers (Phase 4)", () => {
   it("discovers official PDFs with listing metadata while excluding navigation and foreign links", () => {
     const html =
-      '<a href="/about">About</a><table><tr><td>09 Oct 2026</td><td>Bihar school infrastructure notice</td><td><a href="/uploads/notice.pdf"><img /></a></td></tr></table><a href="https://foreign.example/notice.pdf">Foreign</a>';
+      '<a href="/about">About</a><table><tr><td>09 Oct 2026</td><td>Bihar school infrastructure notice</td><td><a href="/uploads/notice.pdf">Download</a></td></tr></table><a href="https://foreign.example/notice.pdf">Foreign</a>';
     expect(parseSection(html, "https://official.example/notices", "official.example")).toHaveLength(
       1
     );

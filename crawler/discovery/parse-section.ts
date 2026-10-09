@@ -94,10 +94,14 @@ export function parseSection(
     );
     const dateText = dateCell?.includes("/") ? dateCell.split("/").reverse().join("-") : dateCell;
     const parsedDate = dateText ? new Date(dateText + " 00:00:00 GMT+0530") : null;
+    const anchorTitle = $(el).text().trim();
+    const genericLink = /^(?:view|download|pdf|click here|देखें|डाउनलोड)(?:\s*\([^)]*\))?$/i.test(
+      anchorTitle
+    );
     entries.push({
       url,
       publishedAt: parsedDate && !Number.isNaN(parsedDate.getTime()) ? parsedDate : null,
-      title: ($(el).text().trim() || noticeTitle || "").slice(0, 300) || null,
+      title: ((genericLink ? noticeTitle : anchorTitle) || noticeTitle || "").slice(0, 300) || null,
       via: "section",
     });
   });
