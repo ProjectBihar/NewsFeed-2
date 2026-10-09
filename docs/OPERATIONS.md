@@ -8,7 +8,9 @@ Use Vercel's Next.js preset for the website. Run acquisition and Python
 processing on GitHub Actions; the website does not execute crawlers or spawn
 Python. The existing Supabase project was initialized on 2026-10-09; see
 `docs/SUPABASE_PREFLIGHT.md` for the applied migrations and live checks.
-Website deployment remains pending.
+Website: https://projectbihar-newsfeed-v2.vercel.app. The release was merged
+and deployed on 2026-10-10 after full CI passed. See `docs/LAUNCH_VERIFICATION.md`
+for live checks and the remaining first-day observation.
 
 ## Local verification
 
@@ -139,6 +141,13 @@ admin observatory. Health counts successful downloads after semantic completion
 and separates extraction failure from irrelevance. Volume and parser drift
 alerts are persisted with their evidence. Exceptions produce a nonzero process
 exit code so Actions reports failure.
+
+Discovery reports include each failed endpoint and its upstream response code.
+Indian Express's RSS and news sitemap are paused in the live database because
+both returned HTTP 403 from GitHub's host. Existing articles remain available.
+Health jobs skip sources with no active discovery endpoints so an operator's
+blocked diagnosis is preserved. Re-enable polling only after access is verified
+from the runner host.
 
 Before launch, verify real publishers from the execution host, public homepage,
 story/district/source pages, archive and search against real data; verify admin

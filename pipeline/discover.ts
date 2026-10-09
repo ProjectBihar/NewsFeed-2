@@ -11,6 +11,7 @@ export async function runDiscovery(db: PipelineDatabase, maxSources = 100, fetch
     succeeded = 0,
     inserted = 0,
     errors = 0;
+  const endpointFailures: Array<{ sourceId: number; url: string | null; error: string }> = [];
   try {
     const sources = (
       await db.query(
@@ -30,7 +31,7 @@ export async function runDiscovery(db: PipelineDatabase, maxSources = 100, fetch
             "SELECT id FROM public.sources WHERE id=$1 AND active FOR UPDATE",
             [row.id]
           );
-          if (!active.rows.length) return { count: 0, ok: false, errors: 0 };
+          if (!active.rows.length) return { count: 0, ok: false, errors: 0, failures: [] };
           const endpoints = (
             await tx.query(
               `SELECT * FROM public.source_endpoints
@@ -71,13 +72,26 @@ export async function runDiscovery(db: PipelineDatabase, maxSources = 100, fetch
             count,
             ok: poll.endpointResults.some((e) => e.ok),
             errors: poll.endpointResults.filter((e) => !e.ok).length,
+            failures: poll.endpointResults
+              .filter((e) => !e.ok)
+              .map((e) => ({
+                sourceId: Number(row.id),
+                url: e.url,
+                error: e.error ?? "endpoint-failed",
+              })),
           };
         });
         inserted += result.count;
         succeeded += Number(result.ok);
         errors += result.errors;
+        endpointFailures.push(...result.failures);
       } catch {
         errors++;
+        endpointFailures.push({
+          sourceId: Number(row.id),
+          url: null,
+          error: "source-transaction-failed",
+        });
       }
     }
     await db.query(
@@ -85,7 +99,7 @@ export async function runDiscovery(db: PipelineDatabase, maxSources = 100, fetch
       sources_attempted=$3, sources_succeeded=$4, urls_discovered=$5, errors=$6 WHERE id=$1`,
       [runId, errors ? "failed" : "complete", attempted, succeeded, inserted, errors]
     );
-    return { runId, attempted, succeeded, inserted, errors };
+    return { runId, attempted, succeeded, inserted, errors, endpointFailures };
   } catch (error) {
     await db.query(
       "UPDATE public.crawl_runs SET status='failed', completed_at=now(), errors=$2 WHERE id=$1",

@@ -74,6 +74,25 @@ describe("live pipeline contracts with real SQL and Python", () => {
     ).toBe(url);
   });
 
+  it("reports blocked discovery endpoints without advancing their successful cursor", async () => {
+    const report = await runDiscovery(db, 200, async () => ({
+      status: 403,
+      contentType: "text/html",
+      text: "Access denied",
+    }));
+    expect(report.errors).toBe(1);
+    expect(report.endpointFailures).toEqual([
+      { sourceId, url: "https://news.example.com/feed", error: "http-403" },
+    ]);
+    expect(
+      (await db.query("SELECT last_seen_url FROM source_endpoints WHERE source_id=$1", [sourceId]))
+        .rows[0].last_seen_url
+    ).toBe(url);
+    expect(
+      (await db.query("SELECT status FROM crawl_runs WHERE id=$1", [report.runId])).rows[0].status
+    ).toBe("failed");
+  });
+
   it("extracts through Python and atomically publishes metadata, joins and evidence", async () => {
     expect(analysis.relevance.pass).toBe(true);
     expect(analysis.topic.primary_category).toBe("Infrastructure");

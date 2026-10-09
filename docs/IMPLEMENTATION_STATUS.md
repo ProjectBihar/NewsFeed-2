@@ -4,8 +4,9 @@
 
 This entry supersedes the historical notes below about missing RLS,
 shared anon admin credentials, audit-only entity edits, and unwired runners.
-Supabase initialization and live ingestion are verified; website deployment
-and runner observation are in progress as of 2026-10-10.
+Supabase initialization, live ingestion and Vercel production deployment are
+verified as of 2026-10-10. First-day read-only monitoring is active; see
+`docs/LAUNCH_VERIFICATION.md` for the evidence and remaining observation.
 
 - Added three transactional migrations: reader/service-role boundaries;
   processing claims, retries and KB identifiers; atomic service-only admin RPCs.
@@ -40,8 +41,8 @@ and runner observation are in progress as of 2026-10-10.
   discovery sources queued 641 URLs. A Bihar batch downloaded, extracted and
   published ten stories without errors. Live service-role admin rename,
   correction, move, split and merge passed inside a rolled-back transaction.
-- Remaining launch work: validate publishers from the runner host, deploy and
-  verify public/admin pages, and observe a full day. Candidate sets above
+- Remaining launch work: complete the first-day observation and isolate any
+  publisher endpoint failures from the runner host. Candidate sets above
   2,000 cause a retry rather than a silent incomplete cluster decision.
 - Setup and recovery: `docs/OPERATIONS.md`.
 
