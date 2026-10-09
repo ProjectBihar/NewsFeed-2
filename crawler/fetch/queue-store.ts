@@ -19,6 +19,7 @@ export interface ClaimedRow {
   source_id: number | null;
   priority: string;
   attempts: number;
+  source_type?: string;
 }
 
 const PRIORITY_ORDER = `CASE priority WHEN 'high' THEN 0 WHEN 'medium' THEN 1 ELSE 2 END`;
@@ -37,7 +38,8 @@ export async function claimDueRows(db: QueryFn, limit: number): Promise<ClaimedR
        FOR UPDATE SKIP LOCKED
        LIMIT $1
      )
-     RETURNING id, url, canonical_url, source_id, priority, attempts`,
+     RETURNING id, url, canonical_url, source_id, priority, attempts,
+       (SELECT s.source_type FROM public.sources s WHERE s.id=source_id) AS source_type`,
     [limit]
   );
   return res.rows as unknown as ClaimedRow[];

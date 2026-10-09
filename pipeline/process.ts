@@ -21,7 +21,7 @@ export async function claimProcessing(
       WHERE s.active AND q.status='fetched' AND q.processing_attempts<5
         AND (q.processing_next_retry_at IS NULL OR q.processing_next_retry_at<=now())
       ORDER BY q.discovered_at,q.id FOR UPDATE OF q SKIP LOCKED LIMIT $1)
-    RETURNING id,source_id,url,canonical_url,discovered_at,processing_attempts`,
+    RETURNING id,source_id,url,canonical_url,discovered_at,processing_attempts,discovery_metadata`,
       [limit]
     )
   ).rows;
@@ -78,6 +78,7 @@ export async function runProcessing(db: PipelineDatabase, batchSize = 100, brows
           operation: "analyze",
           html: row.raw_html,
           url: row.url,
+          discovery_metadata: row.discovery_metadata,
         });
         const outcome = await persistAnalysis(db, row, analysis);
         extracted += Number(analysis.article.extraction_confidence !== "failed");

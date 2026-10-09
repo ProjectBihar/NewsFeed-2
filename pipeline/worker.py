@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "extraction"), str(ROOT / "intelligence")]
 
 from trafilatura_worker import extract_article
+from official_document import extract_official_pdf
 from language import detect_language
 from relevance import assess_relevance
 from relevance.knowledge import get_knowledge_base
@@ -31,7 +32,10 @@ VERSION = "rules-v1-pipeline-20261009"
 
 
 def analyze(request):
-    article = extract_article(request["html"], request["url"]).to_dict()
+    if request["html"].startswith("PROJECTBIHAR_PDF_V1:"):
+        article = extract_official_pdf(request["html"], request["url"], request.get("discovery_metadata") or {})
+    else:
+        article = extract_article(request["html"], request["url"]).to_dict()
     title, body = article.get("title") or "", article.get("body") or ""
     language = detect_language(body).to_dict()
     relevance = assess_relevance(title, body).to_dict()

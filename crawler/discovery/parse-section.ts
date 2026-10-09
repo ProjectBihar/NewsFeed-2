@@ -47,11 +47,13 @@ const EXCLUDED_PATH_HINTS = [
 export function parseSection(
   html: string,
   pageUrl: string,
-  sourceDomain: string
+  sourceDomain: string,
+  options: { include_pattern?: string | null; allow_pdf?: boolean } = {}
 ): DiscoveryEntry[] {
   const $ = load(html);
   const entries: DiscoveryEntry[] = [];
   const seen = new Set<string>();
+  const include = options.include_pattern ? new RegExp(options.include_pattern) : null;
 
   $("a[href]").each((_, el) => {
     const href = ($(el).attr("href") ?? "").trim();
@@ -64,21 +66,38 @@ export function parseSection(
     }
     if (absolute.protocol !== "http:" && absolute.protocol !== "https:") return;
     const host = absolute.hostname.toLowerCase();
-    if (host !== sourceDomain && !host.endsWith(`.${sourceDomain}`)) return;
+    const officialCdn =
+      options.allow_pdf &&
+      host.endsWith(".s3waas.gov.in") &&
+      absolute.pathname.toLowerCase().endsWith(".pdf");
+    if (host !== sourceDomain && !host.endsWith(`.${sourceDomain}`) && !officialCdn) return;
 
     const path = absolute.pathname.toLowerCase();
     const ext = path.slice(path.lastIndexOf("."));
-    if (path.includes(".") && ASSET_EXTENSIONS.has(ext)) return;
+    if (path.includes(".") && ASSET_EXTENSIONS.has(ext) && !(ext === ".pdf" && options.allow_pdf))
+      return;
     if (EXCLUDED_PATH_HINTS.some((hint) => path.includes(hint))) return;
 
     absolute.hash = "";
     const url = absolute.toString();
+    if (url === pageUrl || (include && !include.test(url))) return;
     if (seen.has(url)) return;
     seen.add(url);
+    const cells = $(el)
+      .closest("tr")
+      .find("td")
+      .map((_, td) => $(td).text().trim())
+      .get();
+    const noticeTitle = [...cells].sort((a, b) => b.length - a.length)[0];
+    const dateCell = cells.find(
+      (t) => /^\d{1,2}\s+[A-Za-z]{3}\s+\d{4}$/.test(t) || /^\d{2}\/\d{2}\/\d{4}$/.test(t)
+    );
+    const dateText = dateCell?.includes("/") ? dateCell.split("/").reverse().join("-") : dateCell;
+    const parsedDate = dateText ? new Date(dateText + " 00:00:00 GMT+0530") : null;
     entries.push({
       url,
-      publishedAt: null,
-      title: $(el).text().trim().slice(0, 200) || null,
+      publishedAt: parsedDate && !Number.isNaN(parsedDate.getTime()) ? parsedDate : null,
+      title: ($(el).text().trim() || noticeTitle || "").slice(0, 300) || null,
       via: "section",
     });
   });

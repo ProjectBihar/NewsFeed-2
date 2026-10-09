@@ -15,7 +15,7 @@ export async function runDiscovery(db: PipelineDatabase, maxSources = 100, fetch
   try {
     const sources = (
       await db.query(
-        `SELECT s.id, s.domain, s.priority FROM public.sources s
+        `SELECT s.id, s.domain, s.priority, s.source_type FROM public.sources s
       WHERE s.active AND EXISTS (SELECT 1 FROM public.source_endpoints e WHERE e.source_id=s.id AND e.active)
       ORDER BY (SELECT min(COALESCE(e.last_checked, 'epoch'::timestamptz))
                 FROM public.source_endpoints e WHERE e.source_id=s.id AND e.active), s.id LIMIT $1`,
@@ -54,6 +54,23 @@ export async function runDiscovery(db: PipelineDatabase, maxSources = 100, fetch
           if (poll.queueRows.length) {
             const query = buildEnqueueQuery(poll.queueRows);
             count = (await tx.query(query.text + " RETURNING id", query.values)).rows.length;
+            if (row.source_type === "official") {
+              await tx.query(
+                `UPDATE public.crawl_queue q SET discovery_metadata=jsonb_build_object('title',m.title,'published_at',m.published_at)
+                FROM jsonb_to_recordset($1::jsonb) AS m(url text,title text,published_at text)
+                WHERE q.source_id=$2 AND q.url=m.url AND q.status='discovered'`,
+                [
+                  JSON.stringify(
+                    poll.entries.map((e) => ({
+                      url: e.url,
+                      title: e.title,
+                      published_at: e.publishedAt?.toISOString() ?? null,
+                    }))
+                  ),
+                  row.id,
+                ]
+              );
+            }
           }
           for (const endpoint of poll.endpointResults) {
             const cp = poll.checkpoints[endpoint.url];

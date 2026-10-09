@@ -17,6 +17,8 @@ export interface DiscoveryEndpoint {
   endpoint_type: EndpointType;
   url: string;
   priority: string;
+  include_pattern?: string | null;
+  allow_pdf?: boolean;
   /** Checkpoint cursor: stop walk when this URL reappears (first run: null). */
   last_seen_url: string | null;
   /** Checkpoint cursor: skip entries at/before this time (first run: null). */

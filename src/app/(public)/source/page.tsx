@@ -56,6 +56,7 @@ export default async function SourceIndex({
                   {source.name}
                   <span className="text-[12px] ml-2" style={{ color: "var(--muted)" }}>
                     {source.language.toUpperCase()} · {source.scope}
+                    {source.sourceType === "official" ? " · Official information" : ""}
                   </span>
                 </Link>
               </li>

@@ -111,7 +111,7 @@ async function pollEndpoint(
       case "wordpress_api":
         return { entries: parseWordPress(res.text) };
       case "section":
-        return { entries: parseSection(res.text, endpoint.url, sourceDomain) };
+        return { entries: parseSection(res.text, endpoint.url, sourceDomain, endpoint) };
       default:
         return { entries: [], error: `unknown-endpoint-type: ${type as string}` };
     }
@@ -133,6 +133,7 @@ export interface DiscoverSourceOptions {
 }
 
 export interface SourceDiscovery {
+  entries: DiscoveryEntry[];
   queueRows: QueueRow[];
   endpointResults: EndpointResult[];
   checkpoints: Record<string, CheckpointUpdate>;
@@ -157,7 +158,15 @@ export async function discoverSource(
   let budget = maxUrls;
 
   for (const endpoint of orderEndpoints(endpoints)) {
-    const { entries, error } = await pollEndpoint(endpoint, source.domain, fetcher);
+    const poll = await pollEndpoint(endpoint, source.domain, fetcher);
+    const error = poll.error;
+    const pattern =
+      endpoint.include_pattern && endpoint.endpoint_type !== "section"
+        ? new RegExp(endpoint.include_pattern)
+        : null;
+    const entries = pattern
+      ? poll.entries.filter((e) => pattern.test(e.url + " " + (e.title ?? "")))
+      : poll.entries;
     endpointResults.push({
       endpoint_type: endpoint.endpoint_type as EndpointType,
       url: endpoint.url,
@@ -184,6 +193,7 @@ export async function discoverSource(
   }
 
   return {
+    entries: taken,
     queueRows: toQueueRows(taken, source.id, source.priority),
     endpointResults,
     checkpoints,

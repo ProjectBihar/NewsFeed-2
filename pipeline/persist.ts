@@ -13,6 +13,7 @@ export interface ProcessingRow {
   discovered_at: Date | string;
   processing_attempts: number;
   raw_html: string | null;
+  discovery_metadata?: { title?: string; published_at?: string };
 }
 export type Worker = <T>(request: Record<string, unknown>) => Promise<T>;
 
