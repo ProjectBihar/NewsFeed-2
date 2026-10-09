@@ -10,6 +10,7 @@ export interface KnowledgeEntity {
   longitude?: number | null;
 }
 export interface Analysis {
+  timeline?: { excluded: boolean; reason: string };
   article: {
     title: string | null;
     body: string | null;

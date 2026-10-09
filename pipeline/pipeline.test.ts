@@ -347,4 +347,55 @@ describe("live pipeline contracts with real SQL and Python", () => {
         ).toBe(1);
     }
   });
+
+  it("archives routine crime metadata while marking it excluded from the main timeline", async () => {
+    const testUrl = "https://news.example.com/crime-preference-fixture";
+    await db.query(
+      `INSERT INTO crawl_queue(source_id,url,canonical_url,status)
+      VALUES ($1,$2,$2,'fetched')`,
+      [sourceId, testUrl]
+    );
+    const [row] = await claimProcessing(db, 1);
+    const candidate: Analysis = {
+      ...analysis,
+      article: {
+        ...analysis.article,
+        title: "Three arrested for Patna robbery",
+        canonical_url: testUrl,
+      },
+      keys: {
+        ...analysis.keys,
+        canonical_url: testUrl,
+        content_hash: "crime-preference-content",
+        headline_hash: "crime-preference-headline",
+      },
+      classification: { ...analysis.classification, article_type: "crime" },
+      timeline: { excluded: true, reason: "reader-preference:routine-crime" },
+    };
+    expect(
+      (
+        await persistAnalysis(
+          db,
+          row,
+          candidate,
+          async <T>(request: Record<string, unknown>) =>
+            (request.operation === "assign"
+              ? {}
+              : { canonical_title: candidate.article.title }) as T
+        )
+      ).status
+    ).toBe("complete");
+    expect(
+      (
+        await db.query(
+          "SELECT headline,timeline_excluded,timeline_reason FROM articles WHERE canonical_url=$1",
+          [testUrl]
+        )
+      ).rows[0]
+    ).toMatchObject({
+      headline: candidate.article.title,
+      timeline_excluded: true,
+      timeline_reason: candidate.timeline!.reason,
+    });
+  });
 });
