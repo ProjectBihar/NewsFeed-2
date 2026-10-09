@@ -151,12 +151,12 @@ describe("fetchBatch integration (Phase 5)", () => {
         await db.exec(readFileSync(join(MIGRATIONS_DIR, f), "utf8"));
       const official = (
         await db.query<{ id: number }>(
-          "INSERT INTO sources(name,domain,source_type) VALUES ('Official fixture','official.example','official') RETURNING id"
+          "INSERT INTO sources(name,domain,source_type,language,scope) VALUES ('Official fixture','official.example','official','en','bihar') RETURNING id"
         )
       ).rows[0].id;
       const news = (
         await db.query<{ id: number }>(
-          "INSERT INTO sources(name,domain,source_type) VALUES ('News fixture','news.example','news') RETURNING id"
+          "INSERT INTO sources(name,domain,source_type,language,scope) VALUES ('News fixture','news.example','news','en','bihar') RETURNING id"
         )
       ).rows[0].id;
       for (const [path, sid] of [
