@@ -128,8 +128,14 @@ version. Manual titles survive later ingestion.
 
 Keep the GitHub repository variable `PIPELINE_ENABLED` unset until migrations,
 credentials and a bounded manual run are verified. Set it to `true` to enable
-live stages: discovery every 30 minutes, processing up to 50 rows twice an hour
-at minutes 7 and 37, health every six hours, and daily temporary text cleanup.
+live stages: discovery every 45 minutes, processing up to 50 rows every 45
+minutes with slots seven minutes after discovery, health every six hours, and
+daily temporary text cleanup. The crawl schedule uses a repeating three-hour
+UTC cycle so the interval stays 45 minutes across hour and day boundaries.
+For example, discovery slots in IST are 05:43, 06:28, 07:13 and 07:58;
+processing slots follow at 05:50, 06:35, 07:20 and 08:05. GitHub may delay or
+drop scheduled triggers under load; check actual schedule-event runs rather
+than treating a passing manual dispatch as proof of automatic execution.
 Manual processing can override the batch size. Monitor queue growth and run
 duration during the first day before increasing throughput. Jobs do not apply
 schema automatically. PostgreSQL jobs download the official Supabase CA and

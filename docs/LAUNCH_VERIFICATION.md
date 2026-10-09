@@ -60,8 +60,10 @@ access from the execution host; no browser/CAPTCHA escalation was attempted.
 
 ## Observation still in progress
 
-`PIPELINE_ENABLED=true` enables discovery every 30 minutes, processing up to 50
-rows at minutes 7 and 37, health every six hours and daily retention. Batches are
+The user-requested cadence update on 10 October 2026 configures discovery every
+45 minutes and processing up to 50 rows every 45 minutes, with processing slots
+seven minutes after discovery. `PIPELINE_ENABLED=true` enables those live
+stages, health every six hours and daily retention. Batches are
 bounded and interrupted work remains in the durable queue.
 
 The user approved hourly read-only follow-up checks for 24 hours, from

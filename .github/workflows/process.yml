@@ -10,10 +10,13 @@ name: process
 # Pure contracts always run before the optional live stage.
 #
 # Scheduled batches are bounded at 50 rows; manual batches accept 1–500.
+# Run every 45 minutes, seven minutes after each discovery slot.
 
 on:
   schedule:
-    - cron: "7,37 * * * *"
+    - cron: "20 0-23/3 * * *"
+    - cron: "5,50 1-23/3 * * *"
+    - cron: "35 2-23/3 * * *"
   workflow_dispatch:
     inputs:
       batch-size:

@@ -1,6 +1,6 @@
 name: discover
 
-# Plan §47: poll source endpoints every 30 minutes — discover URLs,
+# Poll source endpoints every 45 minutes — discover URLs,
 # normalise URLs, enqueue new URLs, record discovery metrics.
 # Never fetch full articles.
 #
@@ -9,7 +9,11 @@ name: discover
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    # Repeating three-hour cycle: 00:13, 00:58, 01:43, 02:28 UTC.
+    # Minute offsets avoid the busy start of each hour.
+    - cron: "13,58 0-23/3 * * *"
+    - cron: "43 1-23/3 * * *"
+    - cron: "28 2-23/3 * * *"
   workflow_dispatch:
     inputs:
       verify-expansion:
