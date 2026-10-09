@@ -419,7 +419,7 @@
       "requires_browser": false,
       "group": "bihar-hindi",
       "wave": "B",
-      "notes": "Bihar section; article links only. Sections reject declared crawler (403); testing published RSS instead.",
+      "notes": "Bihar section; article links only. Sections reject declared crawler (403); testing published RSS instead. PUBLISHER RSS SUMMARY MODE: article downloads return 403 from GitHub. Use only publisher-supplied summaries, title, date and original link; never treat as full-article evidence or Curated.",
       "endpoints": [
         {
           "endpoint_type": "rss",
@@ -430,7 +430,10 @@
           "include_pattern": "bihar|patna|बिहार|पटना"
         }
       ],
-      "allowed_endpoint_hosts": ["feeds.feedburner.com"]
+      "allowed_endpoint_hosts": [
+        "feeds.feedburner.com"
+      ],
+      "feed_only": true
     },
     {
       "name": "NDTV",
@@ -443,7 +446,7 @@
       "requires_browser": false,
       "group": "bihar-english",
       "wave": "B",
-      "notes": "Patna section; English sibling of NDTV India, shared ownership. Sections reject declared crawler (403); testing published RSS instead.",
+      "notes": "Patna section; English sibling of NDTV India, shared ownership. Sections reject declared crawler (403); testing published RSS instead. PUBLISHER RSS SUMMARY MODE: article downloads return 403 from GitHub. Use only publisher-supplied summaries, title, date and original link; never treat as full-article evidence or Curated.",
       "endpoints": [
         {
           "endpoint_type": "rss",
@@ -454,7 +457,10 @@
           "include_pattern": "bihar|patna|बिहार|पटना"
         }
       ],
-      "allowed_endpoint_hosts": ["feeds.feedburner.com"]
+      "allowed_endpoint_hosts": [
+        "feeds.feedburner.com"
+      ],
+      "feed_only": true
     },
     {
       "name": "ABP Live Bihar",

@@ -99,6 +99,11 @@ beforeAll(async () => {
         res.writeHead(200, { "content-type": "application/rss+xml" });
         res.end("<rss version='2.0'></rss>");
         return;
+      case "/official.pdf":
+      case "/news.pdf":
+        res.writeHead(200, { "content-type": "application/pdf" });
+        res.end(Buffer.from("%PDF-1.4\nOfficial document transport fixture"));
+        return;
       case "/error":
         res.writeHead(500, { "content-type": "text/html" });
         res.end("always");
@@ -137,6 +142,46 @@ function pgliteQuery(db: PGlite): QueryFn {
 }
 
 describe("fetchBatch integration (Phase 5)", () => {
+  it("stores PDFs temporarily only for an official source", async () => {
+    const db = new PGlite();
+    try {
+      for (const f of readdirSync(MIGRATIONS_DIR)
+        .filter((f) => f.endsWith(".sql"))
+        .sort())
+        await db.exec(readFileSync(join(MIGRATIONS_DIR, f), "utf8"));
+      const official = (
+        await db.query<{ id: number }>(
+          "INSERT INTO sources(name,domain,source_type) VALUES ('Official fixture','official.example','official') RETURNING id"
+        )
+      ).rows[0].id;
+      const news = (
+        await db.query<{ id: number }>(
+          "INSERT INTO sources(name,domain,source_type) VALUES ('News fixture','news.example','news') RETURNING id"
+        )
+      ).rows[0].id;
+      for (const [path, sid] of [
+        ["/official.pdf", official],
+        ["/news.pdf", news],
+      ])
+        await db.query(
+          "INSERT INTO crawl_queue(url,canonical_url,source_id,status) VALUES ($1,$1,$2,'queued')",
+          [base + path, sid]
+        );
+      const result = await fetchBatch({
+        db: pgliteQuery(db),
+        config: CONFIG,
+        batchSize: 2,
+        quiet: true,
+      });
+      expect(result.summary).toMatchObject({ succeeded: 1, rejected: 1, tempStored: 1 });
+      const stored = (await db.query<{ raw_html: string }>("SELECT raw_html FROM temp_documents"))
+        .rows;
+      expect(stored).toHaveLength(1);
+      expect(stored[0].raw_html.startsWith("PROJECTBIHAR_PDF_V1:")).toBe(true);
+    } finally {
+      await db.close();
+    }
+  }, 30000);
   it("fetches representative URLs concurrently without losing queue state", async () => {
     const db = new PGlite();
     try {

@@ -83,6 +83,7 @@ export function parseFeed(xml: string, baseUrl: string, via: EndpointType): Disc
       url,
       publishedAt: parseDate(item["pubDate"] ?? item["date"]),
       title: text(item["title"]),
+      summary: text(item["description"]),
       via,
     });
   }

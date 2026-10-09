@@ -19,6 +19,7 @@ import {
   default as SourcePage,
 } from "@/app/(public)/source/[slug]/page";
 import SourceIndex from "@/app/(public)/source/page";
+import { SOURCES } from "@/lib/public/sources";
 import {
   generateMetadata as generateArchiveMetadata,
   default as ArchivePage,
@@ -465,12 +466,12 @@ describe("Phase 32 — source pages", () => {
       await SourceIndex({ searchParams: Promise.resolve({ demo: "1" }) })
     );
     expect(html).toContain(">Sources</h1>");
-    expect(html).toContain("All 12 active sources");
+    expect(html).toContain(`All ${SOURCES.length} active sources`);
     expect(html).toContain('href="/source/the-hindu?demo=1"');
     expect(html).toContain('href="/source/times-of-india-patna?demo=1"');
     expect(html).toContain('href="/source/prs-legislative-research?demo=1"');
     const links = html.match(/href="\/source\/[a-z0-9-]+(\?demo=1)?"/g) ?? [];
-    expect(links).toHaveLength(12);
+    expect(links).toHaveLength(SOURCES.length);
     // Inactive registry entries are not listed.
     expect(html).not.toContain("News18 Bihar");
     expect(html).not.toContain("Press Information Bureau");

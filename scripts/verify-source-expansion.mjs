@@ -23,7 +23,13 @@ for (let i = 0; i < sources.length; i += 3) {
         endpoints: poll.endpointResults,
         discovered: poll.queueRows.length,
       };
-      if (s.source_type === "news" && poll.queueRows.length) {
+      if (s.feed_only) {
+        report.feedSummary = true;
+        report.sample = {
+          usable: poll.entries.every((e) => !!e.title && !!e.summary),
+          sampledFromFeed: true,
+        };
+      } else if (s.source_type === "news" && poll.queueRows.length) {
         try {
           const r = await defaultFetcher(poll.queueRows[0].url);
           report.sample = {
@@ -49,7 +55,8 @@ writeFileSync(
 if (
   reports.some(
     (r) =>
-      r.endpoints.some((e) => !e.ok) || (r.type === "news" && (!r.discovered || !r.sample?.usable))
+      r.endpoints.some((e) => !e.ok) ||
+      (r.type === "news" && ((!r.discovered && !r.feedSummary) || !r.sample?.usable))
   )
 )
   process.exitCode = 1;

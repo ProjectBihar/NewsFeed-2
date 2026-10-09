@@ -128,6 +128,7 @@ export interface SourceInfo {
 
 export interface DiscoverSourceOptions {
   maxUrls?: number;
+  perEndpointLimit?: number;
   fetcher?: Fetcher;
   now?: Date;
 }
@@ -176,7 +177,11 @@ export async function discoverSource(
     });
     if (error) continue; // Failed poll: cursor untouched, retried next run.
 
-    const { fresh, deferred: endpointDeferred } = applyCheckpoint(entries, endpoint, budget);
+    const { fresh, deferred: endpointDeferred } = applyCheckpoint(
+      entries,
+      endpoint,
+      Math.min(budget, opts.perEndpointLimit ?? budget)
+    );
     deferred += endpointDeferred;
     budget -= fresh.length;
     taken.push(...fresh);

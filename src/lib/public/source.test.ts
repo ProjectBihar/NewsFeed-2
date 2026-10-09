@@ -38,8 +38,8 @@ describe("Phase 32 — stable public routes for active sources", () => {
   it("derives a stable unique slug for every active registry source", () => {
     const active = REGISTRY.sources.filter((s) => s.active);
     const inactive = REGISTRY.sources.filter((s) => !s.active);
-    expect(REGISTRY.sources).toHaveLength(14);
-    expect(active).toHaveLength(12);
+    expect(REGISTRY.sources.filter((s) => s.wave === "A")).toHaveLength(14);
+    expect(active.map((s) => s.name)).toContain("Patna Press");
     expect(SOURCES).toHaveLength(active.length);
 
     const slugs = new Set(SOURCES.map((s) => s.slug));
@@ -76,7 +76,7 @@ describe("Phase 32 — stable public routes for active sources", () => {
     const inactiveSlugs = REGISTRY.sources
       .filter((s) => !s.active)
       .map((s) => slugifySourceName(s.name));
-    expect(inactiveSlugs).toHaveLength(2);
+    expect(inactiveSlugs).toContain("news18-bihar");
     for (const slug of [...inactiveSlugs, "nowhere", "toi"]) {
       expect(await getSource(slug, { demo: true }), slug).toBeNull();
       expect(await getSource(slug), slug).toBeNull();

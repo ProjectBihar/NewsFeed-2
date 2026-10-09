@@ -30,6 +30,7 @@ export interface DiscoveryEntry {
   url: string;
   publishedAt: Date | null;
   title: string | null;
+  summary?: string | null;
   via: EndpointType;
 }
 

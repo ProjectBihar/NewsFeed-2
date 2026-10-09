@@ -92,11 +92,12 @@ export function renderExpansion(registry) {
     "ALTER TABLE public.source_endpoints ADD COLUMN IF NOT EXISTS include_pattern TEXT;",
     "ALTER TABLE public.source_endpoints ADD COLUMN IF NOT EXISTS allow_pdf BOOLEAN NOT NULL DEFAULT FALSE;",
     "ALTER TABLE public.crawl_queue ADD COLUMN IF NOT EXISTS discovery_metadata JSONB NOT NULL DEFAULT '{}'::jsonb;",
+    "ALTER TABLE public.sources ADD COLUMN IF NOT EXISTS feed_only BOOLEAN NOT NULL DEFAULT FALSE;",
     "",
   ];
   for (const s of registry.sources.filter((s) => s.wave !== "A")) {
     lines.push(
-      `INSERT INTO public.sources (name,domain,language,scope,source_type,priority,active,requires_browser) VALUES (${q(s.name)},${q(s.domain)},${q(s.language)},${q(s.scope)},${q(s.source_type)},${q(s.priority)},${bool(s.active)},FALSE) ON CONFLICT (domain) DO NOTHING;`
+      `INSERT INTO public.sources (name,domain,language,scope,source_type,priority,active,requires_browser,feed_only) VALUES (${q(s.name)},${q(s.domain)},${q(s.language)},${q(s.scope)},${q(s.source_type)},${q(s.priority)},${bool(s.active)},FALSE,${bool(s.feed_only ?? false)}) ON CONFLICT (domain) DO NOTHING;`
     );
     for (const e of s.endpoints)
       lines.push(

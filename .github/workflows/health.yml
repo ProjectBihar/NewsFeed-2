@@ -42,5 +42,5 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           curl --fail --silent --show-error --location https://supabase-downloads.s3-ap-southeast-1.amazonaws.com/prod/ssl/prod-ca-2021.crt --output "$RUNNER_TEMP/supabase-ca.crt"
-          cat data/sources/certificates/gogetssl-rsa-dv-ssl-ca2.pem >> "$RUNNER_TEMP/supabase-ca.crt"
+          cat data/sources/certificates/official-intermediates.pem >> "$RUNNER_TEMP/supabase-ca.crt"
           NODE_EXTRA_CA_CERTS="$RUNNER_TEMP/supabase-ca.crt" npm run pipeline:health -- 200

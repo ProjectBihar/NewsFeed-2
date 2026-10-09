@@ -2,6 +2,8 @@ import { discoverSource, type Fetcher } from "../crawler/discovery/discover";
 import type { DiscoveryEndpoint } from "../crawler/discovery/types";
 import { buildEnqueueQuery } from "../crawler/queues/enqueue";
 import type { PipelineDatabase } from "./database";
+import { storeTempDocument } from "../crawler/retention/temp-store";
+import { summaryHtml } from "./rss-summary";
 
 /** Queue insert and checkpoint advancement commit together, per source. */
 export async function runDiscovery(db: PipelineDatabase, maxSources = 100, fetcher?: Fetcher) {
@@ -15,7 +17,7 @@ export async function runDiscovery(db: PipelineDatabase, maxSources = 100, fetch
   try {
     const sources = (
       await db.query(
-        `SELECT s.id, s.domain, s.priority, s.source_type FROM public.sources s
+        `SELECT s.id, s.domain, s.priority, s.source_type, s.feed_only FROM public.sources s
       WHERE s.active AND EXISTS (SELECT 1 FROM public.source_endpoints e WHERE e.source_id=s.id AND e.active)
       ORDER BY (SELECT min(COALESCE(e.last_checked, 'epoch'::timestamptz))
                 FROM public.source_endpoints e WHERE e.source_id=s.id AND e.active), s.id LIMIT $1`,
@@ -48,12 +50,37 @@ export async function runDiscovery(db: PipelineDatabase, maxSources = 100, fetch
           const poll = await discoverSource(
             { id: Number(row.id), domain: String(row.domain), priority: String(row.priority) },
             endpoints,
-            { fetcher }
+            {
+              fetcher,
+              ...(row.source_type === "official" ? { maxUrls: 40, perEndpointLimit: 10 } : {}),
+            }
           );
           let count = 0;
           if (poll.queueRows.length) {
             const query = buildEnqueueQuery(poll.queueRows);
-            count = (await tx.query(query.text + " RETURNING id", query.values)).rows.length;
+            const added = (await tx.query(query.text + " RETURNING id,url", query.values)).rows;
+            count = added.length;
+            if (row.feed_only) {
+              for (const queued of added) {
+                const entry = poll.entries.find((e) => e.url === queued.url);
+                const html = entry ? summaryHtml(entry, String(row.domain)) : null;
+                if (html) {
+                  await storeTempDocument(tx, {
+                    url: String(queued.url),
+                    queueId: Number(queued.id),
+                    rawHtml: html,
+                  });
+                  await tx.query(
+                    "UPDATE public.crawl_queue SET status='fetched',discovery_metadata=$2::jsonb WHERE id=$1",
+                    [queued.id, JSON.stringify({ summary_only: true })]
+                  );
+                } else
+                  await tx.query(
+                    "UPDATE public.crawl_queue SET status='rejected',last_error='publisher-feed-summary-unusable' WHERE id=$1",
+                    [queued.id]
+                  );
+              }
+            }
             if (row.source_type === "official") {
               await tx.query(
                 `UPDATE public.crawl_queue q SET discovery_metadata=jsonb_build_object('title',m.title,'published_at',m.published_at)

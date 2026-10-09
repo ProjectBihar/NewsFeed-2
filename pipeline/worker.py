@@ -40,6 +40,11 @@ def analyze(request):
     language = detect_language(body).to_dict()
     relevance = assess_relevance(title, body).to_dict()
     kind = classify_article(title, body).to_dict()
+    if (request.get("discovery_metadata") or {}).get("summary_only"):
+        article["extraction_method"] = "publisher-rss-summary"
+        article["warnings"].append("publisher-rss-summary-only")
+        kind["curated"] = False
+        kind["reason_codes"].append("summary-only-not-curated")
     topic = classify_topic(title, body).to_dict()
     event = classify_event(title, body).to_dict()
     # Resolve the evidence's canonical names back to the KB's stable IDs.

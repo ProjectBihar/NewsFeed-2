@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/public/Header";
-import { SOURCES } from "@/lib/public/sources";
+import { SOURCES, usesPublisherSummary } from "@/lib/public/sources";
 
 // Source index (Phase 32): one link per active registry source — navigation
 // only, no counts or statistics of its own. Inactive registry entries are
@@ -57,6 +57,7 @@ export default async function SourceIndex({
                   <span className="text-[12px] ml-2" style={{ color: "var(--muted)" }}>
                     {source.language.toUpperCase()} · {source.scope}
                     {source.sourceType === "official" ? " · Official information" : ""}
+                    {usesPublisherSummary(source.name) ? " · Publisher RSS summaries" : ""}
                   </span>
                 </Link>
               </li>
