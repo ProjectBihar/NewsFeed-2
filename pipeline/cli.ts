@@ -24,7 +24,8 @@ async function main() {
     else {
       const rows = (
         await db.query(
-          `SELECT s.id FROM public.sources s WHERE s.active ORDER BY
+          `SELECT s.id FROM public.sources s WHERE s.active
+        AND EXISTS (SELECT 1 FROM public.source_endpoints e WHERE e.source_id=s.id AND e.active) ORDER BY
         (SELECT max(h.checked_at) FROM public.source_health h WHERE h.source_id=s.id) ASC NULLS FIRST,s.id LIMIT $1`,
           [limit]
         )
