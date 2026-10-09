@@ -153,38 +153,6 @@ select:focus-visible {
   padding: 24px 32px 64px;
   margin: auto;
 }
-.feed-introduction {
-  text-align: center;
-  padding: 38px 24px 34px;
-  background: var(--bg-secondary);
-  border-radius: 24px;
-  margin: 24px 0 32px;
-}
-.initiative-label {
-  display: inline-block;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 9px 16px;
-  background: var(--bg);
-  color: var(--ink-secondary);
-  font-size: 10px;
-  line-height: 1.5;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-}
-.feed-introduction h1 {
-  font-size: clamp(36px, 5vw, 54px);
-  line-height: 1.15;
-  letter-spacing: -1.6px;
-  margin: 20px 0 14px;
-}
-.feed-description {
-  max-width: 530px;
-  margin: auto;
-  font-size: 14px;
-  color: var(--ink-secondary);
-  line-height: 1.75;
-}
 .timeline-caption {
   color: var(--muted);
   font-size: 12px;
@@ -196,8 +164,13 @@ select:focus-visible {
   min-height: 190px;
 }
 .story-headline {
-  font-size: 19px;
-  line-height: 1.55;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+@media (min-width: 640px) {
+  .story-headline {
+    font-size: 15px;
+  }
 }
 .story-grid > :nth-child(3n + 2) .story-card {
   background: var(--bg-secondary);
@@ -322,14 +295,6 @@ dialog::backdrop {
   }
   .newsfeed-shell {
     padding: 20px 20px 40px;
-  }
-  .feed-introduction {
-    margin-top: 16px;
-    padding: 28px 20px;
-  }
-  .initiative-label {
-    font-size: 9px;
-    letter-spacing: 0.7px;
   }
   .story-card {
     min-height: 165px;

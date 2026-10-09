@@ -34,14 +34,7 @@ export default function Newsfeed({
       <div className="newsfeed-shell">
         {notice && <div className="mb-3 sm:mb-4">{notice}</div>}
         <SiteNav demo={demo} />
-        <section className="feed-introduction" aria-labelledby="feed-title">
-          <p className="initiative-label">An independent public-interest initiative for Bihar</p>
-          <h1 id="feed-title">Bihar News</h1>
-          <p className="feed-description">
-            A clearer view of Bihar’s public life. Reports from newsrooms and official sources,
-            together in one place.
-          </p>
-        </section>
+        <h1 className="sr-only">Bihar News</h1>
         <p className="timeline-caption">
           {demo ? "Demo seven-day window" : "Today and the previous six days"} · IST · {total}{" "}
           stories
