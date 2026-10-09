@@ -28,7 +28,7 @@ from clustering.scoring import _parse_time, CLUSTER_THRESHOLD
 from clustering.xlingual import augmented_pair_score
 from clustering.titles import select_title
 
-VERSION = "rules-v1-pipeline-20261009"
+VERSION = "rules-v1-pipeline-20261010"
 
 
 def analyze(request):

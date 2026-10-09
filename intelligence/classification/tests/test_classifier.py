@@ -32,6 +32,16 @@ def test_advertorial_markers_dominate():
     assert result["curated"] is False
 
 
+def test_embedded_ad_slot_does_not_turn_ordinary_reporting_into_an_advertorial():
+    title = "Katihar railway officer saves passenger with CPR"
+    body = "The officer saved the passenger at Katihar junction."
+    baseline = classify_article(title, body).to_dict()
+    for banner in ("ADVERTISEMENT", "विज्ञापन"):
+        result = classify_article(title, f"{body}\n{banner}\nMedical staff attended the passenger.").to_dict()
+        assert result["article_type"] == baseline["article_type"]
+        assert result["article_type"] != "advertorial"
+
+
 def test_mass_casualty_upgrades_accident():
     minor = classify_article("Bus overturns", "Two injured after the bus overturned.").to_dict()
     assert minor["significance_tier"] == "C"
