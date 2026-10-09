@@ -1,5 +1,50 @@
 # Implementation Status
 
+## Production foundation and live pipeline (implemented locally, 2026-10-09)
+
+This entry supersedes the historical notes below about missing RLS,
+shared anon admin credentials, audit-only entity edits, and unwired runners.
+Supabase initialization and live ingestion are verified; website deployment
+and runner observation are in progress as of 2026-10-10.
+
+- Added three transactional migrations: reader/service-role boundaries;
+  processing claims, retries and KB identifiers; atomic service-only admin RPCs.
+- Added a PostgreSQL adapter and bounded discovery/process/browser/health CLI.
+  Discovery checkpoints and queue inserts commit together. Processing connects
+  real extraction, language, relevance, type/topic/event classification, exact
+  and near dedup, bilingual story assignment and deterministic titles.
+- Permanent rows hold metadata, fingerprints, evidence and joins. Full HTML and
+  bodies stay in the fixed-window temporary store. Assignment, classification,
+  entities, membership representations, counts and queue completion are atomic.
+- Admin layout and each action enforce authentication. Privileged credentials
+  are server-only; neither admin nor retention falls back to the anon key.
+  Corrections update entity links; rename/move/merge/split and audits commit
+  together. Counts reflect public eligibility and dates reflect report dates.
+- Live workflow stages require `PIPELINE_ENABLED=true`. Processing has bounded
+  twice-hourly batches following publisher validation. CI installs Python before integrated JS
+  tests. Retention uses environment-based secret checks and a service key.
+- Verification: 262 JavaScript tests pass across 39 files; 154 Python tests pass;
+  lint, TypeScript, pipeline compilation and Next.js production build pass.
+  Responsive browser checks pass 39/39 across desktop, tablet and mobile;
+  unauthenticated access to the built admin route returns HTTP 401.
+  Pipeline integration uses actual Python and a local HTTP/RSS publisher,
+  covering publication, exact replay, independent-coverage clustering, manual
+  title preservation, Hindi JSON transport and failure rollback. SQL tests
+  prove public write/private-read rejection and admin audit failure rollback.
+- Deployment target: existing Supabase `zhaxcgvzdkhigtshcubj`, Vercel website,
+  GitHub Actions workers, repository `ProjectBihar/NewsFeed-2`. The local Git
+  `origin` still refers to `ProjectBihar/NewsFeed`; its HEAD matches V2 main.
+  Use the V2 destination explicitly when preparing a branch for publication.
+- Live checks: all ten migrations applied atomically to the empty existing
+  project; 14 sources and 23 endpoints; public/private access verified. Three
+  discovery sources queued 641 URLs. A Bihar batch downloaded, extracted and
+  published ten stories without errors. Live service-role admin rename,
+  correction, move, split and merge passed inside a rolled-back transaction.
+- Remaining launch work: validate publishers from the runner host, deploy and
+  verify public/admin pages, and observe a full day. Candidate sets above
+  2,000 cause a retry rather than a silent incomplete cluster decision.
+- Setup and recovery: `docs/OPERATIONS.md`.
+
 ## §§45–51 — Automation (complete, verified 2026-10-01)
 
 - Date: 2026-10-01

@@ -5,7 +5,7 @@
 // (generate with `npm run admin:hash`). Comparison is constant-time
 // over the hashes. No reader accounts, no sessions, no cookies.
 //
-// WebCrypto only (no node:crypto): middleware runs on the Edge runtime.
+// WebCrypto keeps the same verifier usable by proxy and server actions.
 export interface AdminEnv {
   ADMIN_USERNAME?: string;
   ADMIN_PASSWORD_SHA256?: string;
@@ -32,7 +32,7 @@ export async function isAuthorized(
 ): Promise<boolean> {
   const username = env.ADMIN_USERNAME;
   const expectedHash = (env.ADMIN_PASSWORD_SHA256 ?? "").toLowerCase();
-  if (!username || !expectedHash || !authorization) return false;
+  if (!username || !/^[a-f0-9]{64}$/.test(expectedHash) || !authorization) return false;
   const match = /^Basic\s+(.+)$/.exec(authorization.trim());
   if (!match) return false;
   let decoded: string;

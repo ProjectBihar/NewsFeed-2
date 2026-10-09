@@ -6,31 +6,33 @@ name: process
 # the remaining queue survives (durable crawl_queue — runners claim
 # bounded batches and never delete work).
 #
-# Honesty note: the production fetch→extract→persist wiring is unwired
-# (see the §§45–51 entry in docs/IMPLEMENTATION_STATUS.md). This
-# workflow runs the bounded offline process gate: pure-unit fetch and
-# queue tests only. The network/Chromium integration batches stay in
-# CI's full suite, not here, so every run stays bounded and fast.
+# Live batches require PIPELINE_ENABLED=true and DATABASE_URL.
+# Pure contracts always run before the optional live stage.
 #
-# Manual trigger only: the plan sets no cadence for process runs. The
-# batch-size input reserves the bound the live runner will enforce.
+# Scheduled batches are bounded at 50 rows; manual batches accept 1–500.
 
 on:
+  schedule:
+    - cron: "7,37 * * * *"
   workflow_dispatch:
     inputs:
       batch-size:
-        description: "Max queue rows per batch (bounded execution)"
+        description: "Max queue rows per batch (1–500)"
         required: false
         default: "100"
+      browser:
+        description: "Use browser acquisition for operator-flagged sources"
+        type: boolean
+        default: false
 
 concurrency:
   group: process-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   process-gate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -42,8 +44,36 @@ jobs:
       - name: Install JS dependencies
         run: npm ci
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          pip install -r extraction/requirements.txt
+          pip install -r intelligence/requirements.txt
+
       - name: Bounded process gate (no network, no browser)
         run: npx vitest run crawler/fetch/retry.test.ts crawler/fetch/throttle-config.test.ts crawler/fetch/queue-store.test.ts crawler/fetch/browser-policy.test.ts crawler/queues/checkpoints.test.ts
 
-      - name: Report the bound
-        run: echo "Bounded gate complete (batch-size input reserved for the live runner)"
+      - name: Build pipeline
+        run: npm run pipeline:build
+
+      - name: Install Chromium for flagged sources
+        if: vars.PIPELINE_ENABLED == 'true' && inputs.browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Process a live bounded batch
+        if: vars.PIPELINE_ENABLED == 'true'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BATCH_SIZE: ${{ inputs.batch-size || '50' }}
+          USE_BROWSER: ${{ inputs.browser }}
+        run: |
+          curl --fail --silent --show-error --location https://supabase-downloads.s3-ap-southeast-1.amazonaws.com/prod/ssl/prod-ca-2021.crt --output "$RUNNER_TEMP/supabase-ca.crt"
+          export NODE_EXTRA_CA_CERTS="$RUNNER_TEMP/supabase-ca.crt"
+          if [ "$USE_BROWSER" = "true" ]; then
+            npm run pipeline:browser -- "$BATCH_SIZE"
+          else
+            npm run pipeline:process -- "$BATCH_SIZE"
+          fi

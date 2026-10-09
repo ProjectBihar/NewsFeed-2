@@ -29,6 +29,11 @@ jobs:
       - name: Install JS dependencies
         run: npm ci
 
+      - name: Install Python dependencies
+        run: |
+          pip install -r extraction/requirements.txt
+          pip install -r intelligence/requirements.txt
+
       - name: Lint
         run: npm run lint
 
@@ -40,11 +45,6 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Install Python dependencies
-        run: |
-          pip install -r extraction/requirements.txt
-          pip install -r intelligence/requirements.txt
 
       - name: Python tests
         run: pytest

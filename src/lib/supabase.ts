@@ -3,9 +3,8 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 let cachedClient: SupabaseClient | null = null;
 
 /**
- * Phase 1 scaffolding only.
- * Returns a Supabase client when env is configured, otherwise null.
- * Never throws for missing env — the shell must build without credentials.
+ * Public reader client. RLS and column grants restrict it to public metadata.
+ * Never substitutes privileged credentials; returns null when unconfigured.
  */
 export function getSupabaseClient(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -16,7 +15,9 @@ export function getSupabaseClient(): SupabaseClient | null {
   }
 
   if (!cachedClient) {
-    cachedClient = createClient(url, anonKey);
+    cachedClient = createClient(url, anonKey, {
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+    });
   }
 
   return cachedClient;

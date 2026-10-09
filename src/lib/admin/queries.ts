@@ -1,12 +1,12 @@
 // Read-only admin queries (Phase 21). Thin Supabase selects; shaping in
 // summarize.ts. Mutations arrive with Phase 22 corrections UI.
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { getSupabaseClient } from "../supabase";
+import { getAdminClient } from "./client";
 
 export function requireClient(): SupabaseClient {
-  const client = getSupabaseClient();
+  const client = getAdminClient();
   if (!client) {
-    throw new Error("Supabase is not configured (see .env.example).");
+    throw new Error("Admin Supabase access is not configured (see .env.example).");
   }
   return client;
 }

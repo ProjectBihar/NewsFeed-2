@@ -16,7 +16,12 @@
     "registry:generate": "node scripts/generate-source-seed.mjs",
     "admin:hash": "node scripts/admin-password-hash.mjs",
     "check:responsive": "node scripts/check-homepage-responsive.mjs",
-    "retention:cleanup": "node scripts/retention-cleanup.mjs"
+    "retention:cleanup": "node scripts/retention-cleanup.mjs",
+    "pipeline:build": "tsc -p tsconfig.pipeline.json",
+    "pipeline:discover": "node .pipeline/pipeline/cli.js discover",
+    "pipeline:process": "node .pipeline/pipeline/cli.js process",
+    "pipeline:browser": "node .pipeline/pipeline/cli.js browser",
+    "pipeline:health": "node .pipeline/pipeline/cli.js health"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.117.2",
@@ -24,14 +29,17 @@
     "crawlee": "^3.18.1",
     "fast-xml-parser": "^5.11.1",
     "next": "16.3.6",
+    "pg": "8.16.3",
     "playwright": "^1.63.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "server-only": "0.0.1"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^22.10.0",
+    "@types/pg": "8.15.5",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.17.0",

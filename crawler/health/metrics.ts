@@ -78,7 +78,7 @@ export async function computeSourceMetrics(
 
   const rows = (
     await db.query(
-      `SELECT status, last_error, last_attempt_at, discovered_at FROM public.crawl_queue WHERE source_id = $1`,
+      `SELECT status, last_error, last_attempt_at, discovered_at, processing_diagnostics FROM public.crawl_queue WHERE source_id = $1`,
       [sourceId]
     )
   ).rows as Array<{
@@ -86,18 +86,22 @@ export async function computeSourceMetrics(
     last_error: string | null;
     last_attempt_at: string | Date | null;
     discovered_at: string | Date;
+    processing_diagnostics?: { fetched?: boolean; extracted?: boolean };
   }>;
   const attemptedAt = (r: { last_attempt_at: string | Date | null }) => iso(r.last_attempt_at);
   const touched = rows.filter((r) => {
     const at = attemptedAt(r);
     return at != null && at >= windowStart;
   });
-  const succeededFetch = touched.filter((r) => r.status === "fetched").length;
+  const fetchSucceeded = (r: (typeof rows)[number]) =>
+    ["fetched", "processing", "extracted", "complete"].includes(r.status) ||
+    r.processing_diagnostics?.fetched === true;
+  const succeededFetch = touched.filter(fetchSucceeded).length;
   let blocked403 = 0;
   let rateLimited429 = 0;
   let failures = 0;
   for (const row of touched) {
-    if (row.status === "fetched" || row.status === "rejected") continue;
+    if (fetchSucceeded(row) || row.status === "rejected") continue;
     const kind = classifyFailureKind(row.last_error);
     if (kind === "blocked403") blocked403 += 1;
     else if (kind === "rateLimited429") rateLimited429 += 1;
@@ -107,13 +111,27 @@ export async function computeSourceMetrics(
   }
   const extracted = rows.filter((r) => {
     const at = attemptedAt(r);
-    return r.status === "extracted" && at != null && at >= windowStart;
+    return (
+      (r.status === "extracted" || r.processing_diagnostics?.extracted === true) &&
+      at != null &&
+      at >= windowStart
+    );
   }).length;
+  const semanticObserved = touched.some(
+    (r) => typeof r.processing_diagnostics?.extracted === "boolean"
+  );
   const fetchedTotal = rows.filter((r) => {
     const at = attemptedAt(r);
-    return (r.status === "fetched" || r.status === "extracted") && at != null && at >= windowStart;
+    return (
+      (semanticObserved
+        ? r.status === "extracted" || typeof r.processing_diagnostics?.extracted === "boolean"
+        : fetchSucceeded(r)) &&
+      at != null &&
+      at >= windowStart
+    );
   }).length;
-  const extraction = extracted > 0 ? { attempted: fetchedTotal, succeeded: extracted } : null;
+  const extraction =
+    semanticObserved || extracted > 0 ? { attempted: fetchedTotal, succeeded: extracted } : null;
 
   const discovered = rows.filter((r) => {
     const at = iso(r.discovered_at);

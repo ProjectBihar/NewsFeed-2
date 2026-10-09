@@ -26,7 +26,7 @@ export async function claimBrowserRows(db: QueryFn, limit: number): Promise<Clai
      WHERE id IN (
        SELECT q.id FROM public.crawl_queue q
        JOIN public.sources s ON s.id = q.source_id
-       WHERE s.requires_browser = TRUE
+       WHERE s.requires_browser = TRUE AND s.active = TRUE
          AND (q.status = 'discovered' OR q.status = 'queued'
               OR (q.status = 'retry' AND (q.next_retry_at IS NULL OR q.next_retry_at <= now())))
        ORDER BY ${PRIORITY_ORDER}, q.discovered_at

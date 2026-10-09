@@ -16,7 +16,9 @@ const CONFIG: FetchConfig = {
   ...DEFAULT_FETCH_CONFIG,
   globalConcurrency: 10,
   perDomainConcurrency: 2,
-  requestTimeoutSecs: 2,
+  // Leave startup/load headroom for real local requests. The /slow fixture
+  // always exceeds this timeout, so the timeout path remains exercised.
+  requestTimeoutSecs: 10,
   maxAttempts: 2,
   baseBackoffSecs: 1,
   maxBackoffSecs: 60,
@@ -77,14 +79,17 @@ beforeAll(async () => {
         }
         return;
       case "/slow":
-        setTimeout(() => {
-          try {
-            res.writeHead(200, { "content-type": "text/html" });
-            res.end("late");
-          } catch {
-            /* client already timed out */
-          }
-        }, 5000);
+        setTimeout(
+          () => {
+            try {
+              res.writeHead(200, { "content-type": "text/html" });
+              res.end("late");
+            } catch {
+              /* client already timed out */
+            }
+          },
+          (CONFIG.requestTimeoutSecs + 5) * 1000
+        );
         return;
       case "/image":
         res.writeHead(200, { "content-type": "image/png" });
@@ -195,6 +200,10 @@ describe("fetchBatch integration (Phase 5)", () => {
       const redir = first.results.find((r) => r.url === `${base}/redirect`)!;
       expect(redir.finalUrl).toBe(`${base}/ok`);
       expect(first.results.find((r) => r.url === `${base}/image`)!.html).toBeNull();
+      expect(first.results.find((r) => r.url === `${base}/slow`)!.outcome).toMatchObject({
+        decision: "retry",
+        status: null,
+      });
 
       // Phase 35: each successful response's raw HTML went to TEMPORARY
       // storage (10-day window) — nothing else did, nothing went permanent.

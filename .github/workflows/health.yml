@@ -3,11 +3,8 @@ name: health
 # Plan §49: every 6 hours — source freshness, failure rates, volume
 # anomalies, extraction degradation, feed staleness, blocked sources.
 #
-# Honesty note: live per-source checks need a configured database
-# (checkSourceHealth is callable but unwired — see the §§45–51 entry in
-# docs/IMPLEMENTATION_STATUS.md). This workflow guards the health
-# contract offline: metric computation, assessment order
-# (BLOCKED → BROKEN → STALE → DEGRADED → HEALTHY), and the drift gates.
+# Live metric persistence requires PIPELINE_ENABLED=true and DATABASE_URL.
+# Assessment and drift contracts always run first.
 
 on:
   schedule:
@@ -16,7 +13,7 @@ on:
 
 concurrency:
   group: health-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   health-contract:
@@ -35,3 +32,14 @@ jobs:
 
       - name: Health contract (metrics, assessment, drift gates)
         run: npx vitest run crawler/health
+
+      - name: Build pipeline
+        run: npm run pipeline:build
+
+      - name: Persist live source health
+        if: vars.PIPELINE_ENABLED == 'true'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          curl --fail --silent --show-error --location https://supabase-downloads.s3-ap-southeast-1.amazonaws.com/prod/ssl/prod-ca-2021.crt --output "$RUNNER_TEMP/supabase-ca.crt"
+          NODE_EXTRA_CA_CERTS="$RUNNER_TEMP/supabase-ca.crt" npm run pipeline:health -- 200

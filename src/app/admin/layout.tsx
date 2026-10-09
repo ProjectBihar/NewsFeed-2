@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { requireAdmin } from "@/lib/admin/require-auth";
 import "./admin.css";
 
 export const metadata: Metadata = {
@@ -19,7 +20,8 @@ const LINKS = [
   ["Corrections", "/admin/corrections"],
 ] as const;
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  await requireAdmin();
   return (
     <section className="admin">
       <header className="admin-head">
