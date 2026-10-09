@@ -49,7 +49,7 @@ describe("Phase 28 — public shell", () => {
     const metro = DEMO_STORIES.find((s) => s.id === "metro-approval");
     expect(metro).toBeDefined();
     const html = renderToStaticMarkup(<StoryCard story={metro!} />);
-    expect(html).toContain("glass-card p-4 sm:p-5");
+    expect(html).toContain("glass-card story-card p-4 sm:p-5");
     expect(html).toContain("Cabinet approves Patna Metro expansion");
     expect(html).not.toContain("Infrastructure");
     expect(html).not.toContain("#dc2626"); // V1 infrastructure pill colour
@@ -73,13 +73,13 @@ describe("Phase 28 — public shell", () => {
 
   it("feed shell lays out header, container, nav, modes, and 3-column grid like V1", () => {
     const html = renderToStaticMarkup(<Newsfeed stories={DEMO_STORIES} />);
-    expect(html).toContain("max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-[105px] py-3 sm:py-4");
+    expect(html).toContain("newsfeed-shell");
     expect(html).toContain(
       "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mt-2 items-stretch"
     );
     expect(html).toContain("animate-fade-in h-full");
     const curatedCount = DEMO_STORIES.length;
-    expect((html.match(/glass-card p-4/g) ?? []).length).toBe(curatedCount);
+    expect((html.match(/<article /g) ?? []).length).toBe(curatedCount);
     expect(html).toContain(`>${curatedCount}<`); // V1 "total" count follows the view
     expect(html).not.toMatch(FORBIDDEN);
   });
@@ -93,7 +93,7 @@ describe("Phase 28 — public shell", () => {
     expect(html).toContain("शिक्षक नियुक्ति परीक्षा कैलेंडर जारी");
     expect(html).not.toContain("Tenders invited for metro corridor works");
     // Eleven in-window reports; the future fixture stays in Archive.
-    expect((html.match(/glass-card p-4/g) ?? []).length).toBe(11);
+    expect((html.match(/<article /g) ?? []).length).toBe(11);
     expect(html).toContain("Three arrested after Patna robbery");
     expect(html).not.toContain(">All Bihar News<");
     expect(html).toContain("11 stories");
@@ -136,7 +136,7 @@ describe("Phase 29 — homepage feed modes and navigation", () => {
 
   it("shows every supplied story without categories or a curated switch", () => {
     const html = renderToStaticMarkup(<Newsfeed stories={DEMO_STORIES} />);
-    expect((html.match(/glass-card p-4/g) ?? []).length).toBe(12);
+    expect((html.match(/<article /g) ?? []).length).toBe(12);
     expect(html).toContain("Three arrested after Patna robbery");
     expect(html).not.toContain(">Curated<");
     expect(html).not.toContain(">All Bihar News<");

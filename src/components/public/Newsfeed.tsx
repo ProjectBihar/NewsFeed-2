@@ -31,13 +31,18 @@ export default function Newsfeed({
     <div>
       {!demo && <TimelineRollover asOf={asOf} />}
       <Header totalStories={total} />
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-[105px] py-3 sm:py-4">
+      <div className="newsfeed-shell">
         {notice && <div className="mb-3 sm:mb-4">{notice}</div>}
         <SiteNav demo={demo} />
-        <h1 className="text-lg mb-1" style={{ color: "var(--ink)" }}>
-          Bihar News
-        </h1>
-        <p className="text-[12px] mb-4" style={{ color: "var(--muted)" }}>
+        <section className="feed-introduction" aria-labelledby="feed-title">
+          <p className="initiative-label">An independent public-interest initiative for Bihar</p>
+          <h1 id="feed-title">Bihar News</h1>
+          <p className="feed-description">
+            A clearer view of Bihar’s public life. Reports from newsrooms and official sources,
+            together in one place.
+          </p>
+        </section>
+        <p className="timeline-caption">
           {demo ? "Demo seven-day window" : "Today and the previous six days"} · IST · {total}{" "}
           stories
           {total > 0 &&
@@ -49,7 +54,7 @@ export default function Newsfeed({
             <p className="text-sm">Check back after the next crawl cycle.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mt-2 items-stretch">
+          <div className="story-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mt-2 items-stretch">
             {stories.map((story) => (
               <div key={story.id} className="animate-fade-in h-full">
                 <StoryCard story={story} demo={demo} />

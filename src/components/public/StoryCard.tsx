@@ -12,12 +12,9 @@ export default function StoryCard({ story, demo = false }: { story: PublicStory;
   const href = `/story/${story.id}${demo ? "?demo=1" : ""}`;
 
   return (
-    <article className="glass-card p-4 sm:p-5 flex flex-col relative gpu-accel">
+    <article className="glass-card story-card p-4 sm:p-5 flex flex-col relative">
       {/* Canonical headline — links to the story page */}
-      <h3
-        className="text-[14.5px] sm:text-[15px] font-normal leading-[1.5] mb-3 flex-1"
-        style={{ color: "var(--ink)" }}
-      >
+      <h3 className="story-headline font-normal mb-3 flex-1" style={{ color: "var(--ink)" }}>
         <Link href={href} className="hover:underline decoration-from-font">
           {story.canonicalTitle}
         </Link>
