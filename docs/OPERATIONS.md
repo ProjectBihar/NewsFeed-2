@@ -12,7 +12,7 @@ Website deployment remains pending.
 
 ## Local verification
 
-Use Node 20 or newer and Python 3.12. From the repository root:
+Use Node 22 or newer and Python 3.12 (Actions uses Node 24). From the repository root:
 
 ```sh
 npm ci

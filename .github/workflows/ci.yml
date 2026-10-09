@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - uses: actions/setup-python@v5
@@ -40,7 +40,12 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Install test browser
+        run: npx playwright install --with-deps chromium
+
       - name: TypeScript tests
+        # Includes browser acquisition against a local publisher fixture.
+        # Chromium must be installed even though live crawls stay disabled.
         run: npm test
 
       - name: Build

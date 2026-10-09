@@ -3,6 +3,10 @@ import json
 from pathlib import Path
 import sys
 
+# Library notices must not corrupt the single JSON response on stdout.
+PROTOCOL_STDOUT = sys.stdout
+sys.stdout = sys.stderr
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT / "extraction"), str(ROOT / "intelligence")]
 
@@ -109,7 +113,7 @@ def handle(request):
 if __name__ == "__main__":
     try:
         payload = json.load(sys.stdin)
-        print(json.dumps(handle(payload), ensure_ascii=False))
+        print(json.dumps(handle(payload), ensure_ascii=False, allow_nan=False), file=PROTOCOL_STDOUT)
     except Exception as error:
         print(f"{type(error).__name__}: {error}", file=sys.stderr)
         sys.exit(1)
