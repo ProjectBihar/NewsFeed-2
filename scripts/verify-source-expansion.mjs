@@ -14,7 +14,17 @@ for (let i = 0; i < sources.length; i += 3) {
         s.endpoints
           .filter((e) => e.active)
           .map((e) => ({ ...e, last_seen_url: null, last_seen_published_at: null })),
-        { maxUrls: 20 }
+        {
+          maxUrls: 20,
+          fetcher: async (url) => {
+            try {
+              return await defaultFetcher(url);
+            } catch (error) {
+              const code = error.cause?.code || error.name;
+              throw new Error(`Connection failed (${code})`);
+            }
+          },
+        }
       );
       const report = {
         name: s.name,
