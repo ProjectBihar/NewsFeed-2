@@ -1,10 +1,13 @@
 """Database-free bridge to the existing extraction and intelligence libraries."""
 import json
+import os
 from pathlib import Path
 import sys
 
 # Library notices must not corrupt the single JSON response on stdout.
-PROTOCOL_STDOUT = sys.stdout
+PROTOCOL_STDOUT = os.fdopen(os.dup(sys.stdout.fileno()), "w", encoding="utf-8")
+# Also redirect notices written directly by native libraries to descriptor 1.
+os.dup2(sys.stderr.fileno(), sys.stdout.fileno())
 sys.stdout = sys.stderr
 
 ROOT = Path(__file__).resolve().parents[1]

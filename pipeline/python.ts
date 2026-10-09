@@ -50,7 +50,11 @@ export function callWorker<T>(request: Record<string, unknown>): Promise<T> {
         try {
           resolvePromise(JSON.parse(stdout) as T);
         } catch {
-          reject(new Error("Worker returned invalid JSON."));
+          reject(
+            new Error(
+              `Worker returned invalid JSON (bytes=${Buffer.byteLength(stdout)}, leadingCodePoint=${stdout.codePointAt(0) ?? "empty"}, objectOffset=${stdout.indexOf("{")}).`
+            )
+          );
         }
       }
     });
