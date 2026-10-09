@@ -55,9 +55,9 @@ describe("§§45–51 — workflow automation contracts", () => {
   });
 
   it("each pipeline workflow declares its plan trigger", () => {
-    expect(text("discover.yml")).toContain("*/30 * * * *");
+    expect(text("discover.yml")).toContain("schedule:");
     expect(text("process.yml")).toContain("workflow_dispatch");
-    expect(text("process.yml")).toContain("7,37 * * * *");
+    expect(text("process.yml")).toContain("schedule:");
     expect(text("health.yml")).toContain("*/6");
     expect(text("maintenance.yml")).toContain("23 4 * * *");
     expect(text("train.yml")).toMatch(/\* \* 1/);
@@ -65,6 +65,36 @@ describe("§§45–51 — workflow automation contracts", () => {
       if (file === "ci.yml") continue;
       expect(text(file), `${file} dispatch`).toContain("workflow_dispatch");
     }
+  });
+
+  it("spaces crawl slots 45 minutes apart across midnight, with processing seven minutes later", () => {
+    const slots = (name: string) => {
+      const expand = (field: string) =>
+        field.split(",").flatMap((part) => {
+          const [range, step = "1"] = part.split("/");
+          const [start, end = start] = range.split("-").map(Number);
+          return Array.from(
+            { length: Math.floor((end - start) / Number(step)) + 1 },
+            (_, i) => start + i * Number(step)
+          );
+        });
+      return [...text(name).matchAll(/cron: "([^"]+)"/g)]
+        .flatMap((match) => {
+          const [minute, hour, day, month, weekday] = match[1].split(" ");
+          expect([day, month, weekday]).toEqual(["*", "*", "*"]);
+          return expand(hour).flatMap((h) => expand(minute).map((m) => h * 60 + m));
+        })
+        .sort((a, b) => a - b);
+    };
+    const discovery = slots("discover.yml");
+    const processing = slots("process.yml");
+    for (const times of [discovery, processing]) {
+      expect(times).toHaveLength(32);
+      times.forEach((time, i) =>
+        expect((times[(i + 1) % times.length] - time + 1440) % 1440).toBe(45)
+      );
+    }
+    expect(processing).toEqual(discovery.map((time) => (time + 7) % 1440).sort((a, b) => a - b));
   });
 
   it("every workflow is bounded and cancellable", () => {
