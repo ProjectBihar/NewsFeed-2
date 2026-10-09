@@ -41,14 +41,17 @@ the existing Indian Express. Related ownership is recorded in registry notes.
 confirmed the nine full-article newsroom channels and most official listings.
 It exposed NDTV article blocking and missing BSDMA/railway TLS intermediates,
 which prompted the supported feed-summary path and verified certificate bundle.
-The final hosted rerun and production publication evidence will be recorded
-after verification. Production activation waits for those results and full CI.
+The [diagnostic hosted check](https://github.com/ProjectBihar/NewsFeed-2/actions/runs/37988204476)
+confirmed all other active new channels, but railway polling returned
+`ECONNREFUSED`. Railway remains paused despite local reachability. Production
+activation waits for the final active-channel check and full CI.
 
 East Champaran is registered inactive because the directory-listed host has a
 certificate hostname mismatch. Some district listings have no current notices;
 an empty channel does not mean articles were ingested. Railway collection covers
 homepage document announcements; a dedicated train press-release listing remains
-unlocated. Scanned government notices need an OCR follow-up before full coverage.
+unlocated, and its host refuses connections from the execution runner. Scanned
+government notices need an OCR follow-up before full coverage.
 
 Run the discover workflow with `verify-expansion=true` for a read-only host
 check. It skips live database writes and saves the verification artifact.
