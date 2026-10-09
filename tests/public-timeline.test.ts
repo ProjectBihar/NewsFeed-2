@@ -44,7 +44,7 @@ describe("public timeline with actual PostgreSQL and anonymous RLS", () => {
     `);
   });
   afterEach(async () => {
-    await db.exec("RESET ROLE; ROLLBACK;");
+    await db.exec("ROLLBACK; RESET ROLE;");
   });
   afterAll(async () => {
     await db?.close();
@@ -151,5 +151,45 @@ describe("public timeline with actual PostgreSQL and anonymous RLS", () => {
     const repeated = await timeline(1, first.asOf);
     expect(repeated.total).toBe(181);
     expect(repeated.stories.map((s) => s.id)).toEqual(first.stories.map((s) => s.id));
+  });
+
+  it("hides crime only from the timeline and uses an eligible headline for mixed story groups", async () => {
+    await report(
+      "Routine murder case",
+      "now()-interval '1 minute'",
+      "UPDATE articles SET timeline_excluded=true WHERE headline='Routine murder case';"
+    );
+    const storyId = (
+      await db.query<{ id: number }>(
+        "SELECT id FROM stories WHERE canonical_title='Routine murder case'"
+      )
+    ).rows[0].id;
+    expect((await timeline()).total).toBe(181);
+    await db.exec("SET ROLE anon");
+    expect(
+      (await db.query("SELECT headline FROM articles WHERE headline='Routine murder case'")).rows
+    ).toHaveLength(1);
+    expect(
+      (await db.query("SELECT id FROM stories WHERE canonical_title='Routine murder case'")).rows
+    ).toHaveLength(1);
+    await db.exec("SAVEPOINT permission_probe");
+    await expect(db.query("SELECT timeline_reason FROM articles")).rejects.toThrow(
+      /permission denied/i
+    );
+    await db.exec("ROLLBACK TO SAVEPOINT permission_probe");
+    await db.exec("RESET ROLE");
+    await db.query(`INSERT INTO articles(source_id,url,canonical_url,headline,story_id,article_type,bihar_relevance_score,
+      published_at,created_at) SELECT source_id,'https://timeline.example/public-policy','https://timeline.example/public-policy',
+      'Statewide police recruitment results',story_id,'development',0.9,now()-interval '1 minute',now()-interval '1 minute'
+      FROM articles WHERE headline='Routine murder case'`);
+    await db.query(
+      "INSERT INTO story_articles(story_id,article_id,created_at) SELECT story_id,id,now()-interval '1 minute' FROM articles WHERE headline='Statewide police recruitment results'"
+    );
+    const result = await timeline();
+    expect(result.total).toBe(182);
+    expect(result.stories.find((s) => Number(s.id) === Number(storyId))).toMatchObject({
+      canonical_title: "Statewide police recruitment results",
+      article_count: 1,
+    });
   });
 });

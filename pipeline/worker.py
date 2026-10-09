@@ -19,6 +19,7 @@ from language import detect_language
 from relevance import assess_relevance
 from relevance.knowledge import get_knowledge_base
 from classification import classify_article, classify_topic, classify_event
+from classification.timeline_policy import timeline_policy
 from dedup.keys import article_keys
 from dedup.exact import find_duplicate, KnownArticle
 from dedup.lsh import LSHIndex, IndexedArticle
@@ -28,7 +29,7 @@ from clustering.scoring import _parse_time, CLUSTER_THRESHOLD
 from clustering.xlingual import augmented_pair_score
 from clustering.titles import select_title
 
-VERSION = "rules-v1-pipeline-20261010"
+VERSION = "rules-v1-pipeline-20261010-crime-preference"
 
 
 def analyze(request):
@@ -56,6 +57,7 @@ def analyze(request):
     return {
         "article": article, "language": language, "relevance": relevance,
         "classification": kind, "topic": topic, "event": event,
+        "timeline": timeline_policy(title, article.get("description"), body),
         "entities": entities, "districts": districts,
         "keys": article_keys(request["url"], article.get("canonical_url"), title, body),
         "fingerprint": fingerprint, "classifier_version": VERSION,

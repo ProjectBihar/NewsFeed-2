@@ -87,6 +87,7 @@ export async function persistAnalysis(
       classifier_version: analysis.classifier_version,
       relevance_evidence: analysis.relevance.evidence,
       warnings: analysis.article.warnings,
+      timeline: analysis.timeline,
     };
     const finish = async (status: string, extra: Record<string, unknown> = {}) =>
       tx.query(
@@ -181,8 +182,8 @@ export async function persistAnalysis(
         `INSERT INTO public.articles
       (source_id,url,canonical_url,headline,headline_hash,description,language,language_confidence,script_mix,
        published_at,first_seen_at,content_hash,similarity_fingerprint,extraction_confidence,bihar_relevance_score,
-       article_type,primary_category,event_type,district_id,story_id,curated)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21) RETURNING id`,
+       article_type,primary_category,event_type,district_id,story_id,curated,timeline_excluded,timeline_reason)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23) RETURNING id`,
         [
           row.source_id,
           row.url,
@@ -205,6 +206,8 @@ export async function persistAnalysis(
           district,
           storyId,
           analysis.classification.curated,
+          analysis.timeline?.excluded ?? false,
+          analysis.timeline?.reason ?? "legacy:unreviewed",
         ]
       )
     ).rows[0].id;
