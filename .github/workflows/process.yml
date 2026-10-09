@@ -71,6 +71,7 @@ jobs:
           USE_BROWSER: ${{ inputs.browser }}
         run: |
           curl --fail --silent --show-error --location https://supabase-downloads.s3-ap-southeast-1.amazonaws.com/prod/ssl/prod-ca-2021.crt --output "$RUNNER_TEMP/supabase-ca.crt"
+          cat data/sources/certificates/official-intermediates.pem >> "$RUNNER_TEMP/supabase-ca.crt"
           export NODE_EXTRA_CA_CERTS="$RUNNER_TEMP/supabase-ca.crt"
           if [ "$USE_BROWSER" = "true" ]; then
             npm run pipeline:browser -- "$BATCH_SIZE"

@@ -17,8 +17,21 @@ export const BROWSER_FLAGS_MIGRATION = join(
 
 const q = (s) => `'${String(s).replace(/'/g, "''")}'`;
 const bool = (b) => (b ? "TRUE" : "FALSE");
+export const EXPANSION_MIGRATION = join(
+  root,
+  "supabase",
+  "migrations",
+  "20261010000001_bihar_source_expansion.sql"
+);
+const foundation = (registry) => ({
+  ...registry,
+  version: 1,
+  verified_at: "2026-09-28",
+  sources: registry.sources.filter((s) => s.wave === "A"),
+});
 
 export function renderSeed(registry) {
+  registry = foundation(registry);
   const lines = [
     "-- ProjectBihar Newsfeed V2 — Phase 3: Source registry seed.",
     "--",
@@ -48,6 +61,7 @@ export function renderSeed(registry) {
 }
 
 export function renderBrowserFlags(registry) {
+  registry = foundation(registry);
   const flagged = registry.sources.filter((s) => s.requires_browser === true);
   const lines = [
     "-- ProjectBihar Newsfeed V2 — Phase 6: browser-fallback routing flags.",
@@ -71,11 +85,33 @@ export function renderBrowserFlags(registry) {
   return lines.join("\n") + "\n";
 }
 
+export function renderExpansion(registry) {
+  const lines = [
+    "-- GENERATED additive expansion. Existing IDs, endpoints and checkpoints are preserved.",
+    "-- Source: data/sources/registry.json; npm run registry:generate",
+    "ALTER TABLE public.source_endpoints ADD COLUMN IF NOT EXISTS include_pattern TEXT;",
+    "ALTER TABLE public.source_endpoints ADD COLUMN IF NOT EXISTS allow_pdf BOOLEAN NOT NULL DEFAULT FALSE;",
+    "ALTER TABLE public.crawl_queue ADD COLUMN IF NOT EXISTS discovery_metadata JSONB NOT NULL DEFAULT '{}'::jsonb;",
+    "ALTER TABLE public.sources ADD COLUMN IF NOT EXISTS feed_only BOOLEAN NOT NULL DEFAULT FALSE;",
+    "",
+  ];
+  for (const s of registry.sources.filter((s) => s.wave !== "A")) {
+    lines.push(
+      `INSERT INTO public.sources (name,domain,language,scope,source_type,priority,active,requires_browser,feed_only) VALUES (${q(s.name)},${q(s.domain)},${q(s.language)},${q(s.scope)},${q(s.source_type)},${q(s.priority)},${bool(s.active)},FALSE,${bool(s.feed_only ?? false)}) ON CONFLICT (domain) DO NOTHING;`
+    );
+    for (const e of s.endpoints)
+      lines.push(
+        `INSERT INTO public.source_endpoints (source_id,endpoint_type,url,active,priority,include_pattern,allow_pdf) SELECT id,${q(e.endpoint_type)},${q(e.url)},${bool(e.active)},${q(e.priority)},${e.include_pattern ? q(e.include_pattern) : "NULL"},${bool(e.allow_pdf ?? false)} FROM public.sources WHERE domain=${q(s.domain)} ON CONFLICT (url) DO NOTHING;`
+      );
+  }
+  return lines.join("\n") + "\n";
+}
 const isMain = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
 if (isMain) {
   const registry = JSON.parse(readFileSync(REGISTRY, "utf8"));
   writeFileSync(MIGRATION, renderSeed(registry));
   writeFileSync(BROWSER_FLAGS_MIGRATION, renderBrowserFlags(registry));
+  writeFileSync(EXPANSION_MIGRATION, renderExpansion(registry));
   console.log(
     `Wrote ${MIGRATION}: ${registry.sources.length} sources, ` +
       `${registry.sources.reduce((n, s) => n + s.endpoints.length, 0)} endpoints.`

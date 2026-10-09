@@ -7,6 +7,8 @@ import {
   renderBrowserFlags,
   MIGRATION,
   BROWSER_FLAGS_MIGRATION,
+  renderExpansion,
+  EXPANSION_MIGRATION,
 } from "../scripts/generate-source-seed.mjs";
 
 const REGISTRY_PATH = join(process.cwd(), "data", "sources", "registry.json");
@@ -21,7 +23,7 @@ const WAVES = ["A", "B", "C", "D"];
 
 describe("Phase 3 source registry (static rules)", () => {
   it("declares known groups and waves", () => {
-    expect(registry.version).toBe(1);
+    expect(registry.version).toBe(2);
     expect(registry.groups).toContain("bihar-hindi");
     expect(registry.groups).toContain("district-local");
     expect(registry.groups).toContain("education");
@@ -77,7 +79,10 @@ describe("Phase 3 source registry (static rules)", () => {
         const u = new URL(e.url);
         expect(u.protocol).toBe("https:");
         expect(
-          u.hostname === s.domain || u.hostname.endsWith(`.${s.domain}`),
+          u.hostname === s.domain ||
+            u.hostname.endsWith(`.${s.domain}`) ||
+            ((s.allowed_endpoint_hosts ?? []).includes(u.hostname) &&
+              ["rss", "atom"].includes(e.endpoint_type)),
           `${e.url}: host must match domain ${s.domain}`
         ).toBe(true);
         expect(urls.has(e.url), `duplicate endpoint ${e.url}`).toBe(false);
@@ -98,6 +103,9 @@ describe("Phase 3 source registry (static rules)", () => {
     expect(renderSeed(registry)).toBe(committed);
     const committedFlags = readFileSync(BROWSER_FLAGS_MIGRATION, "utf8").replace(/\r\n/g, "\n");
     expect(renderBrowserFlags(registry)).toBe(committedFlags);
+    expect(renderExpansion(registry)).toBe(
+      readFileSync(EXPANSION_MIGRATION, "utf8").replace(/\r\n/g, "\n")
+    );
   });
 });
 

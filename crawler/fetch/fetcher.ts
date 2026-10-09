@@ -11,6 +11,7 @@
 // before user code runs, which would hide content-type decisions from
 // our classifier. Here every byte reaches the policy.
 import { randomUUID } from "node:crypto";
+import { load } from "cheerio";
 import { HttpCrawler, Configuration, LogLevel } from "crawlee";
 import type { FetchConfig } from "./config";
 import { classifyContentType, classifyError, classifyHttpStatus, type FetchOutcome } from "./retry";
@@ -38,6 +39,51 @@ export interface FetchResult {
 }
 
 export type RecordFn = (result: FetchResult) => Promise<void>;
+
+/** District detail pages publish signed attachments on the government S3WAAS CDN. */
+export async function officialAttachment(html: string, pageUrl: string): Promise<string | null> {
+  if (!/\/(?:notice|document)\//.test(new URL(pageUrl).pathname)) return null;
+  const $ = load(html);
+  const href = $("a[href]")
+    .map((_, el) => $(el).attr("href"))
+    .get()
+    .find((href) => {
+      try {
+        const u = new URL(href, pageUrl);
+        return (
+          u.protocol === "https:" &&
+          u.pathname.toLowerCase().endsWith(".pdf") &&
+          (u.hostname === new URL(pageUrl).hostname || u.hostname.endsWith(".s3waas.gov.in"))
+        );
+      } catch {
+        return false;
+      }
+    });
+  if (!href) return null;
+  const res = await fetch(new URL(href, pageUrl), { signal: AbortSignal.timeout(20000) });
+  if (!res.ok || res.headers.get("content-type")?.split(";")[0] !== "application/pdf")
+    throw new Error("official-attachment-fetch-failed");
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  const reader = res.body!.getReader();
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.length;
+      if (size > 8 * 1024 * 1024) {
+        await reader.cancel();
+        throw new Error("official-attachment-over-8mb");
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  const bytes = Buffer.concat(chunks);
+  if (bytes.subarray(0, 5).toString() !== "%PDF-") throw new Error("official-attachment-invalid");
+  return "PROJECTBIHAR_PDF_V1:" + bytes.toString("base64");
+}
 
 export interface CrawlerDeps {
   config: FetchConfig;
@@ -128,6 +174,29 @@ export function createFetchCrawler(deps: CrawlerDeps) {
             contentType?.type ?? header(response.headers, "content-type") ?? null;
 
           if (outcome.decision === "success") {
+            if (responseContentType === "application/pdf" && request.userData.official === true) {
+              const bytes = Buffer.isBuffer(body) ? body : Buffer.from(body);
+              const valid =
+                bytes.length <= 8 * 1024 * 1024 && bytes.subarray(0, 5).toString() === "%PDF-";
+              await record({
+                queueId: request.userData.queueId as number,
+                url: request.url,
+                finalUrl,
+                status,
+                contentType: responseContentType,
+                responseTimeMs,
+                fetchedAt,
+                html: valid ? "PROJECTBIHAR_PDF_V1:" + bytes.toString("base64") : null,
+                outcome: valid
+                  ? outcome
+                  : {
+                      decision: "reject-content",
+                      status,
+                      reason: "official-pdf-invalid-or-over-8mb",
+                    },
+              });
+              return;
+            }
             const contentDecision = classifyContentType(
               responseContentType,
               config.acceptContentTypes
@@ -158,7 +227,15 @@ export function createFetchCrawler(deps: CrawlerDeps) {
               contentType: responseContentType,
               responseTimeMs,
               fetchedAt,
-              html: typeof body === "string" ? body : body.toString(),
+              html:
+                request.userData.official === true
+                  ? ((await officialAttachment(
+                      typeof body === "string" ? body : body.toString(),
+                      finalUrl
+                    )) ?? (typeof body === "string" ? body : body.toString()))
+                  : typeof body === "string"
+                    ? body
+                    : body.toString(),
               outcome,
             });
             return;

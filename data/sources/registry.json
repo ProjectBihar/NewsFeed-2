@@ -1,7 +1,7 @@
 {
-  "version": 1,
-  "verified_at": "2026-09-28",
-  "verification_method": "HTTP GET of each endpoint URL; kept only http-200 with the expected content type (feed XML, sitemap XML, section HTML). Blocked or failed endpoints are registered inactive with a reason, never silently dropped.",
+  "version": 2,
+  "verified_at": "2026-10-10",
+  "verification_method": "Official domains and published discovery links verified over TLS; hosted verification required before production activation. Existing Wave A verification is preserved.",
   "groups": [
     "national-english",
     "national-hindi",
@@ -383,6 +383,1298 @@
           "active": true,
           "priority": "low",
           "verification": "2026-09-28 http-200 text/html homepage"
+        }
+      ]
+    },
+    {
+      "name": "Patna Press",
+      "domain": "patnapress.com",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-english",
+      "wave": "B",
+      "notes": "User-selected priority Bihar newsroom; official homepage advertises this RSS feed.",
+      "endpoints": [
+        {
+          "endpoint_type": "rss",
+          "url": "https://patnapress.com/feed/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)"
+        }
+      ]
+    },
+    {
+      "name": "NDTV India",
+      "domain": "ndtv.in",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "B",
+      "notes": "Bihar section; article links only. Sections reject declared crawler (403); testing published RSS instead. PUBLISHER RSS SUMMARY MODE: article downloads return 403 from GitHub. Use only publisher-supplied summaries, title, date and original link; never treat as full-article evidence or Curated.",
+      "endpoints": [
+        {
+          "endpoint_type": "rss",
+          "url": "https://feeds.feedburner.com/ndtvkhabar-latest",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 XML; explicitly advertised by publisher; article verification pending",
+          "include_pattern": "bihar|patna|बिहार|पटना"
+        }
+      ],
+      "allowed_endpoint_hosts": [
+        "feeds.feedburner.com"
+      ],
+      "feed_only": true
+    },
+    {
+      "name": "NDTV",
+      "domain": "ndtv.com",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-english",
+      "wave": "B",
+      "notes": "Patna section; English sibling of NDTV India, shared ownership. Sections reject declared crawler (403); testing published RSS instead. PUBLISHER RSS SUMMARY MODE: article downloads return 403 from GitHub. Use only publisher-supplied summaries, title, date and original link; never treat as full-article evidence or Curated.",
+      "endpoints": [
+        {
+          "endpoint_type": "rss",
+          "url": "https://feeds.feedburner.com/ndtvnews-latest",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 XML; explicitly advertised by publisher; article verification pending",
+          "include_pattern": "bihar|patna|बिहार|पटना"
+        }
+      ],
+      "allowed_endpoint_hosts": [
+        "feeds.feedburner.com"
+      ],
+      "feed_only": true
+    },
+    {
+      "name": "ABP Live Bihar",
+      "domain": "abplive.com",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "B",
+      "notes": "Bihar desk; numeric article links only.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.abplive.com/states/bihar",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/states/bihar/(?!page-)[^/?]+-\\d{6,}$"
+        }
+      ]
+    },
+    {
+      "name": "Aaj Tak",
+      "domain": "aajtak.in",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "B",
+      "notes": "Current Bihar section; India Today Group; shared ownership with Bihar Tak.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.aajtak.in/bihar",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/bihar/story/"
+        }
+      ]
+    },
+    {
+      "name": "Bihar Tak",
+      "domain": "newstak.in",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "B",
+      "notes": "Current Bihar channel linked by NewsTak; former bihartak.in DNS fails. India Today Group; do not treat sibling outlets as independent ownership.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.newstak.in/bihar",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/bihar/story/"
+        }
+      ]
+    },
+    {
+      "name": "ETV Bharat Bihar",
+      "domain": "etvbharat.com",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "B",
+      "notes": "Bihar section; brs identifier selects Bihar reports.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.etvbharat.com/hi/bihar",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/hi/state/[^/?]+-brs\\d+$"
+        }
+      ]
+    },
+    {
+      "name": "Zee Bihar Jharkhand",
+      "domain": "zeenews.india.com",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "B",
+      "notes": "Shared regional desk; Bihar relevance still evaluated before publication.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://zeenews.india.com/hindi/india/bihar-jharkhand",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/hindi/india/bihar-jharkhand/(?!.*(?:video|photo-gallery))[^?]+/\\d+$"
+        }
+      ]
+    },
+    {
+      "name": "TV9 Bharatvarsh",
+      "domain": "tv9hindi.com",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "B",
+      "notes": "Bihar section advertises this feed; relevance remains required.",
+      "endpoints": [
+        {
+          "endpoint_type": "rss",
+          "url": "https://www.tv9hindi.com/state/bihar/feed/gn",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)"
+        }
+      ]
+    },
+    {
+      "name": "Navbharat Times Bihar",
+      "domain": "navbharattimes.indiatimes.com",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-hindi",
+      "wave": "B",
+      "notes": "Bihar section advertises this RSS; Times Group ownership overlaps existing TOI/ET.",
+      "endpoints": [
+        {
+          "endpoint_type": "rss",
+          "url": "https://navbharattimes.indiatimes.com/langapi/sitemap/gstandrssfeed/21236753.xml",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)"
+        }
+      ]
+    },
+    {
+      "name": "The New Indian Express",
+      "domain": "newindianexpress.com",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "news",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "bihar-english",
+      "wave": "B",
+      "notes": "Separate publisher from the existing Indian Express; dated Bihar report links only.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://www.newindianexpress.com/states/bihar",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/states/bihar/20\\d{2}/[A-Za-z]+/\\d{2}/[^/?]+$"
+        }
+      ]
+    },
+    {
+      "name": "Bihar IPRD, Education and Health Departments",
+      "domain": "betastate.bihar.gov.in",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "official",
+      "wave": "C",
+      "notes": "Official government portal. Department-specific endpoints share one source because the foundation has unique domains. Bounded PDF text extraction; scanned notices are rejected with diagnostics.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://betastate.bihar.gov.in/iprdwebsite/DyPageView.aspx?PageTitleID=1533",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/file_2/FileUpload/.+\\.pdf$",
+          "allow_pdf": true
+        },
+        {
+          "endpoint_type": "section",
+          "url": "https://betastate.bihar.gov.in/iprdwebsite/DyPageView.aspx?PageTitleID=1571",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/file_2/FileUpload/.+\\.pdf$",
+          "allow_pdf": true
+        },
+        {
+          "endpoint_type": "section",
+          "url": "https://betastate.bihar.gov.in/educationbihar/DyPageView.aspx?PageTitleID=3386",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/file_2/FileUpload/.+\\.pdf$",
+          "allow_pdf": true
+        },
+        {
+          "endpoint_type": "section",
+          "url": "https://betastate.bihar.gov.in/health/DyPageView.aspx?PageTitleID=1209",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/file_2/FileUpload/.+\\.pdf$",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Bihar Public Service Commission",
+      "domain": "bpsc.bihar.gov.in",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "education",
+      "wave": "C",
+      "notes": "Official BPSC notice board. Additional public issuer intermediate supplied to complete verified TLS; no OCR.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://bpsc.bihar.gov.in/whats-new/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/wp-content/uploads/.+\\.pdf$",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Bihar State Disaster Management Authority",
+      "domain": "bsdma.bihar.gov.in",
+      "language": "hi",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "official",
+      "wave": "C",
+      "notes": "Official disaster management authority; current announcements, not static plans.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://bsdma.bihar.gov.in/en/indexmain",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/en/Current-"
+        }
+      ]
+    },
+    {
+      "name": "Araria District Administration",
+      "domain": "araria.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://araria.nic.in/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Arwal District Administration",
+      "domain": "arwal.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://arwal.nic.in/category/press-release/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Aurangabad District Administration",
+      "domain": "aurangabad.bih.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://aurangabad.bih.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Banka District Administration",
+      "domain": "banka.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://banka.nic.in/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Begusarai District Administration",
+      "domain": "begusarai.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://begusarai.nic.in/document-category/press-release/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Bhagalpur District Administration",
+      "domain": "bhagalpur.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://bhagalpur.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Bhojpur District Administration",
+      "domain": "bhojpur.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://bhojpur.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Buxar District Administration",
+      "domain": "buxar.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://buxar.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Darbhanga District Administration",
+      "domain": "darbhanga.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://darbhanga.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Gaya District Administration",
+      "domain": "gaya.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://gaya.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Gopalganj District Administration",
+      "domain": "gopalganj.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://gopalganj.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Jamui District Administration",
+      "domain": "jamui.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://jamui.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Jehanabad District Administration",
+      "domain": "jehanabad.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://jehanabad.nic.in/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Kaimur (Bhabua) District Administration",
+      "domain": "kaimur.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://kaimur.nic.in/category/press-release/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Katihar District Administration",
+      "domain": "katihar.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://katihar.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Khagaria District Administration",
+      "domain": "khagaria.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://khagaria.nic.in/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Kishanganj District Administration",
+      "domain": "kishanganj.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://kishanganj.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Lakhisarai District Administration",
+      "domain": "lakhisarai.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://lakhisarai.nic.in/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Madhepura District Administration",
+      "domain": "madhepura.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://madhepura.nic.in/category/press-release/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Madhubani District Administration",
+      "domain": "madhubani.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://madhubani.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Munger District Administration",
+      "domain": "munger.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://munger.nic.in/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Muzaffarpur District Administration",
+      "domain": "muzaffarpur.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://muzaffarpur.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Nalanda District Administration",
+      "domain": "nalanda.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://nalanda.nic.in/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Nawada District Administration",
+      "domain": "nawada.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://nawada.nic.in/notice_category/proceeding-announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Pashchim Champaran District Administration",
+      "domain": "westchamparan.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://westchamparan.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Patna District Administration",
+      "domain": "patna.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://patna.nic.in/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Purbi Champaran District Administration",
+      "domain": "eastchamparan.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": false,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "INACTIVE: official directory domain has TLS hostname mismatch.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://eastchamparan.nic.in",
+          "active": false,
+          "priority": "high",
+          "verification": "2026-10-10 INACTIVE: TLS hostname mismatch; do not bypass",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Purnia District Administration",
+      "domain": "purnea.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://purnea.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Rohtas District Administration",
+      "domain": "rohtas.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://rohtas.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Saharsa District Administration",
+      "domain": "saharsa.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://saharsa.nic.in/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Samastipur District Administration",
+      "domain": "samastipur.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://samastipur.nic.in/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Saran District Administration",
+      "domain": "saran.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://saran.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Sheikhpura District Administration",
+      "domain": "sheikhpura.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://sheikhpura.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Sheohar District Administration",
+      "domain": "sheohar.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://sheohar.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Sitamarhi District Administration",
+      "domain": "sitamarhi.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://sitamarhi.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Siwan District Administration",
+      "domain": "siwan.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://siwan.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Supaul District Administration",
+      "domain": "supaul.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://supaul.nic.in/notice_category/announcements/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "Vaishali District Administration",
+      "domain": "vaishali.nic.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": true,
+      "requires_browser": false,
+      "group": "district-local",
+      "wave": "C",
+      "notes": "Official district website identified by Government of India directory; public notice/press-release channel.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://vaishali.nic.in/category/press-release/",
+          "active": true,
+          "priority": "high",
+          "verification": "2026-10-10 http-200 expected content; local probe (hosted verification pending)",
+          "include_pattern": "/(?:notice|document)/[^/?]+/?$|/20\\d{2}/\\d{2}/|\\.pdf(?:$|\\?)",
+          "allow_pdf": true
+        }
+      ]
+    },
+    {
+      "name": "East Central Railway",
+      "domain": "ecr.indianrailways.gov.in",
+      "language": "en",
+      "scope": "bihar",
+      "source_type": "official",
+      "priority": "high",
+      "active": false,
+      "requires_browser": false,
+      "group": "official",
+      "wave": "C",
+      "notes": "Official railway homepage announcements; selected uploaded documents only, not static menus or biographies. Train-specific press-release listing remains unlocated; relevance and dates must be validated before publication. Inactive: GitHub runner connection refused (ECONNREFUSED) in three hosted verifications on 2026-10-10; local reachability alone is insufficient. Dedicated train announcement feed still needs verification.",
+      "endpoints": [
+        {
+          "endpoint_type": "section",
+          "url": "https://ecr.indianrailways.gov.in/?lang=0",
+          "active": false,
+          "priority": "high",
+          "allow_pdf": true,
+          "include_pattern": "/cris/(?:/)?uploads/files/.+\\.pdf$",
+          "verification": "2026-10-10 http-200 HTML; announcement documents visibly linked on official homepage"
         }
       ]
     }

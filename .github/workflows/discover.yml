@@ -11,6 +11,11 @@ on:
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
+    inputs:
+      verify-expansion:
+        description: "Read-only verification of new source channels; skip live writes"
+        type: boolean
+        default: false
 
 concurrency:
   group: discover-${{ github.ref }}
@@ -37,10 +42,25 @@ jobs:
       - name: Build pipeline
         run: npm run pipeline:build
 
+      - name: Verify expansion from the execution host
+        if: inputs.verify-expansion
+        env:
+          NODE_EXTRA_CA_CERTS: data/sources/certificates/official-intermediates.pem
+          SOURCE_VERIFICATION_OUTPUT: source-verification.json
+        run: node scripts/verify-source-expansion.mjs
+
+      - name: Save expansion verification
+        if: always() && inputs.verify-expansion
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-verification
+          path: source-verification.json
+
       - name: Discover live endpoints
-        if: vars.PIPELINE_ENABLED == 'true'
+        if: vars.PIPELINE_ENABLED == 'true' && !inputs.verify-expansion
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           curl --fail --silent --show-error --location https://supabase-downloads.s3-ap-southeast-1.amazonaws.com/prod/ssl/prod-ca-2021.crt --output "$RUNNER_TEMP/supabase-ca.crt"
+          cat data/sources/certificates/official-intermediates.pem >> "$RUNNER_TEMP/supabase-ca.crt"
           NODE_EXTRA_CA_CERTS="$RUNNER_TEMP/supabase-ca.crt" npm run pipeline:discover -- 100

@@ -92,7 +92,7 @@ async function runBatch(
     rows.map((r) => ({
       url: r.url,
       uniqueKey: r.canonical_url,
-      userData: { queueId: r.id },
+      userData: { queueId: r.id, official: r.source_type === "official" },
       headers: { "User-Agent": config.userAgent },
     }))
   );

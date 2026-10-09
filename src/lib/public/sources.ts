@@ -26,9 +26,12 @@ interface RegistrySource {
   scope: string;
   source_type: string;
   active: boolean;
+  feed_only?: boolean;
 }
 
 const REGISTRY = (registryData as { sources: RegistrySource[] }).sources;
+export const usesPublisherSummary = (name: string) =>
+  REGISTRY.some((s) => s.name === name && s.feed_only);
 
 /** Lowercase ASCII slug — deterministic, so a source's URL never changes. */
 export function slugifySourceName(name: string): string {
