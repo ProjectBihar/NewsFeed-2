@@ -1,216 +1,231 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { PGlite } from "@electric-sql/pglite";
 import {
   correctArticle,
-  currentEntityNames,
   mergeStories,
   moveArticle,
   renameStory,
   splitStory,
+  type Db,
 } from "./mutations";
-import { fakeDb, type FakeDb } from "./fake-db";
 
-function seed(): FakeDb {
-  return fakeDb({
-    articles: [
-      {
-        id: 1,
-        story_id: 10,
-        source_id: 7,
-        url: "https://x.example/1",
-        headline: "Metro approved",
-        article_type: "development",
-        primary_category: "Infrastructure",
-        event_type: "approval",
-        district_id: "patna",
-        bihar_relevance_score: 0.9,
+describe("atomic admin corrections and story controls", () => {
+  let sql: PGlite, db: Db, article: number, story: number, target: number, source: number;
+  beforeAll(async () => {
+    sql = new PGlite();
+    const dir = join(process.cwd(), "supabase/migrations");
+    for (const file of readdirSync(dir)
+      .filter((f) => f.endsWith(".sql"))
+      .sort())
+      await sql.exec(readFileSync(join(dir, file), "utf8"));
+    source = (
+      await sql.query<{ id: number }>(`INSERT INTO sources(name,domain,language,scope)
+      VALUES ('Admin fixture','admin.example','en','bihar') RETURNING id`)
+    ).rows[0].id;
+    db = {
+      rpc: async (_name: string, args: Record<string, unknown>) => {
+        try {
+          const result = await sql.query<{ result: unknown }>(
+            "SELECT admin_mutate($1,$2,$3,$4,$5,$6,$7) AS result",
+            [
+              args.p_operation,
+              args.p_id,
+              args.p_target ?? null,
+              args.p_title ?? null,
+              JSON.stringify(args.p_fields ?? {}),
+              args.p_article_ids ?? [],
+              args.p_reason ?? null,
+            ]
+          );
+          return { data: result.rows[0].result, error: null };
+        } catch (error) {
+          return { data: null, error: { message: (error as Error).message } };
+        }
       },
-      {
-        id: 2,
-        story_id: 10,
-        source_id: 8,
-        url: "https://x.example/2",
-        headline: "Metro cleared",
-        article_type: "development",
-        primary_category: "Infrastructure",
-        event_type: "approval",
-        district_id: "patna",
-        bihar_relevance_score: 0.8,
-      },
-      {
-        id: 3,
-        story_id: 20,
-        source_id: 7,
-        url: "https://x.example/3",
-        headline: "Robbery reported",
-        article_type: "crime",
-        primary_category: "Governance",
-        event_type: "crime",
-        district_id: "patna",
-        bihar_relevance_score: 0.7,
-      },
-    ],
-    stories: [
-      {
-        id: 10,
-        canonical_title: "Metro story",
-        status: "active",
-        article_count: 2,
-        source_count: 2,
-      },
-      {
-        id: 20,
-        canonical_title: "Crime story",
-        status: "active",
-        article_count: 1,
-        source_count: 1,
-      },
-    ],
-    story_articles: [
-      { story_id: 10, article_id: 1, cluster_score: 0.9 },
-      { story_id: 10, article_id: 2, cluster_score: 0.8 },
-      { story_id: 20, article_id: 3, cluster_score: null },
-    ],
-    classification_results: [
-      { id: 100, article_id: 1, classifier_version: "rules-v1", confidence: 0.9 },
-    ],
-    admin_corrections: [],
-    entities: [
-      { id: 5, canonical_name: "Patna Metro" },
-      { id: 6, canonical_name: "Bihar Cabinet" },
-    ],
-    article_entities: [
-      { article_id: 1, entity_id: 5 },
-      { article_id: 1, entity_id: 6 },
-    ],
+    } as unknown as Db;
   });
-}
-
-describe("correctArticle (Phase 22)", () => {
-  let db: FakeDb;
-  beforeEach(() => {
-    db = seed();
-  });
-
-  it("updates changed whitelisted fields with audit rows", async () => {
-    const result = await correctArticle(
-      db as never,
-      1,
-      { article_type: "governance", primary_category: "Infrastructure" },
-      "reviewed"
+  beforeEach(async () => {
+    await sql.exec("DELETE FROM admin_corrections; DELETE FROM articles; DELETE FROM stories;");
+    story = (
+      await sql.query<{ id: number }>(
+        "INSERT INTO stories(canonical_title) VALUES ('Metro story') RETURNING id"
+      )
+    ).rows[0].id;
+    target = (
+      await sql.query<{ id: number }>(
+        "INSERT INTO stories(canonical_title) VALUES ('Other story') RETURNING id"
+      )
+    ).rows[0].id;
+    const rows = (
+      await sql.query<{ id: number }>(
+        `INSERT INTO articles(source_id,url,canonical_url,headline,story_id,article_type,bihar_relevance_score,published_at)
+      VALUES ($1,'https://admin.example/1','https://admin.example/1','Metro approval',$2,'development',0.9,'2026-10-01T00:00:00Z'),
+      ($1,'https://admin.example/2','https://admin.example/2','Metro construction',$2,'development',0.9,'2026-10-02T00:00:00Z') RETURNING id`,
+        [source, story]
+      )
+    ).rows;
+    article = rows[0].id;
+    await sql.exec(
+      "INSERT INTO story_articles(story_id,article_id) SELECT story_id,id FROM articles;"
     );
-    expect(result).toEqual({ updatedFields: ["article_type"], corrections: 1 });
-    expect(db.tables["articles"].find((a) => a["id"] === 1)?.["article_type"]).toBe("governance");
-    const audits = db.tables["admin_corrections"];
-    expect(audits).toHaveLength(1);
-    expect(audits[0]).toMatchObject({
-      article_id: 1,
-      story_id: 10,
-      field_name: "article_type",
+    await sql.query<Record<string, unknown>>(
+      "INSERT INTO classification_results(article_id,classifier_version) VALUES ($1,'rules-v1')",
+      [article]
+    );
+    await sql.query<Record<string, unknown>>("SELECT recount_story_metadata($1)", [story]);
+  });
+  afterAll(async () => {
+    await sql?.close();
+  });
+  it("corrects changed fields with original values and classifier version", async () => {
+    expect(await correctArticle(db, article, { article_type: "governance" }, "reviewed")).toEqual({
+      updatedFields: ["article_type"],
+      corrections: 1,
+    });
+    expect(
+      (
+        await sql.query<Record<string, unknown>>(
+          "SELECT old_value,new_value,classifier_version FROM admin_corrections"
+        )
+      ).rows[0]
+    ).toMatchObject({
       old_value: "development",
       new_value: "governance",
-      reason: "reviewed",
       classifier_version: "rules-v1",
     });
-    expect(typeof audits[0]["created_at"]).toBe("string");
-  });
-
-  it("ignores unknown fields and skips unchanged values silently", async () => {
-    const result = await correctArticle(
-      db as never,
-      1,
-      { article_type: "development", bogus: "x" } as never,
-      ""
-    );
-    expect(result).toEqual({ updatedFields: [], corrections: 0 });
-    expect(db.tables["admin_corrections"]).toHaveLength(0);
-  });
-
-  it("maps relevance checkbox to scores and audits entities without touching links", async () => {
-    const result = await correctArticle(
-      db as never,
-      3,
-      { bihar_relevant: "false", entities: "Patna Metro, New Entity" },
-      undefined
-    );
-    expect(result.updatedFields).toEqual(["bihar_relevance_score"]);
-    expect(db.tables["articles"].find((a) => a["id"] === 3)?.["bihar_relevance_score"]).toBe(0.0);
-    expect(db.tables["article_entities"]).toHaveLength(2);
-    const fields = db.tables["admin_corrections"].map((r) => r["field_name"]);
-    expect(fields).toContain("bihar_relevance");
-    expect(fields).toContain("entities");
-  });
-
-  it("throws for missing articles", async () => {
-    await expect(correctArticle(db as never, 999, { article_type: "crime" })).rejects.toThrow();
-  });
-
-  it("reads current entity names", async () => {
-    expect(await currentEntityNames(db as never, 1)).toEqual(["Patna Metro", "Bihar Cabinet"]);
-    expect(await currentEntityNames(db as never, 2)).toEqual([]);
-  });
-});
-
-describe("story controls (Phase 22)", () => {
-  let db: FakeDb;
-  beforeEach(() => {
-    db = seed();
-  });
-
-  it("renames with audit and validates titles", async () => {
-    await renameStory(db as never, 10, "  Metro expansion story  ", "better");
-    expect(db.tables["stories"].find((s) => s["id"] === 10)?.["canonical_title"]).toBe(
-      "Metro expansion story"
-    );
-    expect(db.tables["admin_corrections"]).toHaveLength(1);
-    await expect(renameStory(db as never, 10, "   ")).rejects.toThrow();
-  });
-
-  it("moves an article between stories with recount and audit", async () => {
-    const { storyId } = await moveArticle(db as never, 3, { kind: "story", id: 10 }, "dup");
-    expect(storyId).toBe(10);
-    expect(db.tables["articles"].find((a) => a["id"] === 3)?.["story_id"]).toBe(10);
-    expect(db.tables["story_articles"].filter((l) => l["story_id"] === 10)).toHaveLength(3);
-    expect(db.tables["stories"].find((s) => s["id"] === 10)?.["article_count"]).toBe(3);
-    expect(db.tables["stories"].find((s) => s["id"] === 10)?.["source_count"]).toBe(2);
-    expect(db.tables["stories"].find((s) => s["id"] === 20)?.["article_count"]).toBe(0);
-    const audit = db.tables["admin_corrections"][0];
-    expect(audit).toMatchObject({
-      article_id: 3,
-      story_id: 10,
-      field_name: "story_assignment",
-      old_value: "20",
-      new_value: "10",
+    expect(await correctArticle(db, article, { article_type: "governance" })).toEqual({
+      updatedFields: [],
+      corrections: 0,
     });
   });
-
-  it("moves to a newly created story", async () => {
-    const { storyId } = await moveArticle(db as never, 3, { kind: "new", title: "Split out" });
-    expect(storyId).toBeGreaterThan(20);
-    expect(db.tables["stories"].find((s) => s["id"] === storyId)?.["canonical_title"]).toBe(
-      "Split out"
-    );
+  it("updates entity links and excludes irrelevant reports from counts", async () => {
+    await correctArticle(db, article, {
+      entities: "Patna Metro, Reviewed Entity",
+      bihar_relevant: "false",
+    });
+    expect(
+      (
+        await sql.query<Record<string, unknown>>(
+          "SELECT count(*) AS n FROM article_entities WHERE article_id=$1",
+          [article]
+        )
+      ).rows[0]
+    ).toEqual({ n: 2 });
+    expect(
+      (
+        await sql.query<Record<string, unknown>>("SELECT article_count FROM stories WHERE id=$1", [
+          story,
+        ])
+      ).rows[0]
+    ).toEqual({ article_count: 1 });
+    await correctArticle(db, article, { entities: "" });
+    expect(
+      (
+        await sql.query<Record<string, unknown>>(
+          "SELECT count(*) AS n FROM article_entities WHERE article_id=$1",
+          [article]
+        )
+      ).rows[0]
+    ).toEqual({ n: 0 });
   });
-
-  it("merges all members and parks the source as merged", async () => {
-    const { moved } = await mergeStories(db as never, 20, 10, "dup");
-    expect(moved).toBe(1);
-    expect(db.tables["articles"].find((a) => a["id"] === 3)?.["story_id"]).toBe(10);
-    expect(db.tables["stories"].find((s) => s["id"] === 20)?.["status"]).toBe("merged");
-    expect(db.tables["stories"].find((s) => s["id"] === 10)?.["article_count"]).toBe(3);
-    const fields = db.tables["admin_corrections"].map((r) => r["field_name"]);
-    expect(fields).toContain("story_assignment");
-    expect(fields).toContain("status");
-    await expect(mergeStories(db as never, 10, 10)).rejects.toThrow();
+  it("renames with audit and rejects invalid or missing targets", async () => {
+    await renameStory(db, story, "  Reviewed   Metro ");
+    expect(
+      (
+        await sql.query<Record<string, unknown>>(
+          "SELECT canonical_title FROM stories WHERE id=$1",
+          [story]
+        )
+      ).rows[0]
+    ).toEqual({ canonical_title: "Reviewed Metro" });
+    await expect(renameStory(db, story, " ")).rejects.toThrow();
+    await expect(renameStory(db, 999999, "X")).rejects.toThrow();
   });
-
-  it("splits a subset into a new story", async () => {
-    const { storyId } = await splitStory(db as never, 10, [2], "Second angle", "split");
-    expect(db.tables["articles"].find((a) => a["id"] === 2)?.["story_id"]).toBe(storyId);
-    expect(db.tables["stories"].find((s) => s["id"] === 10)?.["article_count"]).toBe(1);
-    expect(db.tables["stories"].find((s) => s["id"] === storyId)?.["canonical_title"]).toBe(
-      "Second angle"
-    );
-    await expect(splitStory(db as never, 10, [1], "All out")).rejects.toThrow();
-    await expect(splitStory(db as never, 10, [999], "Nowhere")).rejects.toThrow();
+  it("moves both membership representations and preserves event dates", async () => {
+    expect(await moveArticle(db, article, { kind: "story", id: target })).toEqual({
+      storyId: target,
+    });
+    expect(
+      (
+        await sql.query<Record<string, unknown>>("SELECT story_id FROM articles WHERE id=$1", [
+          article,
+        ])
+      ).rows[0].story_id
+    ).toBe(target);
+    expect(
+      (
+        await sql.query<Record<string, unknown>>(
+          "SELECT story_id FROM story_articles WHERE article_id=$1",
+          [article]
+        )
+      ).rows[0].story_id
+    ).toBe(target);
+    const moved = (
+      await sql.query<{ article_count: number; first_seen_at: Date }>(
+        "SELECT article_count,first_seen_at FROM stories WHERE id=$1",
+        [target]
+      )
+    ).rows[0];
+    expect(moved.article_count).toBe(1);
+    expect(moved.first_seen_at.toISOString()).toBe("2026-10-01T00:00:00.000Z");
+  });
+  it("merges every member and parks the source story", async () => {
+    expect(await mergeStories(db, story, target)).toEqual({ moved: 2 });
+    expect(
+      (
+        await sql.query<Record<string, unknown>>(
+          "SELECT status,article_count FROM stories WHERE id=$1",
+          [story]
+        )
+      ).rows[0]
+    ).toEqual({ status: "merged", article_count: 0 });
+    await expect(mergeStories(db, target, target)).rejects.toThrow();
+  });
+  it("splits only valid subsets and preserves the new manual title", async () => {
+    await expect(splitStory(db, story, [article, 999999], "Bad split")).rejects.toThrow();
+    const moved = await splitStory(db, story, [article], "New angle");
+    expect(
+      (
+        await sql.query<Record<string, unknown>>("SELECT article_count FROM stories WHERE id=$1", [
+          moved.storyId,
+        ])
+      ).rows[0].article_count
+    ).toBe(1);
+    expect(
+      (
+        await sql.query<Record<string, unknown>>(
+          "SELECT new_value FROM admin_corrections WHERE story_id=$1 AND field_name='canonical_title'",
+          [moved.storyId]
+        )
+      ).rows[0].new_value
+    ).toBe("New angle");
+    const remaining = (
+      await sql.query<{ id: number }>("SELECT id FROM articles WHERE story_id=$1", [story])
+    ).rows[0].id;
+    await expect(splitStory(db, story, [remaining], "All")).rejects.toThrow();
+  });
+  it("rolls back article changes when audit persistence fails", async () => {
+    await sql.exec(`CREATE FUNCTION reject_fixture_audit() RETURNS trigger LANGUAGE plpgsql AS $$
+      BEGIN RAISE EXCEPTION 'fixture audit failure'; END $$;
+      CREATE TRIGGER reject_fixture_audit BEFORE INSERT ON admin_corrections FOR EACH ROW EXECUTE FUNCTION reject_fixture_audit();`);
+    try {
+      await expect(correctArticle(db, article, { article_type: "crime" })).rejects.toThrow(
+        "fixture audit failure"
+      );
+      expect(
+        (
+          await sql.query<Record<string, unknown>>(
+            "SELECT article_type FROM articles WHERE id=$1",
+            [article]
+          )
+        ).rows[0].article_type
+      ).toBe("development");
+    } finally {
+      await sql.exec(
+        "DROP TRIGGER reject_fixture_audit ON admin_corrections; DROP FUNCTION reject_fixture_audit();"
+      );
+    }
   });
 });

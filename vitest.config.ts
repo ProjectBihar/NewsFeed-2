@@ -5,11 +5,20 @@ export default defineConfig({
   // App code uses the Next "@/*" alias; resolve it here too so tests can
   // import pages/components the same way the app does.
   resolve: {
-    alias: { "@": resolve(process.cwd(), "src") },
+    alias: {
+      "@": resolve(process.cwd(), "src"),
+      // Tests execute server modules in Node; Next enforces this marker in builds.
+      "server-only": resolve(process.cwd(), "node_modules/next/dist/compiled/server-only/empty.js"),
+    },
   },
   esbuild: { jsx: "automatic" },
   test: {
-    include: ["src/**/*.test.{ts,tsx}", "tests/**/*.test.{ts,tsx}", "crawler/**/*.test.{ts,tsx}"],
+    include: [
+      "src/**/*.test.{ts,tsx}",
+      "tests/**/*.test.{ts,tsx}",
+      "crawler/**/*.test.{ts,tsx}",
+      "pipeline/**/*.test.ts",
+    ],
     environment: "node",
     // Embedded PGlite boots real Postgres (WASM); allow headroom on slow/loaded machines.
     testTimeout: 60000,

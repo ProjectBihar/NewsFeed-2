@@ -1,36 +1,31 @@
 # ProjectBihar Newsfeed V2
 
-Bihar news-intelligence system. Rebuilt from scratch; V1 remains the
-production/visual reference.
+Bihar news intelligence: discover publisher URLs, extract and classify reports,
+remove technical duplicates, group independent coverage into stories, and serve
+public metadata with an authenticated admin observatory.
 
-Full context: `PROJECTBIHAR_NEWSFEED_V2_MASTER_PLAN (1).md`.
-Subsystem rules: `docs/ARCHITECTURE.md`.
-Progress: `docs/IMPLEMENTATION_STATUS.md`.
+The public Next.js app lives in `src/`. Acquisition lives in `crawler/`, Python
+extraction in `extraction/`, semantic rules in `intelligence/`, and the executable
+orchestration in `pipeline/`. PostgreSQL stores the durable queue, public
+metadata, audit records, and separately protected temporary article text.
 
-## Phase 1 — shell
+Read [operations and deployment](docs/OPERATIONS.md) for the existing Supabase
+project, Vercel setup, migrations, secrets, bounded pipeline commands, and launch
+checks. [Architecture](docs/ARCHITECTURE.md) defines subsystem boundaries;
+[implementation status](docs/IMPLEMENTATION_STATUS.md) records verified progress
+and remaining production work. The master plan remains the product source of truth.
 
-```bash
-npm install
+```sh
+npm ci
+python -m pip install -r extraction/requirements.txt -r intelligence/requirements.txt
 npm run lint
-npm test
+npm run typecheck
+npm run pipeline:build
+npm test -- --maxWorkers=2
+python -m pytest
 npm run build
-pytest
 ```
 
-Copy `.env.example` to `.env.local` and fill Supabase values when
-Phase 2 begins. The dev shell builds and runs without credentials
-(Supabase client returns `null` when unconfigured).
-
-## Structure
-
-```text
-src/app/          Next.js public site (placeholder homepage)
-src/lib/          Supabase scaffolding
-crawler/          Phase 4+ (discovery/fetch — not started)
-intelligence/     Phase 8+ (language/relevance/classify — not started)
-extraction/       Phase 7 (Trafilatura worker stub)
-data/             Phase 9 (Bihar knowledge base — not started)
-tests/            fixtures / regression / golden (Phase 23+)
-supabase/         migrations (Phase 2)
-.github/workflows CI (lint + typecheck + tests + build + pytest)
-```
+Copy `.env.example` to `.env.local` for website development. Pipeline commands
+read process environment and need `DATABASE_URL`; automated live stages remain
+disabled until `PIPELINE_ENABLED=true` is explicitly configured in GitHub.

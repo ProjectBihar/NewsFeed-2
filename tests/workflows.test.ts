@@ -57,7 +57,7 @@ describe("§§45–51 — workflow automation contracts", () => {
   it("each pipeline workflow declares its plan trigger", () => {
     expect(text("discover.yml")).toContain("*/30 * * * *");
     expect(text("process.yml")).toContain("workflow_dispatch");
-    expect(text("process.yml")).not.toContain("schedule");
+    expect(text("process.yml")).toContain("7,37 * * * *");
     expect(text("health.yml")).toContain("*/6");
     expect(text("maintenance.yml")).toContain("23 4 * * *");
     expect(text("train.yml")).toMatch(/\* \* 1/);

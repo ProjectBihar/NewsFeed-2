@@ -29,7 +29,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install JS dependencies
@@ -41,25 +41,24 @@ jobs:
   temporary-text-cleanup:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install JS dependencies
         run: npm ci
 
       - name: Temporary text cleanup (live, secret-guarded)
-        if: secrets.NEXT_PUBLIC_SUPABASE_URL != ''
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        if: vars.PIPELINE_ENABLED == 'true' && env.NEXT_PUBLIC_SUPABASE_URL != '' && env.SUPABASE_SERVICE_ROLE_KEY != ''
         run: npm run retention:cleanup
 
       - name: Honest skip (no backend configured)
-        if: secrets.NEXT_PUBLIC_SUPABASE_URL == ''
-        run: echo "Supabase secrets absent — live temporary-text cleanup skipped; nothing was deleted and nothing was faked."
+        if: vars.PIPELINE_ENABLED != 'true' || env.NEXT_PUBLIC_SUPABASE_URL == '' || env.SUPABASE_SERVICE_ROLE_KEY == ''
+        run: echo "Live cleanup is disabled or its service credentials are absent."

@@ -29,7 +29,9 @@ export async function claimDueRows(db: QueryFn, limit: number): Promise<ClaimedR
     `UPDATE public.crawl_queue SET status = 'fetching', last_attempt_at = now(), attempts = attempts + 1
      WHERE id IN (
        SELECT id FROM public.crawl_queue
-       WHERE (status = 'discovered' OR status = 'queued'
+       WHERE EXISTS (SELECT 1 FROM public.sources s WHERE s.id = source_id
+                     AND s.active AND NOT s.requires_browser)
+         AND (status = 'discovered' OR status = 'queued'
               OR (status = 'retry' AND (next_retry_at IS NULL OR next_retry_at <= now())))
        ORDER BY ${PRIORITY_ORDER}, discovered_at
        FOR UPDATE SKIP LOCKED

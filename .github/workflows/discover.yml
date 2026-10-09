@@ -4,12 +4,8 @@ name: discover
 # normalise URLs, enqueue new URLs, record discovery metrics.
 # Never fetch full articles.
 #
-# Honesty note: live endpoint polling needs a configured database and a
-# production discover runner (unwired — see the §§45–51 entry in
-# docs/IMPLEMENTATION_STATUS.md). Until that wiring exists this workflow
-# guards the discovery contract offline: channel parsers, checkpoint
-# cursors, URL normalisation, idempotent enqueue SQL, and registry sync.
-# No network I/O beyond installs; no live database touched.
+# Live polling requires PIPELINE_ENABLED=true and a DATABASE_URL secret.
+# Apply the reviewed migrations before enabling it.
 
 on:
   schedule:
@@ -18,7 +14,7 @@ on:
 
 concurrency:
   group: discover-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   discovery-contract:
@@ -29,7 +25,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install JS dependencies
@@ -37,3 +33,14 @@ jobs:
 
       - name: Discovery contract (parsers, checkpoints, enqueue, registry)
         run: npx vitest run crawler/discovery crawler/queues crawler/normalisation tests/source-registry.test.ts
+
+      - name: Build pipeline
+        run: npm run pipeline:build
+
+      - name: Discover live endpoints
+        if: vars.PIPELINE_ENABLED == 'true'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          curl --fail --silent --show-error --location https://supabase-downloads.s3-ap-southeast-1.amazonaws.com/prod/ssl/prod-ca-2021.crt --output "$RUNNER_TEMP/supabase-ca.crt"
+          NODE_EXTRA_CA_CERTS="$RUNNER_TEMP/supabase-ca.crt" npm run pipeline:discover -- 100

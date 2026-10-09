@@ -33,6 +33,8 @@ next-env.d.ts
 
 # testing / coverage
 coverage/
+.test-tmp/
+.pipeline/
 
 # python
 __pycache__/

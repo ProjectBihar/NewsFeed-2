@@ -128,14 +128,14 @@ describe("Phase 35 — retention cleanup script", () => {
     };
     const run = await runScript({
       NEXT_PUBLIC_SUPABASE_URL: base,
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: "test-anon-key",
+      SUPABASE_SERVICE_ROLE_KEY: "test-service-key",
     });
     expect(run.status).toBe(0);
     expect(calls).toHaveLength(1);
     expect(calls[0].method).toBe("POST");
     expect(calls[0].url).toBe("/rest/v1/rpc/run_retention_cleanup");
-    expect(calls[0].apikey).toBe("test-anon-key");
-    expect(calls[0].authorization).toBe("Bearer test-anon-key");
+    expect(calls[0].apikey).toBe("test-service-key");
+    expect(calls[0].authorization).toBe("Bearer test-service-key");
     expect(calls[0].body).toBe("{}");
     expect(run.stdout).toContain("deleted=3 remaining=5 exempt=1");
   });
@@ -163,9 +163,23 @@ describe("Phase 35 — retention cleanup script", () => {
 
     const run = await runScript({
       NEXT_PUBLIC_SUPABASE_URL: `http://127.0.0.1:${port}`,
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: "test-anon-key",
+      SUPABASE_SERVICE_ROLE_KEY: "test-service-key",
     });
     expect(run.status).toBe(1);
     expect(run.stderr).toContain("could not reach");
+  });
+
+  it("refuses an anon key before making any cleanup request", async () => {
+    calls = [];
+    const run = await runScript(
+      {
+        NEXT_PUBLIC_SUPABASE_URL: base,
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: "public-key",
+      },
+      emptyCwd
+    );
+    expect(run.status).toBe(1);
+    expect(run.stderr).toContain("SUPABASE_SERVICE_ROLE_KEY missing");
+    expect(calls).toHaveLength(0);
   });
 });

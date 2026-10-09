@@ -41,15 +41,13 @@ const fileEnv = readEnvFile(resolve(process.cwd(), ".env.local"));
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? fileEnv.NEXT_PUBLIC_SUPABASE_URL ?? null;
 const key =
   process.env.SUPABASE_SERVICE_ROLE_KEY ??
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
   fileEnv.SUPABASE_SERVICE_ROLE_KEY ??
-  fileEnv.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
   null;
 
 if (!url || !key) {
   console.error(
     "[retention] Supabase is not configured (" +
-      (!url ? "NEXT_PUBLIC_SUPABASE_URL missing" : "no API key") +
+      (!url ? "NEXT_PUBLIC_SUPABASE_URL missing" : "SUPABASE_SERVICE_ROLE_KEY missing") +
       ") — no cleanup ran. Permanent archive metadata is unaffected either way."
   );
   process.exit(1);
