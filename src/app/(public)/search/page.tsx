@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ARTICLE_TYPES, EVENT_TYPES } from "@/lib/admin/options";
 import Header from "@/components/public/Header";
 import { DemoNotice, ErrorNotice, NotConfiguredNotice } from "@/components/public/Notices";
 import StoryCard from "@/components/public/StoryCard";
-import { CATEGORIES } from "@/lib/public/categories";
 import { DISTRICTS, getDistrictBySlug } from "@/lib/public/districts";
 import {
   MAX_QUERY_LENGTH,
@@ -26,15 +24,6 @@ type PageProps = {
 
 const CARD = "glass-card p-4 sm:p-5 mb-4";
 
-/** `_`-separated slugs → reader label ("construction_started" → "Construction
- * started") — presentation only; stored values never change. */
-function humanize(slug: string): string {
-  return slug
-    .split("_")
-    .map((word, index) => (index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word))
-    .join(" ");
-}
-
 const LANGUAGE_LABELS: Record<string, string> = { en: "English", hi: "Hindi" };
 
 /** Deterministic search URLs: q, filters, page, demo. */
@@ -42,9 +31,6 @@ function searchHref(page: number, params: SearchParams): string {
   const query = new URLSearchParams();
   if (params.q) query.set("q", params.q);
   if (params.district) query.set("district", params.district);
-  if (params.category) query.set("category", params.category);
-  if (params.articleType) query.set("type", params.articleType);
-  if (params.eventType) query.set("event", params.eventType);
   if (params.source) query.set("source", params.source);
   if (params.language) query.set("language", params.language);
   if (params.year !== null) query.set("year", String(params.year));
@@ -58,13 +44,6 @@ function searchHref(page: number, params: SearchParams): string {
 function appliedFilters(params: SearchParams): string[] {
   const labels: string[] = [];
   if (params.district) labels.push(getDistrictBySlug(params.district)?.name ?? params.district);
-  if (params.category) {
-    labels.push(
-      CATEGORIES.find((entry) => entry.slug === params.category)?.label ?? params.category
-    );
-  }
-  if (params.articleType) labels.push(humanize(params.articleType));
-  if (params.eventType) labels.push(humanize(params.eventType));
   if (params.source)
     labels.push(SOURCES.find((entry) => entry.slug === params.source)?.name ?? params.source);
   if (params.language)
@@ -74,19 +53,29 @@ function appliedFilters(params: SearchParams): string[] {
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-  const params = parseSearchParams((await props.searchParams) ?? {});
+  const params = parseSearchParams({
+    ...((await props.searchParams) ?? {}),
+    category: undefined,
+    type: undefined,
+    event: undefined,
+  });
   if (!params) return { title: "Search not found — PrōjectBihar Newsfeed" };
   return {
     title: params.q
       ? `Search: ${params.q} — PrōjectBihar Newsfeed`
       : "Search — PrōjectBihar Newsfeed",
     description:
-      "Search story titles, articles, entities, districts, categories and sources across the archive.",
+      "Search story titles, articles, entities, districts and sources across the archive.",
   };
 }
 
 export default async function SearchPage(props: PageProps) {
-  const params = parseSearchParams((await props.searchParams) ?? {});
+  const params = parseSearchParams({
+    ...((await props.searchParams) ?? {}),
+    category: undefined,
+    type: undefined,
+    event: undefined,
+  });
   if (!params) notFound();
   const data = await getSearch(params);
 
@@ -94,7 +83,6 @@ export default async function SearchPage(props: PageProps) {
   const criteria = hasSearchCriteria(params);
   const filters = appliedFilters(params);
   const showEmpty = criteria && total === 0 && (data.configured || data.demo) && !data.error;
-  const fixtureNoArticleTypes = params.demo && params.articleType !== null;
   const clearParams: SearchParams = {
     q: "",
     tokens: [],
@@ -147,8 +135,8 @@ export default async function SearchPage(props: PageProps) {
           </p>
           {!criteria && (
             <p className="text-[12.5px]" style={{ color: "var(--muted)" }}>
-              Search story titles, article headlines, entities, districts, categories and sources —
-              filter by date, district, category, article type, event type, source and language.
+              Search story titles, article headlines, entities, districts and sources — filter by
+              date, district, source and language.
             </p>
           )}
           {criteria && params.tokens.length > 0 && (
@@ -198,69 +186,6 @@ export default async function SearchPage(props: PageProps) {
                 {DISTRICTS.map((district) => (
                   <option key={district.id} value={district.id}>
                     {district.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="block">
-              <span
-                className="block text-[11px] uppercase tracking-wider font-semibold mb-1"
-                style={{ color: "var(--muted)" }}
-              >
-                Category
-              </span>
-              <select
-                name="category"
-                defaultValue={params.category ?? ""}
-                className="glass-input w-full px-3 py-1.5 text-[13px]"
-                style={{ color: "var(--ink)" }}
-              >
-                <option value="">All categories</option>
-                {CATEGORIES.map((category) => (
-                  <option key={category.slug} value={category.slug}>
-                    {category.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="block">
-              <span
-                className="block text-[11px] uppercase tracking-wider font-semibold mb-1"
-                style={{ color: "var(--muted)" }}
-              >
-                Article type
-              </span>
-              <select
-                name="type"
-                defaultValue={params.articleType ?? ""}
-                className="glass-input w-full px-3 py-1.5 text-[13px]"
-                style={{ color: "var(--ink)" }}
-              >
-                <option value="">All types</option>
-                {ARTICLE_TYPES.map((type) => (
-                  <option key={type} value={type}>
-                    {humanize(type)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="block">
-              <span
-                className="block text-[11px] uppercase tracking-wider font-semibold mb-1"
-                style={{ color: "var(--muted)" }}
-              >
-                Event
-              </span>
-              <select
-                name="event"
-                defaultValue={params.eventType ?? ""}
-                className="glass-input w-full px-3 py-1.5 text-[13px]"
-                style={{ color: "var(--ink)" }}
-              >
-                <option value="">All events</option>
-                {EVENT_TYPES.map((event) => (
-                  <option key={event} value={event}>
-                    {humanize(event)}
                   </option>
                 ))}
               </select>
@@ -398,12 +323,7 @@ export default async function SearchPage(props: PageProps) {
             <p className="text-[12.5px] mt-1" style={{ color: "var(--muted)" }}>
               Try fewer words or clear a filter.
             </p>
-            {fixtureNoArticleTypes && (
-              <p className="text-[12.5px] mt-1" style={{ color: "var(--muted)" }}>
-                The demo fixture carries no article-type labels, so the article-type filter matches
-                nothing in the fixture view (it filters live stories).
-              </p>
-            )}
+
             <Link
               href={searchHref(1, clearParams)}
               className="inline-block mt-2 text-[13px] font-medium transition-colors hover:text-[var(--accent)]"

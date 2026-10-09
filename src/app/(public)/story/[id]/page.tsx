@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { cache, type ReactNode } from "react";
 import Header from "@/components/public/Header";
 import { DemoNotice } from "@/components/public/Notices";
-import { categoryColor } from "@/lib/public/categories";
 import { slugForDistrictName } from "@/lib/public/districts";
 import { getStory } from "@/lib/public/story";
 import { formatStamp, timeAgo } from "@/lib/public/time-ago";
@@ -43,12 +42,6 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   };
 }
 
-function displayEvent(eventType: string | null): string {
-  if (!eventType) return "—";
-  const words = eventType.replace(/_/g, " ");
-  return words.charAt(0).toUpperCase() + words.slice(1);
-}
-
 const CARD = "glass-card p-4 sm:p-5 mb-4";
 const SECTION_LABEL = "text-[12px] font-semibold uppercase tracking-wider mb-4";
 
@@ -57,14 +50,12 @@ export default async function StoryPage(props: PageProps) {
   const story = await getStoryCached(id, demo);
   if (!story) notFound();
 
-  const color = story.primaryCategory ? categoryColor(story.primaryCategory) : null;
   const firstReported = formatStamp(story.firstSeenAt) ?? "—";
   const latestStamp = formatStamp(story.lastSeenAt);
   const latestUpdate = latestStamp
     ? `${latestStamp} (${timeAgo(story.lastSeenAt)})`
     : timeAgo(story.lastSeenAt);
   const facts: Array<{ label: string; value: ReactNode }> = [
-    { label: "Event type", value: displayEvent(story.eventType) },
     {
       label: "Location",
       // Districts link into the Phase 31 archives (keeping the demo flag).
@@ -126,21 +117,6 @@ export default async function StoryPage(props: PageProps) {
 
         {/* Headline + facts */}
         <article className={CARD}>
-          <div className="flex items-center gap-2 mb-3">
-            {story.primaryCategory && color && (
-              <span
-                className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider"
-                style={{
-                  backgroundColor: `${color}0A`,
-                  color: `${color}bb`,
-                  border: `1px solid ${color}15`,
-                }}
-              >
-                {story.primaryCategory}
-              </span>
-            )}
-          </div>
-
           <h1
             className="text-[18px] sm:text-[22px] leading-[1.4] mb-5"
             style={{ color: "var(--ink)", fontWeight: 500 }}

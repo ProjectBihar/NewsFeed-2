@@ -133,6 +133,13 @@ class ClassificationResult:
 def classify_article(title: str, body: str) -> ClassificationResult:
     """Type, tier, and curation; never raises on odd input."""
     title, body = title or "", body or ""
+    # Publisher ad-slot labels can sit inside an otherwise ordinary report.
+    # Remove only isolated generic banner labels; sponsored/partner content
+    # and advertisement wording in actual sentences remain classification evidence.
+    body = "\n".join(
+        line for line in body.splitlines()
+        if line.strip().casefold() not in {"advertisement", "विज्ञापन"}
+    )
     scores = score_types(title, body)
     ranked = sorted(scores.items(), key=lambda kv: (-kv[1][0], kv[0]))
     best, (best_score, best_evidence) = ranked[0]

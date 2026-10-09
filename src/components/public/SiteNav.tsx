@@ -1,22 +1,7 @@
 import Link from "next/link";
 
-/**
- * Section navigation (Phase 29, plan information architecture; Phases
- * 31-33 completed it).
- *
- * Latest, Topics, Districts, Sources and Archive all work today (feed
- * root, the category pill strip, the district index, the source index,
- * and the server-paginated archive) — no disabled placeholders remain.
- * Demo mode carries `?demo=1` so navigation never drops the reader out of
- * the fixture view.
- */
-export default function SiteNav({
-  onTopics,
-  demo = false,
-}: {
-  onTopics?: () => void;
-  demo?: boolean;
-}) {
+/** Navigation carries demo mode through public archives. */
+export default function SiteNav({ demo = false }: { demo?: boolean }) {
   const homeHref = demo ? "/?demo=1" : "/";
   const districtHref = demo ? "/district?demo=1" : "/district";
   const sourceHref = demo ? "/source?demo=1" : "/source";
@@ -33,24 +18,6 @@ export default function SiteNav({
       >
         Latest
       </Link>
-      <a
-        href="#topics"
-        onClick={(event) => {
-          // The pill strip lives in Curated mode (V1 behaviour): make sure it
-          // is on screen before scrolling to it, and keep the plain anchor as
-          // the no-JS fallback.
-          event.preventDefault();
-          onTopics?.();
-          requestAnimationFrame(() => {
-            document
-              .getElementById("topics")
-              ?.scrollIntoView({ behavior: "smooth", block: "start" });
-          });
-        }}
-        className="transition-colors text-[var(--ink-secondary)] hover:text-[var(--accent)] flex-shrink-0"
-      >
-        Topics
-      </a>
       <Link
         href={districtHref}
         className="transition-colors text-[var(--ink-secondary)] hover:text-[var(--accent)] flex-shrink-0"

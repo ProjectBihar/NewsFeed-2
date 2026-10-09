@@ -102,7 +102,7 @@ export async function persistAnalysis(
       !analysis.article.title ||
       !analysis.article.body ||
       !analysis.relevance.pass ||
-      analysis.classification.significance_tier === "D"
+      analysis.classification.article_type === "advertorial"
     ) {
       await finish("rejected");
       return { status: "rejected", storyCreated: false };
@@ -239,7 +239,7 @@ export async function persistAnalysis(
     const members = (
       await tx.query(
         `${MEMBER_SELECT} WHERE a.story_id=$1 AND s.active
-      AND a.bihar_relevance_score>=0.5 AND a.article_type NOT IN ('roundup','sports','entertainment','advertorial') ORDER BY a.id`,
+      AND a.bihar_relevance_score>=0.5 AND a.article_type IS DISTINCT FROM 'advertorial' ORDER BY a.id`,
         [storyId]
       )
     ).rows;

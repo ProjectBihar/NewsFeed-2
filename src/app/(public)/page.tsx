@@ -1,6 +1,7 @@
 import Newsfeed from "@/components/public/Newsfeed";
 import { DemoNotice, ErrorNotice, NotConfiguredNotice } from "@/components/public/Notices";
 import { getFeed } from "@/lib/public/feed";
+import { parseTimelineParams } from "@/lib/public/timeline";
 
 // Public homepage (Phase 28): the V1 visual shell over the V2 story
 // architecture. Phase 29 adds feed modes and navigation.
@@ -10,7 +11,7 @@ export default async function Home({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const params = (await searchParams) ?? {};
-  const feed = await getFeed({ demo: params.demo === "1" });
+  const feed = await getFeed(parseTimelineParams(params));
 
   const notice = feed.demo ? (
     <DemoNotice />
@@ -20,5 +21,5 @@ export default async function Home({
     <ErrorNotice message={feed.error} />
   ) : undefined;
 
-  return <Newsfeed stories={feed.stories} notice={notice} demo={feed.demo} />;
+  return <Newsfeed {...feed} notice={notice} />;
 }

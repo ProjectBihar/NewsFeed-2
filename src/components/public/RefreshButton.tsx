@@ -19,6 +19,13 @@ export default function RefreshButton({
     <button
       onClick={() => {
         setRefreshing(true);
+        const url = new URL(window.location.href);
+        if (url.pathname === "/" && url.searchParams.has("asof")) {
+          url.searchParams.delete("asof");
+          url.searchParams.delete("page");
+          window.location.assign(url.toString());
+          return;
+        }
         window.location.reload();
       }}
       disabled={refreshing}
