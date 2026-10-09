@@ -4,7 +4,6 @@
 // sentiment buttons, recommendation prediction, block-phrase controls) appear.
 import { describe, expect, it } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
-import CategoryTabs from "./CategoryTabs";
 import Header from "./Header";
 import Newsfeed from "./Newsfeed";
 import StoryCard from "./StoryCard";
@@ -46,35 +45,14 @@ describe("Phase 28 — public shell", () => {
     expect(html).not.toMatch(FORBIDDEN);
   });
 
-  it("category pill strip renders All + the eight V2 categories, V1 styling", () => {
-    const html = renderToStaticMarkup(<CategoryTabs active="all" onChange={() => {}} />);
-    for (const label of [
-      "All",
-      "Economy",
-      "Infrastructure",
-      "Industry",
-      "Agriculture",
-      "Education",
-      "Healthcare",
-      "Environment",
-      "Governance",
-    ]) {
-      expect(html).toContain(`>${label}<`);
-    }
-    // Active pill uses the V1 accent-background treatment.
-    expect(html).toContain("bg-[var(--accent)] text-white");
-    expect(html).toContain("scrollbar-hide");
-    expect(html).not.toMatch(FORBIDDEN);
-  });
-
   it("story card renders the V2 story shape inside the V1 card", () => {
     const metro = DEMO_STORIES.find((s) => s.id === "metro-approval");
     expect(metro).toBeDefined();
     const html = renderToStaticMarkup(<StoryCard story={metro!} />);
     expect(html).toContain("glass-card p-4 sm:p-5");
     expect(html).toContain("Cabinet approves Patna Metro expansion");
-    expect(html).toContain("Infrastructure");
-    expect(html).toContain("#dc2626"); // V1 infrastructure pill colour
+    expect(html).not.toContain("Infrastructure");
+    expect(html).not.toContain("#dc2626"); // V1 infrastructure pill colour
     expect(html).toContain("Patna · ");
     expect(html).toContain("5 sources");
     expect(html).toContain("EN + HI");
@@ -100,7 +78,7 @@ describe("Phase 28 — public shell", () => {
       "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mt-2 items-stretch"
     );
     expect(html).toContain("animate-fade-in h-full");
-    const curatedCount = DEMO_STORIES.filter((s) => s.curated).length;
+    const curatedCount = DEMO_STORIES.length;
     expect((html.match(/glass-card p-4/g) ?? []).length).toBe(curatedCount);
     expect(html).toContain(`>${curatedCount}<`); // V1 "total" count follows the view
     expect(html).not.toMatch(FORBIDDEN);
@@ -113,13 +91,12 @@ describe("Phase 28 — public shell", () => {
     expect(html).toContain("Phase 16 clustering benchmark");
     expect(html).toContain("Cabinet approves Patna Metro expansion");
     expect(html).toContain("शिक्षक नियुक्ति परीक्षा कैलेंडर जारी");
-    expect(html).toContain("Tenders invited for metro corridor works");
-    // Default Curated view: 9 of the 12 fixture stories; routine crime etc.
-    // stay behind the "All Bihar News" mode.
-    expect((html.match(/glass-card p-4/g) ?? []).length).toBe(9);
-    expect(html).not.toContain("Three arrested after Patna robbery");
-    expect(html).toContain(">All Bihar News<");
-    expect(html).toContain("(12)");
+    expect(html).not.toContain("Tenders invited for metro corridor works");
+    // Eleven in-window reports; the future fixture stays in Archive.
+    expect((html.match(/glass-card p-4/g) ?? []).length).toBe(11);
+    expect(html).toContain("Three arrested after Patna robbery");
+    expect(html).not.toContain(">All Bihar News<");
+    expect(html).toContain("11 stories");
     expect(html).not.toMatch(FORBIDDEN);
   });
 
@@ -140,7 +117,7 @@ describe("Phase 29 — homepage feed modes and navigation", () => {
     expect(html).toContain('aria-label="Sections"');
     expect(html).toContain('href="/?demo=1"'); // Latest stays in the demo view
     expect(html).toContain('aria-current="page"'); // Latest is home
-    expect(html).toContain('href="#topics"'); // Topics anchors the pill strip
+    expect(html).not.toContain('href="#topics"'); // Topics anchors the pill strip
     expect(html).toContain('href="/district?demo=1"'); // Phase 31: district index
     expect(html).toContain('href="/source?demo=1"'); // Phase 32: source index
     expect(html).toContain('href="/archive?demo=1"'); // Phase 33: archive
@@ -157,22 +134,14 @@ describe("Phase 29 — homepage feed modes and navigation", () => {
     expect(live).not.toMatch(FORBIDDEN);
   });
 
-  it("defaults to Curated with both mode labels, counts, and exactly one pressed", () => {
+  it("shows every supplied story without categories or a curated switch", () => {
     const html = renderToStaticMarkup(<Newsfeed stories={DEMO_STORIES} />);
-    expect(html).toContain(">Curated<");
-    expect(html).toContain(">All Bihar News<");
-    expect(html).toContain("(9)"); // curated count
-    expect(html).toContain("(12)"); // all count
-    const pressed = html.match(/aria-pressed="true"/g) ?? [];
-    expect(pressed).toHaveLength(1);
-    // Curated default view: crime/politics/sport fixtures are not rendered.
-    expect((html.match(/glass-card p-4/g) ?? []).length).toBe(9);
-    expect(html).not.toContain("Three arrested after Patna robbery");
-    expect(html).not.toContain("Minister attacks rival at Muzaffarpur rally");
-    expect(html).toContain("Cabinet approves Patna Metro expansion");
-    // Category pills live in Curated mode (V1 behaviour).
-    expect(html).toContain('id="topics"');
-    expect(html).not.toMatch(FORBIDDEN);
+    expect((html.match(/glass-card p-4/g) ?? []).length).toBe(12);
+    expect(html).toContain("Three arrested after Patna robbery");
+    expect(html).not.toContain(">Curated<");
+    expect(html).not.toContain(">All Bihar News<");
+    expect(html).not.toContain('id="topics"');
+    expect(html).not.toContain(">Infrastructure<");
   });
 
   it("story card carries no needless synopsis prose", () => {
@@ -196,8 +165,8 @@ describe("Phase 30 — story page", () => {
 
     // The plan's eight facts
     expect(html).toContain("Cabinet approves Patna Metro expansion");
-    expect(html).toContain("Infrastructure");
-    expect(html).toContain(">Approval<"); // event type, display form
+    expect(html).not.toContain("Infrastructure");
+    expect(html).not.toContain(">Approval<"); // event type, display form
     expect(html).toContain("First reported");
     expect(html).toContain("28 Sep, 10:00");
     expect(html).toContain("Latest update");
@@ -281,10 +250,10 @@ describe("Phase 31 — district pages", () => {
     expect(html).toContain(">Patna</h1>");
     expect(html).toContain("Latest developments");
     expect(html).toContain("Recent stories");
-    expect(html).toContain("Topic distribution");
+    expect(html).not.toContain("Topic distribution");
     expect(html).toContain("Source coverage");
     // Sample sizes attached to both metrics.
-    expect(html).toContain("Across 5 recent stories");
+    expect(html).not.toContain("Across 5 recent stories");
     expect(html).toContain("Across 9 recent articles");
 
     // Developments: newest report first (s-tender is dated 28 Oct in the
@@ -303,7 +272,7 @@ describe("Phase 31 — district pages", () => {
     expect(html).not.toContain('href="/story/s-rally');
 
     // Counts, coverage rows, and the way back to the index.
-    expect(html).toContain("Infrastructure"); // topic distribution label
+    expect(html).not.toContain("Infrastructure"); // topic distribution label
     expect(html).toContain("Dainik Jagran"); // source coverage row
     expect(html).toContain('href="/district?demo=1"'); // ← All districts
     expect(html).not.toMatch(FORBIDDEN);
@@ -314,7 +283,7 @@ describe("Phase 31 — district pages", () => {
       const html = renderToStaticMarkup(await DistrictPage(districtProps(slug, "1")));
       expect(html, slug).toContain('href="/story/flood-relief?demo=1"');
       expect(html, slug).toContain("Relief camps house 40,000 in north Bihar");
-      expect(html, slug).toContain("Across 1 recent story");
+      expect(html, slug).not.toContain("Across 1 recent story");
       expect(html, slug).toContain("Across 3 recent articles");
       expect(html, slug).not.toMatch(FORBIDDEN);
     }
@@ -619,9 +588,7 @@ describe("Phase 34 — search page", () => {
     expect(html).toContain("Demo stories");
     // Count line (12 fixture stories) plus the browse prompt — never a claim.
     expect(html).toContain("12 stories");
-    expect(html).toContain(
-      "Search story titles, article headlines, entities, districts, categories and"
-    );
+    expect(html).toContain("Search story titles, article headlines, entities, districts and");
     expect(html).not.toContain("Headline matches rank first"); // no query yet
     expect(html).not.toContain("No stories match"); // not an empty state
     // One window only: 8 of 12 cards, server-paginated like /archive.
@@ -630,16 +597,7 @@ describe("Phase 34 — search page", () => {
     // The plan's whole query surface: q + the seven filters, GET round-trip.
     expect(html).toContain('action="/search"');
     expect(html).toContain('method="get"');
-    for (const name of [
-      "q",
-      "district",
-      "category",
-      "type",
-      "event",
-      "source",
-      "language",
-      "year",
-    ]) {
+    for (const name of ["q", "district", "source", "language", "year"]) {
       expect(html).toContain(`name="${name}"`);
     }
     expect(html).toContain('type="hidden" name="demo" value="1"');
@@ -707,16 +665,16 @@ describe("Phase 34 — search page", () => {
     const typed = renderToStaticMarkup(
       await SearchPage(searchProps({ demo: "1", type: "development" }))
     );
-    expect(typed).toContain("No stories match these filters.");
-    expect(typed).toContain("The demo fixture carries no article-type labels");
-    expect(typed).not.toContain("<article ");
+    expect(typed).toContain("12 stories");
+    expect(typed).not.toContain("The demo fixture carries no article-type labels");
+    expect(typed).toContain("<article ");
   });
 
   it("404s unknown, inactive, or malformed filters instead of guessing", async () => {
     await expect(SearchPage(searchProps({ district: "nope" }))).rejects.toThrow();
-    await expect(SearchPage(searchProps({ category: "nope" }))).rejects.toThrow();
-    await expect(SearchPage(searchProps({ type: "nope" }))).rejects.toThrow();
-    await expect(SearchPage(searchProps({ event: "nope" }))).rejects.toThrow();
+    for (const retired of ["category", "type", "event"]) {
+      await expect(SearchPage(searchProps({ [retired]: "nope" }))).resolves.toBeDefined();
+    }
     await expect(SearchPage(searchProps({ source: "nope" }))).rejects.toThrow();
     // Inactive registry sources are not live filters.
     await expect(SearchPage(searchProps({ source: "news18-bihar" }))).rejects.toThrow();

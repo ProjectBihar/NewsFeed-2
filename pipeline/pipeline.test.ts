@@ -302,4 +302,49 @@ describe("live pipeline contracts with real SQL and Python", () => {
       );
     }
   });
+  it("publishes relevant tier-D sport reports but continues rejecting advertorials", async () => {
+    await db.query("UPDATE sources SET active=true WHERE id=$1", [sourceId]);
+    for (const kind of ["sports", "advertorial"]) {
+      const testUrl = `https://news.example.com/${kind}-fixture`;
+      await db.query(
+        `INSERT INTO crawl_queue(source_id,url,canonical_url,status)
+        VALUES ($1,$2,$2,'fetched')`,
+        [sourceId, testUrl]
+      );
+      const [row] = await claimProcessing(db, 1);
+      const candidate: Analysis = {
+        ...analysis,
+        article: { ...analysis.article, title: `Bihar ${kind} report`, canonical_url: testUrl },
+        keys: {
+          ...analysis.keys,
+          canonical_url: testUrl,
+          content_hash: `${kind}-content`,
+          headline_hash: `${kind}-headline`,
+        },
+        classification: {
+          ...analysis.classification,
+          article_type: kind,
+          significance_tier: "D",
+          curated: false,
+        },
+      };
+      const result = await persistAnalysis(
+        db,
+        row,
+        candidate,
+        async <T>(request: Record<string, unknown>) =>
+          (request.operation === "assign" ? {} : { canonical_title: candidate.article.title }) as T
+      );
+      expect(result.status).toBe(kind === "sports" ? "complete" : "rejected");
+      const published = (
+        await db.query("SELECT story_id FROM articles WHERE canonical_url=$1", [testUrl])
+      ).rows;
+      expect(published).toHaveLength(kind === "sports" ? 1 : 0);
+      if (published.length)
+        expect(
+          (await db.query("SELECT article_count FROM stories WHERE id=$1", [published[0].story_id]))
+            .rows[0].article_count
+        ).toBe(1);
+    }
+  });
 });

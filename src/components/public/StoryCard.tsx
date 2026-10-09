@@ -1,42 +1,18 @@
 import Link from "next/link";
-import { categoryColor } from "@/lib/public/categories";
-import { timeAgo } from "@/lib/public/time-ago";
+import { formatStamp, timeAgo } from "@/lib/public/time-ago";
 import type { PublicStory } from "@/lib/public/types";
 
-/**
- * V1 news card (Phase 28) carrying a V2 story: the same glass card,
- * category badge, headline typography, and muted meta row as V1's NewsCard,
- * with sentiment buttons, category correction, and per-article links removed.
- * Meta row: district · time on the left, sources · languages on the right —
- * per the plan's story-card example. The headline links to the story page
- * (Phase 30), carrying `?demo=1` when serving fixture stories.
- */
+/** Headline and provenance, without inferred topic labels. */
 export default function StoryCard({ story, demo = false }: { story: PublicStory; demo?: boolean }) {
-  const color = story.primaryCategory ? categoryColor(story.primaryCategory) : null;
-
-  const time = timeAgo(story.lastSeenAt);
+  const time = demo
+    ? formatStamp(story.lastSeenAt)
+    : `${story.dateVerified === false ? "First seen " : story.firstSeenAt !== story.lastSeenAt ? "Updated " : ""}${timeAgo(story.lastSeenAt)}`;
   const left = story.districtNames.length ? `${story.districtNames.join(", ")} · ${time}` : time;
   const languages = story.languages.length ? ` · ${story.languages.join(" + ")}` : "";
   const href = `/story/${story.id}${demo ? "?demo=1" : ""}`;
 
   return (
     <article className="glass-card p-4 sm:p-5 flex flex-col relative gpu-accel">
-      {/* Category badge — V1 pill styling and colour */}
-      <div className="flex items-center gap-2 mb-3">
-        {story.primaryCategory && color && (
-          <span
-            className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider"
-            style={{
-              backgroundColor: `${color}0A`,
-              color: `${color}bb`,
-              border: `1px solid ${color}15`,
-            }}
-          >
-            {story.primaryCategory}
-          </span>
-        )}
-      </div>
-
       {/* Canonical headline — links to the story page */}
       <h3
         className="text-[14.5px] sm:text-[15px] font-normal leading-[1.5] mb-3 flex-1"

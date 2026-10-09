@@ -5,7 +5,6 @@ import { cache } from "react";
 import Header from "@/components/public/Header";
 import { DemoNotice, ErrorNotice, NotConfiguredNotice } from "@/components/public/Notices";
 import StoryCard from "@/components/public/StoryCard";
-import { categoryColor } from "@/lib/public/categories";
 import { getDistrict } from "@/lib/public/district";
 import { slugForSourceName } from "@/lib/public/sources";
 import { formatStamp } from "@/lib/public/time-ago";
@@ -46,7 +45,7 @@ export default async function DistrictPage(props: PageProps) {
   const data = await getDistrictCached(slug, demo);
   if (!data) notFound();
 
-  const { district, stories, developments, sourceCoverage, topicCounts, samples } = data;
+  const { district, stories, developments, sourceCoverage, samples } = data;
   const noCoverage = stories.length === 0 && developments.length === 0;
   const showEmpty = (data.configured || data.demo) && !data.error && noCoverage;
 
@@ -57,8 +56,6 @@ export default async function DistrictPage(props: PageProps) {
   ) : data.error ? (
     <ErrorNotice message={data.error} />
   ) : undefined;
-
-  const maxTopic = topicCounts[0]?.count ?? 1;
 
   return (
     <div>
@@ -143,46 +140,6 @@ export default async function DistrictPage(props: PageProps) {
                   <StoryCard story={story} demo={demo} />
                 </div>
               ))}
-            </div>
-          </section>
-        )}
-
-        {/* Topic distribution — only over stories that exist */}
-        {topicCounts.length > 0 && (
-          <section className={CARD} aria-label="Topic distribution">
-            <h2 className={SECTION_LABEL} style={{ color: "var(--muted)" }}>
-              Topic distribution
-            </h2>
-            <p className="text-[12px] -mt-2 mb-4" style={{ color: "var(--muted)" }}>
-              Across {samples.stories} recent {samples.stories === 1 ? "story" : "stories"}
-            </p>
-            <div className="flex flex-col gap-3">
-              {topicCounts.map((topic) => {
-                const color = topic.category ? categoryColor(topic.category) : null;
-                return (
-                  <div key={topic.category ?? "uncategorised"}>
-                    <div className="flex items-baseline justify-between text-[13px] mb-1">
-                      <span style={{ color: topic.category ? "var(--ink)" : "var(--muted)" }}>
-                        {topic.category ?? "Uncategorised"}
-                      </span>
-                      <span style={{ color: "var(--muted)" }}>{topic.count}</span>
-                    </div>
-                    <div
-                      className="h-1.5 rounded-full overflow-hidden"
-                      style={{ backgroundColor: "var(--pill-bg)" }}
-                    >
-                      <div
-                        className="h-1.5 rounded-full"
-                        style={{
-                          width: `${Math.round((topic.count / maxTopic) * 100)}%`,
-                          backgroundColor: color ?? "var(--muted)",
-                          opacity: color ? 0.75 : 1,
-                        }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
             </div>
           </section>
         )}

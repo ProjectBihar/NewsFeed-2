@@ -1,73 +1,93 @@
-"use client";
-
-import { useMemo, useState } from "react";
 import type { ReactNode } from "react";
-import CategoryTabs from "./CategoryTabs";
-import FeedSwitcher from "./FeedSwitcher";
+import Link from "next/link";
 import Header from "./Header";
 import SiteNav from "./SiteNav";
 import StoryCard from "./StoryCard";
-import { countByMode, selectStories, type FeedMode } from "@/lib/public/feed-modes";
+import TimelineRollover from "./TimelineRollover";
+import { FEED_PAGE_SIZE, timelineHref } from "@/lib/public/timeline";
 import type { PublicStory } from "@/lib/public/types";
 
-/**
- * Public feed shell (Phase 28/29): V1's page structure — sticky header,
- * centred 1200px container, Curated/All feed modes (plan §54, default
- * Curated), category pill strip, three-column glass-card grid — over V2
- * stories. Phase 29 adds the plan's section nav above the switcher; the
- * header count follows the visible list, as in V1. Category pills filter
- * within Curated only (V1 behaviour: tabs are hidden in All mode).
- */
 export default function Newsfeed({
   stories,
   notice,
   demo = false,
+  total = stories.length,
+  page = 1,
+  totalPages = 1,
+  asOf = new Date().toISOString(),
 }: {
   stories: PublicStory[];
   notice?: ReactNode;
-  /** True when serving `?demo=1` fixture stories — story links carry the flag. */
   demo?: boolean;
+  total?: number;
+  page?: number;
+  totalPages?: number;
+  asOf?: string;
 }) {
-  const [mode, setMode] = useState<FeedMode>("curated");
-  const [active, setActive] = useState("all");
-
-  const counts = useMemo(() => countByMode(stories), [stories]);
-  const filtered = useMemo(() => selectStories(stories, mode, active), [stories, mode, active]);
-
-  const emptyHeading =
-    mode === "curated" && active !== "all" ? "No stories in this category" : "No stories found";
-
+  const pages = [...new Set([1, page - 1, page, page + 1, totalPages])]
+    .filter((p) => p >= 1 && p <= totalPages)
+    .sort((a, b) => a - b);
   return (
     <div>
-      <Header totalStories={filtered.length} />
-
+      {!demo && <TimelineRollover asOf={asOf} />}
+      <Header totalStories={total} />
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-[105px] py-3 sm:py-4">
         {notice && <div className="mb-3 sm:mb-4">{notice}</div>}
-
-        <SiteNav
-          demo={demo}
-          onTopics={() => {
-            if (mode !== "curated") setMode("curated");
-          }}
-        />
-
-        <FeedSwitcher mode={mode} onChange={setMode} counts={counts} />
-
-        {mode === "curated" && <CategoryTabs active={active} onChange={setActive} />}
-
-        {filtered.length === 0 ? (
+        <SiteNav demo={demo} />
+        <h1 className="text-lg mb-1" style={{ color: "var(--ink)" }}>
+          Bihar News
+        </h1>
+        <p className="text-[12px] mb-4" style={{ color: "var(--muted)" }}>
+          {demo ? "Demo seven-day window" : "Today and the previous six days"} · IST · {total}{" "}
+          stories
+          {total > 0 &&
+            ` · Showing ${(page - 1) * FEED_PAGE_SIZE + 1}–${(page - 1) * FEED_PAGE_SIZE + stories.length}`}
+        </p>
+        {stories.length === 0 ? (
           <div className="text-center py-20 text-gray-400">
-            <p className="text-lg mb-2">{emptyHeading}</p>
+            <p className="text-lg mb-2">No stories found</p>
             <p className="text-sm">Check back after the next crawl cycle.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mt-2 items-stretch">
-            {filtered.map((story) => (
+            {stories.map((story) => (
               <div key={story.id} className="animate-fade-in h-full">
                 <StoryCard story={story} demo={demo} />
               </div>
             ))}
           </div>
+        )}
+        {totalPages > 1 && (
+          <nav
+            aria-label="News pagination"
+            className="flex flex-wrap items-center justify-center gap-4 py-6 text-sm"
+          >
+            {page > 1 && (
+              <Link prefetch={false} href={timelineHref(page - 1, asOf, demo)}>
+                Previous
+              </Link>
+            )}
+            {pages.map((p, i) => (
+              <span key={p} className="flex gap-4">
+                {i > 0 && p - pages[i - 1] > 1 && <span aria-hidden="true">…</span>}
+                <Link
+                  prefetch={false}
+                  href={timelineHref(p, asOf, demo)}
+                  aria-current={p === page ? "page" : undefined}
+                >
+                  {p}
+                </Link>
+              </span>
+            ))}
+            {page < totalPages && (
+              <Link prefetch={false} href={timelineHref(page + 1, asOf, demo)}>
+                Next
+              </Link>
+            )}
+            <span style={{ color: "var(--muted)" }}>
+              Page {page} of {totalPages}
+            </span>
+          </nav>
         )}
       </div>
     </div>
