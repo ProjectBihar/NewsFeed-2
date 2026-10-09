@@ -2,11 +2,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
-/* Existing display face, with a readable serif fallback. */
+/* Self-host the supplied Book face; Hindi glyphs fall back to Mukta. */
 @font-face {
   font-family: "P22 Mackinac";
-  src: url("https://db.onlinewebfonts.com/c/9d4d074c9335825a23cce178ee03b498?family=P22+Mackinac+W01+Book")
-    format("woff2");
+  src: url("/fonts/P22Mackinac-Book.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -50,15 +49,8 @@
   box-sizing: border-box;
 }
 body {
-  font-family:
-    "Segoe UI",
-    "Segoe UI Variable",
-    system-ui,
-    -apple-system,
-    "Helvetica Neue",
-    Arial,
-    "Mukta",
-    sans-serif;
+  font-family: "P22 Mackinac", "Mukta", Georgia, serif;
+  font-synthesis: none;
   background: var(--bg);
   color: var(--ink);
   margin: 0;
@@ -137,7 +129,7 @@ select:focus-visible {
 }
 .masthead-brand span {
   display: block;
-  font-family: "Segoe UI", system-ui, sans-serif;
+  font-family: inherit;
   font-size: 10px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -355,5 +347,42 @@ dialog::backdrop {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
+  }
+}
+.footer-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.pwa-install {
+  max-width: 300px;
+}
+.pwa-install summary {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--ink);
+}
+.pwa-install summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+.install-instructions {
+  padding: 12px 0;
+}
+.install-instructions button {
+  padding: 8px 16px;
+  margin-bottom: 8px;
+}
+@media (display-mode: standalone) {
+  .pwa-install {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .footer-actions {
+    align-items: flex-start;
   }
 }
