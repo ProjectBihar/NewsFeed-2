@@ -16,6 +16,8 @@
     "registry:generate": "node scripts/generate-source-seed.mjs",
     "admin:hash": "node scripts/admin-password-hash.mjs",
     "check:responsive": "node scripts/check-homepage-responsive.mjs",
+    "check:pwa": "node scripts/check-pwa.mjs",
+    "pwa:icons": "node scripts/generate-pwa-icons.mjs",
     "retention:cleanup": "node scripts/retention-cleanup.mjs",
     "pipeline:build": "tsc -p tsconfig.pipeline.json",
     "pipeline:discover": "node .pipeline/pipeline/cli.js discover",

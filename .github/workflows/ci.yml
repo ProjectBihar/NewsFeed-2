@@ -51,6 +51,19 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: PWA browser checks
+        env:
+          BASE_URL: http://localhost:3102
+        run: |
+          npm run start -- --port 3102 > /tmp/newsfeed-pwa-server.log 2>&1 &
+          pwa_server_pid=$!
+          trap 'kill "$pwa_server_pid"' EXIT
+          for attempt in {1..30}; do
+            if curl --silent --fail http://localhost:3102/manifest.webmanifest > /dev/null; then break; fi
+            sleep 1
+          done
+          npm run check:pwa
+
       - name: Python tests
         run: pytest
 
